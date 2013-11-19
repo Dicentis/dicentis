@@ -1,13 +1,11 @@
 <?php
 
-if( !class_exists( 'PostTypePodcast' ) )
-{
+if( !class_exists( 'PostTypePodcast' ) ) {
 	/**
 	 * The Podcast Post Type
 	 */
-	class PostTypePodcast
-	{
-		const POST_TYPE = 'dicentis_podcast';
+	class PostTypePodcast {
+		const POST_TYPE = 'podcast';
 		private $_meta  = array(
 			'_meta_a',
 			'_meta_b',
@@ -15,8 +13,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 			'_dicentis_podcast_medialink'
 		);
 
-		public function __construct()
-		{
+		public function __construct() {
 			// register actions
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -25,10 +22,10 @@ if( !class_exists( 'PostTypePodcast' ) )
 		/**
 		 * hook into WP's init action hook
 		 */
-		public function init()
-		{
+		public function init() {
 			// Initialize Post Type
-			$this->create_post_type();
+			$this->register_pocast_post_type();
+			$this->register_podcast_taxonomy();
 			add_action( 'save_post', array( $this,'save_post' ) );
 
 			// script & style action with page detection
@@ -41,8 +38,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 		/**
 		 * Create the post type
 		 */
-		public function create_post_type()
-		{
+		public function register_pocast_post_type() {
 			// set up arguments for podcast post type
 			$podcast_args = array(
 				'labels' => array(
@@ -80,20 +76,54 @@ if( !class_exists( 'PostTypePodcast' ) )
 
 			// Register the dicentis podcast post type
 			if ( post_type_exists( self::POST_TYPE ) ) {
+				/* @TODO: show admin notice */
 				// don't register post type b/c there already exists one
 				// with the same name.
 			} else {
 				register_post_type( self::POST_TYPE, $podcast_args );
 			}
-		} // END public function create_post_type()
+		} // END public function register_pocast_post_type()
+
+		/**
+		 * creates custom taxonomies for categorizing podcasts
+		 * in series
+		 */
+		public function register_podcast_taxonomy() {
+			// Set up the series taxonomy
+			$series_args = array(
+				'hierarchical' => true,
+				'query_var' => 'podcast_series',
+				'rewrite' => array(
+					'slug' => self::POST_TYPE . '/series',
+				),
+				'labels' => array(
+					'name' => 'Series',
+					'singular_name' => 'Series',
+					'edit_item' => 'Edit Series',
+					'update_item' => 'Update Series',
+					'add_new_item' => 'Add New Series',
+					'new_item_name' => 'New Series Name',
+					'all_items' => 'All Series',
+					'search_items' => 'Search Series',
+					'parent_item' => 'Parent Series',
+					'parent_item_colon' => 'Parent Series:',
+				),
+			);
+
+			// register series taxonomy
+			if ( taxonomy_exists( 'podcast_sereis' ) ) {
+				/* @TODO: show admin notice */
+			} else {
+				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
+			}
+		} // END public function register_podcast_taxonomy()
 
 		/**
 		 * Save the metaboxes for this custom post type
 		 * @param  [type] $post_id [description]
 		 * @return [type]          [description]
 		 */
-		public function save_post( $post_id )
-		{
+		public function save_post( $post_id ) {
 			// verify if this is an auto save routine
 			// If it is our form has not been submitted, so we don't want to do anything
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
@@ -124,8 +154,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 		 * hook into WP's admin_init action hook
 		 * @return [type] [description]
 		 */
-		public function admin_init()
-		{
+		public function admin_init() {
 			// Add metaboxes
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		} // END public function admin_init()
@@ -134,8 +163,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 		 * hook into WP's add_meta_boxes action hook
 		 * @param string $value [description]
 		 */
-		public function add_meta_boxes()
-		{
+		public function add_meta_boxes() {
 			// Add this metabox to every selected post
 			add_meta_box(
 				sprintf( 'dicentis_%s_selection', self::POST_TYPE ),
@@ -149,8 +177,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 		 * called off of the add meta box
 		 * @param [type] $post [description]
 		 */
-		public function add_inner_meta_boxes( $post )
-		{
+		public function add_inner_meta_boxes( $post ) {
 			// Render the job order metabox
 			include( sprintf('%s/../templates/%s_metabox.php', dirname(__FILE__), self::POST_TYPE) );
 		} // END public function add_inner_meta_boxes( $post )
@@ -162,6 +189,7 @@ if( !class_exists( 'PostTypePodcast' ) )
 				array( 'jquery', 'media-upload', 'thickbox' )
 			);
 		}
+
 		public function media_admin_style() {
 			wp_enqueue_style( 'thickbox' );
 		}
