@@ -13,8 +13,11 @@ License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
 
 if( !class_exists('Dicentis') ) {
 	class Dicentis {
-		
+
 		public function __construct() {
+			// Load the plugin's translated strings
+			add_action( 'init' , array( $this, 'load_localisation' ) );
+
 			// define default settings and save
 			$dicentis_options = array(
 				'option1' => 'value1',
@@ -94,6 +97,10 @@ if( !class_exists('Dicentis') ) {
 
 			// Render the settings template
 			include( sprintf( "%s/templates/settings.php", dirname(__FILE__) ) );
+		}
+
+		public function load_localisation() {
+			load_plugin_textdomain( 'dicentis', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 	}
 }
