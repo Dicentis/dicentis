@@ -79,7 +79,12 @@ if( !class_exists( 'PostTypePodcast' ) )
 			);
 
 			// Register the dicentis podcast post type
-			register_post_type( self::POST_TYPE, $podcast_args );
+			if ( post_type_exists( self::POST_TYPE ) ) {
+				// don't register post type b/c there already exists one
+				// with the same name.
+			} else {
+				register_post_type( self::POST_TYPE, $podcast_args );
+			}
 		} // END public function create_post_type()
 
 		/**
