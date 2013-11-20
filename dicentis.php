@@ -11,6 +11,8 @@ Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
 License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 if( !class_exists('Dicentis') ) {
 	class Dicentis {
 
