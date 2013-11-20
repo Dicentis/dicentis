@@ -12,6 +12,12 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			'_meta_c',
 			'_dicentis_podcast_medialink'
 		);
+		/* push each taxonomy name, which is used in this plugin
+		 * into this->_tax array. filter_posts() uses this array
+		 * to know which taxonomy is used and display filter options
+		 * for that
+		 */
+		private $_tax = array();
 
 		public function __construct() {
 			// register actions
@@ -24,10 +30,12 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 		 */
 		public function init() {
 			// Initialize Post Type
-			$this->register_pocast_post_type();
+			$this->register_podcast_post_type();
 			$this->register_podcast_taxonomy();
 			add_action( 'save_post', array( $this,'save_post' ) );
 
+			// add additional filter options to podcast site
+			add_action( 'restrict_manage_posts', array( $this, 'filter_posts' ) );
 			// script & style action with page detection
 			add_action( 'admin_print_scripts-post.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
@@ -38,7 +46,7 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 		/**
 		 * Create the post type
 		 */
-		public function register_pocast_post_type() {
+		public function register_podcast_post_type() {
 			// set up arguments for podcast post type
 			$podcast_args = array(
 				'labels' => array(
@@ -82,7 +90,7 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			} else {
 				register_post_type( self::POST_TYPE, $podcast_args );
 			}
-		} // END public function register_pocast_post_type()
+		} // END public function register_podcast_post_type()
 
 		/**
 		 * creates custom taxonomies for categorizing podcasts
@@ -110,13 +118,93 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 				),
 			);
 
+			// Set up the speaker taxonomy
+			$speaker_args = array(
+				'hierarchical' => true,
+				'query_var' => 'podcast_speaker',
+				'rewrite' => array(
+					'slug' => self::POST_TYPE . '/speaker',
+				),
+				'labels' => array(
+					'name' => 'Speaker',
+					'singular_name' => 'Speaker',
+					'edit_item' => 'Edit Speaker',
+					'update_item' => 'Update Speaker',
+					'add_new_item' => 'Add New Speaker',
+					'new_item_name' => 'New Speaker Name',
+					'all_items' => 'All Speaker',
+					'search_items' => 'Search Speaker',
+					'parent_item' => 'Parent Speaker',
+					'parent_item_colon' => 'Parent Speaker:',
+				),
+			);
+
+			/* push each taxonomy name, which is used in this plugin
+			 * into this->_tax array. filter_posts() uses this array
+			 * to know which taxonomy is used and display filter options
+			 * for that
+			 */
 			// register series taxonomy
-			if ( taxonomy_exists( 'podcast_sereis' ) ) {
+			if ( taxonomy_exists( 'celebration_series' ) ) {
+				// avantgarde-celebration plugin is installed and active
+				register_taxonomy_for_object_type( 'celebration_series', self::POST_TYPE );
+				array_push( $this->_tax, 'celebration_series' );
+			} else if ( taxonomy_exists( 'podcast_series' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
+				array_push( $this->_tax, 'podcast_series' );
+			}
+
+			// register speaker taxonomy
+			if ( taxonomy_exists( 'celebration_preachers' ) ) {
+				// avantgarde-celebration plugin is installed and active
+				register_taxonomy_for_object_type( 'celebration_preachers', self::POST_TYPE );
+				array_push( $this->_tax, 'celebration_preachers' );
+			} else if ( taxonomy_exists( 'podcast_speaker' ) ) {
+				/* @TODO: show admin notice */
+			} else {
+				register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
+				array_push( $this->_tax, 'podcast_speaker' );
 			}
 		} // END public function register_podcast_taxonomy()
+
+		/**
+		 * add additional filter options to post type site for each
+		 * taxonomy which is used for this plugin
+		 */
+		public function filter_posts() {
+			global $typenow;
+
+			if( 'podcast' == $typenow ){
+
+				/* push each taxonomy name, which is used in this plugin
+				 * into this->_tax array. filter_posts() uses this array
+				 * to know which taxonomy is used and display filter options
+				 * for that
+				 */
+				foreach ( $this->_tax as $tax_slug ) {
+					$tax_obj = get_taxonomy( $tax_slug );
+					$tax_name = $tax_obj->labels->name;
+					$terms = get_terms($tax_slug);
+
+					echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+					echo "<option value=''>Show All $tax_name</option>";
+
+					foreach ( $terms as $term ) {
+						$selected = '';
+						if ( isset( $_GET[$tax_slug] ) ) {
+							if ( $_GET[$tax_slug] == $term->slug )
+								$selected = ' selected="selected"';
+						}
+
+						echo '<option value='. $term->slug, $selected,'>' . $term->name .' (' . $term->count .')</option>';
+					}
+
+					echo "</select>";
+				}
+			}
+		}
 
 		/**
 		 * Save the metaboxes for this custom post type
