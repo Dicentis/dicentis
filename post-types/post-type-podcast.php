@@ -34,6 +34,11 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			$this->register_podcast_taxonomy();
 			add_action( 'save_post', array( $this,'save_post' ) );
 
+			// add taxonomy information for posts as new column
+			// manage_podcast_posts_columns
+			add_filter( 'manage_' . self::POST_TYPE . '_posts_columns', array( $this, 'add_tax_column' ) );
+			add_action( 'manage_' . self::POST_TYPE . '_posts_custom_column', array( $this, 'podcast_custom_column' ), 10, 2 );
+
 			// add additional filter options to podcast site
 			add_action( 'restrict_manage_posts', array( $this, 'filter_posts' ) );
 
@@ -165,7 +170,9 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_show', array( self::POST_TYPE ), $podcast_show_args );
-				array_push( $this->_tax, 'podcast_show' );
+				// array_push( $this->_tax, 'podcast_show' );
+				$the_tax = get_taxonomy( 'podcast_show' );
+				$this->_tax['podcast_show'] = $the_tax->labels->name;
 			}
 
 			/* push each taxonomy name, which is used in this plugin
@@ -177,24 +184,32 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			if ( taxonomy_exists( 'celebration_series' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_series', self::POST_TYPE );
-				array_push( $this->_tax, 'celebration_series' );
+				// array_push( $this->_tax, 'celebration_series' );
+				$the_tax = get_taxonomy( 'celebration_series' );
+				$this->_tax['celebration_series'] = $the_tax->labels->name;
 			} else if ( taxonomy_exists( 'podcast_series' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
-				array_push( $this->_tax, 'podcast_series' );
+				// array_push( $this->_tax, 'podcast_series' );
+				$the_tax = get_taxonomy( 'podcast_series' );
+				$this->_tax['podcast_series'] = $the_tax->labels->name;
 			}
 
 			// register speaker taxonomy
 			if ( taxonomy_exists( 'celebration_preachers' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_preachers', self::POST_TYPE );
-				array_push( $this->_tax, 'celebration_preachers' );
+				// array_push( $this->_tax, 'celebration_preachers' );
+				$the_tax = get_taxonomy( 'celebration_preachers' );
+				$this->_tax['celebration_preachers'] = $the_tax->labels->name;
 			} else if ( taxonomy_exists( 'podcast_speaker' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
-				array_push( $this->_tax, 'podcast_speaker' );
+				// array_push( $this->_tax, 'podcast_speaker' );
+				$the_tax = get_taxonomy( 'podcast_speaker' );
+				$this->_tax['podcast_speaker'] = $the_tax->labels->name;
 			}
 		} // END public function register_podcast_taxonomy()
 
@@ -212,7 +227,7 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 				 * to know which taxonomy is used and display filter options
 				 * for that
 				 */
-				foreach ( $this->_tax as $tax_slug ) {
+				foreach ( $this->_tax as $tax_slug => $tax_name ) {
 					$tax_obj = get_taxonomy( $tax_slug );
 					$tax_name = $tax_obj->labels->name;
 					$terms = get_terms($tax_slug);
@@ -269,7 +284,6 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 
 		/**
 		 * hook into WP's admin_init action hook
-		 * @return [type] [description]
 		 */
 		public function admin_init() {
 			// Add metaboxes
@@ -301,14 +315,35 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 
 		public function media_admin_script() {
 			wp_enqueue_script( 'dicentis-media-upload',
-				plugin_dir_path( __FILE__ ) . '../assets/js/dicentis-medialink.js',
-				// plugins_url( 'dicentis/assets/js/dicentis-medialink.js' ),
+				// plugin_dir_path( __FILE__ ) . '../assets/js/dicentis-medialink.js',
+				plugins_url( 'dicentis/assets/js/dicentis-medialink.js' ),
 				array( 'jquery', 'media-upload', 'thickbox' )
 			);
 		}
 
 		public function media_admin_style() {
 			wp_enqueue_style( 'thickbox' );
+		}
+
+		public function add_tax_column( $columns ) {
+			foreach ( $this->_tax as $tax_slug => $tax_name ) {
+				$columns[$tax_slug] = __( $tax_name, 'dicentis' );
+			}
+
+			return $columns;
+		}
+
+		public function podcast_custom_column( $column_name, $post_id ) {
+			$taxonomy = $column_name;
+			$post_type = get_post_type($post_id);
+			$terms = get_the_terms($post_id, $taxonomy);
+
+			if ( !empty($terms) ) {
+				foreach ( $terms as $term )
+					$post_terms[] = "<a href='edit.php?post_type={$post_type}&{$taxonomy}={$term->slug}'> " . esc_html(sanitize_term_field('name', $term->name, $term->term_id, $taxonomy, 'edit')) . "</a>";
+				echo join( ', ', $post_terms );
+			}
+			else echo '<i>No terms.</i>';
 		}
 
 		// public function updated_messages( $messages ) {
