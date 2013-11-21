@@ -36,6 +36,7 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 
 			// add additional filter options to podcast site
 			add_action( 'restrict_manage_posts', array( $this, 'filter_posts' ) );
+
 			// script & style action with page detection
 			add_action( 'admin_print_scripts-post.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
@@ -50,20 +51,20 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			// set up arguments for podcast post type
 			$podcast_args = array(
 				'labels' => array(
-					'name' => __( "Podcasts" ),
-					'singular_name' => __( "Podcast" ),
-					'add_new' => __( "Add New Podcast" ),
-					'add_new_item' => __( "Add New Podcast" ),
-					'edit_item' => __( "Edit Podcast" ),
-					'new_item' => __( "New Podcast" ),
-					'view_item' => __( "View Podcast" ),
-					'search_items' => __( "Search Podcast" ),
-					'not_found' => __( "No Podcasts Found" ),
-					'not_found_in_trash' => __( "No Podcast Found In Trash" )
+					'name' => __( 'Podcasts', 'dicentis' ),
+					'singular_name' => __( 'Podcast', 'dicentis' ),
+					'add_new' => __( 'Add New Podcast', 'dicentis' ),
+					'add_new_item' => __( 'Add New Podcast', 'dicentis' ),
+					'edit_item' => __( 'Edit Podcast', 'dicentis' ),
+					'new_item' => __( 'New Podcast', 'dicentis' ),
+					'view_item' => __( 'View Podcast', 'dicentis' ),
+					'search_items' => __( 'Search Podcast', 'dicentis' ),
+					'not_found' => __( 'No Podcasts Found', 'dicentis' ),
+					'not_found_in_trash' => __( 'No Podcast Found In Trash', 'dicentis' )
 				),
 				'public' => true,
 				'has_archive' => true,
-				'description' => __( "A podcast plugin which allows to define multipel podcasts with individual feeds" ),
+				'description' => __( 'A podcast plugin which allows to define multipel podcasts with individual feeds', 'dicentis' ),
 				'supports' => array(
 					'editor',
 					'thumbnail',
@@ -97,6 +98,26 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 		 * in series
 		 */
 		public function register_podcast_taxonomy() {
+			$podcast_show_args = array(
+				'hierarchical' => true,
+				'query_var' => 'podcast_show',
+				'rewrite' => array(
+					'slug' => self::POST_TYPE . '/show',
+				),
+				'labels' => array(
+					'name' => __( 'Podcast Shows', 'dicentis' ),
+					'singular_name' => __( 'Podcast Show', 'dicentis' ),
+					'edit_item' => __( 'Edit Podcast Show', 'dicentis' ),
+					'update_item' => __( 'Update Podcast Show', 'dicentis' ),
+					'add_new_item' => __( 'Add New Podcast Show', 'dicentis' ),
+					'new_item_name' => __( 'New Podcast Show Name', 'dicentis' ),
+					'all_items' => __( 'All Podcast Show', 'dicentis' ),
+					'search_items' => __( 'Search Podcast Show', 'dicentis' ),
+					'parent_item' => __( 'Parent Podcast Show', 'dicentis' ),
+					'parent_item_colon' => __( 'Parent Podcast Show:', 'dicentis' ),
+				),
+			);
+
 			// Set up the series taxonomy
 			$series_args = array(
 				'hierarchical' => true,
@@ -105,16 +126,16 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 					'slug' => self::POST_TYPE . '/series',
 				),
 				'labels' => array(
-					'name' => 'Series',
-					'singular_name' => 'Series',
-					'edit_item' => 'Edit Series',
-					'update_item' => 'Update Series',
-					'add_new_item' => 'Add New Series',
-					'new_item_name' => 'New Series Name',
-					'all_items' => 'All Series',
-					'search_items' => 'Search Series',
-					'parent_item' => 'Parent Series',
-					'parent_item_colon' => 'Parent Series:',
+					'name' => __( 'Series', 'dicentis' ),
+					'singular_name' => __( 'Series', 'dicentis' ),
+					'edit_item' => __( 'Edit Series', 'dicentis' ),
+					'update_item' => __( 'Update Series', 'dicentis' ),
+					'add_new_item' => __( 'Add New Series', 'dicentis' ),
+					'new_item_name' => __( 'New Series Name', 'dicentis' ),
+					'all_items' => __( 'All Series', 'dicentis' ),
+					'search_items' => __( 'Search Series', 'dicentis' ),
+					'parent_item' => __( 'Parent Series', 'dicentis' ),
+					'parent_item_colon' => __( 'Parent Series:', 'dicentis' ),
 				),
 			);
 
@@ -126,18 +147,26 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 					'slug' => self::POST_TYPE . '/speaker',
 				),
 				'labels' => array(
-					'name' => 'Speaker',
-					'singular_name' => 'Speaker',
-					'edit_item' => 'Edit Speaker',
-					'update_item' => 'Update Speaker',
-					'add_new_item' => 'Add New Speaker',
-					'new_item_name' => 'New Speaker Name',
-					'all_items' => 'All Speaker',
-					'search_items' => 'Search Speaker',
-					'parent_item' => 'Parent Speaker',
-					'parent_item_colon' => 'Parent Speaker:',
+					'name' => __( 'Speakers', 'dicentis' ),
+					'singular_name' => __( 'Speaker', 'dicentis' ),
+					'edit_item' => __( 'Edit Speaker', 'dicentis' ),
+					'update_item' => __( 'Update Speaker', 'dicentis' ),
+					'add_new_item' => __( 'Add New Speaker', 'dicentis' ),
+					'new_item_name' => __( 'New Speaker Name', 'dicentis' ),
+					'all_items' => __( 'All Speaker', 'dicentis' ),
+					'search_items' => __( 'Search Speaker', 'dicentis' ),
+					'parent_item' => __( 'Parent Speaker', 'dicentis' ),
+					'parent_item_colon' => __( 'Parent Speaker:', 'dicentis' ),
 				),
 			);
+
+			// register show taxonomy
+			if ( taxonomy_exists( 'podcast_show' ) ) {
+				/* @TODO: show admin notice */
+			} else {
+				register_taxonomy( 'podcast_show', array( self::POST_TYPE ), $podcast_show_args );
+				array_push( $this->_tax, 'podcast_show' );
+			}
 
 			/* push each taxonomy name, which is used in this plugin
 			 * into this->_tax array. filter_posts() uses this array
@@ -255,7 +284,7 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 			// Add this metabox to every selected post
 			add_meta_box(
 				sprintf( 'dicentis_%s_selection', self::POST_TYPE ),
-				sprintf( '%s Information', ucwords(str_replace("_", " ", self::POST_TYPE)) ),
+				sprintf( __( '%s Information', 'dicentis' ), ucwords(str_replace("_", " ", self::POST_TYPE)) ),
 				array( $this, 'add_inner_meta_boxes' ),
 				self::POST_TYPE
 			);
