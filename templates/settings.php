@@ -1,8 +1,7 @@
 <div class="wrap">
-	<h2>Dicentis</h2>
+	<div id="icon-tools" class="icon32"></div><h2>Dicentis Podcast Settings</h2>
 	<form method="post" action="options.php">
 		<?php @settings_fields( 'dicentis-group' ); ?>
-		<?php @do_settings_fields( 'dicentis-group' ); ?>
 
 		<table class="form-table">
 			<tr valign="top">

@@ -20,20 +20,22 @@ if( !class_exists('Dicentis') ) {
 			// Load the plugin's translated strings
 			add_action( 'init' , array( $this, 'load_localisation' ) );
 
-			// define default settings and save
-			$dicentis_options = array(
-				'option1' => 'value1',
-				'option2' => 'value2',
-				'option3' => 'value3',
-			);
-			update_option( 'dicentis_options', $dicentis_options );
+			add_action( 'admin_init', array( $this, 'admin_init') );
+			add_action( 'admin_menu', array( $this, 'add_menu') );
 
-			// register actions
-			add_action( 'admin_init', array($this, 'admin_init') );
-			add_action( 'admin_menu', array($this, 'add_menu') );
-			require_once( sprintf("%s/post-types/post-type-podcast.php", dirname(__FILE__)) );
-			$PostTypePodcast = new PostTypePodcast();
+			// Initilize Settings
+			require_once( sprintf("%s/classes/settings.php", dirname( __FILE__ ) ) );
+			$Dicentis_Settings = new Dicentis_Settings();
+
+			// Create CPT Podcast
+			require_once( sprintf("%s/classes/post-type-podcast.php", dirname(__FILE__)) );
+			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
 		}
+
+
+		public function load_localisation() {
+			load_plugin_textdomain( 'dicentis', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		} // END public function load_localisation()
 
 		/**
 		 * Activate the plugin
@@ -49,7 +51,7 @@ if( !class_exists('Dicentis') ) {
 			// register deactivation hook only then plugin is activated
 			// and not on every plugin load.
 			register_deactivation_hook( __FILE__, array('Dicentis', 'deactivate') );
-		}
+		} // END public static function activate()
 
 		/**
 		 * Deactivate the plugin
@@ -57,53 +59,8 @@ if( !class_exists('Dicentis') ) {
 		 */
 		public static function deactivate() {
 
-		}
+		} // END public static function deactivate()
 
-		/**
-		 * hook into WP's admin_init action hook
-		 */
-		public function admin_init() {
-			// Set up the settings for this plugin
-			$this->init_settings();
-		}
-
-		/**
-		 * Initialize some custom settings
-		 */
-		public function init_settings() {
-			// register the settings for this plugin
-			register_setting( 'dicentis-group', 'setting_a' );
-			register_setting( 'dicentis-group', 'setting_b' );
-		}
-
-		/**
-		 * add a menu
-		 */
-		public function add_menu() {
-			add_options_page(
-					__( 'Dicentis Settings', 'dicentis' ),
-					__( 'Dicentis', 'dicentis' ),
-					'manage_options',
-					'dicentis',
-					array( $this, 'dicentis_settings_page' )
-				);
-		}
-
-		/**
-		 * Menu Callback
-		 */
-		public function dicentis_settings_page() {
-			if( !current_user_can('manage_options') ) {
-				wp_die( __('You do not have sufficient permissions to access this page.', 'dicentis' ) );
-			}
-
-			// Render the settings template
-			include( sprintf( "%s/templates/settings.php", dirname(__FILE__) ) );
-		}
-
-		public function load_localisation() {
-			load_plugin_textdomain( 'dicentis', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-		}
 	}
 }
 
