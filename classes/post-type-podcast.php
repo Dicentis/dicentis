@@ -1,10 +1,10 @@
 <?php
 
-if( !class_exists( 'PostTypePodcast' ) ) {
+if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	/**
 	 * The Podcast Post Type
 	 */
-	class PostTypePodcast {
+	class Dicentis_Podcast_CPT {
 		const POST_TYPE = 'podcast';
 		private $_meta  = array(
 			'_meta_a',
@@ -363,5 +363,5 @@ if( !class_exists( 'PostTypePodcast' ) ) {
 		// 	);
 		// 	return $messages;
 		// }
-	} // END class PostTypePodcast
-} // END if( !class_exists( 'PostTypePodcast' ) )
+	} // END class Dicentis_Podcast_CPT
+} // END if( !class_exists( 'Dicentis_Podcast_CPT' ) )
