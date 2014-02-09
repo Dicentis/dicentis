@@ -30,6 +30,8 @@ if( !class_exists('Dicentis') ) {
 			// Create CPT Podcast
 			require_once( sprintf("%s/classes/post-type-podcast.php", dirname(__FILE__)) );
 			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
+
+			add_action( 'template_redirect', array( $this, 'feed_template' ) );
 		} // END public function __construct()
 
 		/**
@@ -124,6 +126,18 @@ if( !class_exists('Dicentis') ) {
 		public static function deactivate() {
 
 		} // END public static function deactivate()
+
+		public function feed_template() {
+			// Render the feed template
+			if ( in_array($_GET['post_type'], array('podcast')) &&
+				 in_array($_GET['feed'], array('itunes')) ) {
+				// load rss template and exit afterwards
+				// to exclude html code
+				$file = trailingslashit( dirname( __FILE__ ) ) . 'templates/feed-itunes.php';
+				load_template( $file );
+				exit();
+			}
+		}
 
 	}
 }
