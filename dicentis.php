@@ -32,6 +32,8 @@ if( !class_exists('Dicentis') ) {
 			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
 
 			add_action( 'template_redirect', array( $this, 'feed_template' ) );
+			add_filter( 'single_template', array( $this, 'single_template' ) );
+			add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 		} // END public function __construct()
 
 		/**
@@ -77,14 +79,14 @@ if( !class_exists('Dicentis') ) {
 			// Look for $find_page and the submenu $find_sub
 			$find_page = 'edit.php?post_type=podcast';
 			$find_sub  = 'Dashboard';
-
+			// pre_print($submenu);
 			// Loop thru $submenu until $find_page is found
-			foreach ( $submenu as $page => $items ) :
-				if ( $page == $find_page ) :
+			// foreach ( $submenu as $page => $items ) {
+				// if ( $page == $find_page ) {
 					// loop thru $find_page item and look for
 					// $find_sub b/c we want to reorder it
-					foreach ( $items as $id => $meta ) :
-						if ( $meta[0] == $find_sub ) :
+					foreach ( $submenu[$find_page] as $id => $meta ) {
+						if ( $meta[0] == $find_sub ) {
 							// $find_sub is found so assing it to
 							// first place (0-based) in sub-array and unset
 							// its former entry.
@@ -93,10 +95,10 @@ if( !class_exists('Dicentis') ) {
 							$submenu[$find_page][0] = $meta;
 							unset( $submenu[$find_page][$id] );
 							ksort( $submenu[$find_page] );
-						endif;
-					endforeach;
-				endif;
-			endforeach;
+						}
+					}
+				// }
+			// }
 		} // END public function menu_order() 
 
 		public function load_localisation() {
@@ -133,12 +135,31 @@ if( !class_exists('Dicentis') ) {
 				 in_array($_GET['feed'], array('itunes')) ) {
 				// load rss template and exit afterwards
 				// to exclude html code
-				$file = trailingslashit( dirname( __FILE__ ) ) . 'templates/feed-itunes.php';
+				$file = dirname( __FILE__ ) . '/templates/feed-itunes.php';
 				load_template( $file );
 				exit();
 			}
 		}
 
+		public function single_template( $single_template ) {
+			global $post;
+
+			if ( $post->post_type == 'podcast' ) {
+				$single_template = dirname( __FILE__ ) . '/templates/episode-single.php';
+			}
+
+			return $single_template;
+		}
+
+		public function podcast_archive_template( $archive_template ) {
+			global $post;
+
+			 if ( is_post_type_archive ( 'podcast' ) ) {
+				$archive_template = dirname( __FILE__ ) . '/templates/podcast-archive.php';
+			}
+
+			return $archive_template;
+		}
 	}
 }
 
