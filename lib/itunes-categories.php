@@ -3,7 +3,7 @@
 $cats = array(
 		'Arts'=> array(
 					'Design',
-					'Fashion &amp; Beauty',
+					'Fashion & Beauty',
 					'Food',
 					'Literature',
 					'Performing Arts',
@@ -13,7 +13,7 @@ $cats = array(
 					'Business News',
 					'Careers',
 					'Investing',
-					'Management &amp; Marketing',
+					'Management & Marketing',
 					'Shopping'
 		 ),
 		'Comedy'=>array(),
@@ -24,14 +24,14 @@ $cats = array(
 					'Language Courses',
 					'Training'
 		),
-		'Games &amp; Hobbies' => array(
+		'Games & Hobbies' => array(
 					'Automotive',
 					'Aviation',
 					'Hobbies',
 					'Other Games',
 					'Video Games'
 		),
-		'Government &amp; Organizations' => array(
+		'Government & Organizations' => array(
 					'Local',
 					'National',
 					'Non-Profit',
@@ -39,14 +39,14 @@ $cats = array(
 		),
 		'Health' => array(
 					'Alternative Health',
-					'Fitness &amp; Nutrition',
+					'Fitness & Nutrition',
 					'Self-Help',
 					'Sexuality'
 		),
-		'Kids &amp; Family'=>array(),
+		'Kids & Family'=>array(),
 		'Music'=>array(),
-		'News &amp; Politics'=>array(),
-		'Religion &amp; Spirituality'=>array(
+		'News & Politics'=>array(),
+		'Religion & Spirituality'=>array(
 					'Buddhism',
 					'Christianity',
 					'Hinduism',
@@ -55,20 +55,20 @@ $cats = array(
 					'Other',
 					'Spirituality'
 		),
-		'Science &amp; Medicine'=>array(
+		'Science & Medicine'=>array(
 					'Medicine',
 					'Natural Sciences',
 					'Social Sciences'
 		),
-		'Society &amp; Culture'=>array(
+		'Society & Culture'=>array(
 					'History',
 					'Personal Journals',
 					'Philosophy',
-					'Places &amp; Travel'
+					'Places & Travel'
 		),
-		'Sports &amp; Recreation'=>array(
+		'Sports & Recreation'=>array(
 					'Amateur',
-					'College &amp; High School',
+					'College & High School',
 					'Outdoor',
 					'Professional',
 		),
@@ -78,5 +78,5 @@ $cats = array(
 					'Podcasting',
 					'Software How-To'
 		),
-		'TV &amp; Film'=>array()
+		'TV & Film'=>array()
 );

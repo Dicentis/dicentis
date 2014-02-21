@@ -43,7 +43,7 @@ function dp_get_speaker( $id ) {
 $itunes_opt = get_option( 'dipo_itunes_options' );
 
 
-header( 'Content-Type: application/rss+xml; charset=' . get_option( 'blog_charset' ), true );
+header( 'Content-Type: application/xml; charset=' . get_option( 'blog_charset' ), true );
 $more = 1;
 
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
@@ -62,11 +62,11 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<title><?php bloginfo_rss('name'); dp_get_show_details(); ?></title>
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), false); ?></lastBuildDate>
-	<!-- TODO: put in settings -->
 	<language><?php
 		$iso_code = preg_replace('/[_]/', '-', $itunes_opt['itunes_language']);
 		echo $iso_code;
 	?></language>
+	<!-- TODO: Add Copyright Setting -->
 	<copyright>&#x2117; &amp; &#xA9; 2005 John Doe &amp; Family</copyright>
 	<itunes:subtitle><?php echo $itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
 	<itunes:author><?php echo $itunes_opt['itunes_author']; ?></itunes:author>
@@ -77,19 +77,22 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		<itunes:email><?php echo $itunes_opt['itunes_owner_mail']; ?></itunes:email>
 	</itunes:owner>
 	<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything.jpg" />
-
+	<!-- TODO: Refactore Categories -->
 	<?php
 		// TODO: It's ugly and needs to be refactored but it works
 		foreach ($cats as $catname => $subcats) {
 			$catvalue = strtolower( $catname );
 			if ( !strcmp( $itunes_opt['itunes_category1'], $catvalue ) ) {
-				echo "<itunes:category text='$catname' />";
+				$cat_text = htmlspecialchars( $catname );
+				echo "<itunes:category text='$cat_text' />";
 			} else {
 				foreach ($subcats as $subcat => $subcatname) {
 					$subcatvalue = strtolower( $subcatname );
 					if ( !strcmp( $itunes_opt['itunes_category1'], $subcatvalue ) ) {
-						echo "<itunes:category text='$catname'>";
-						echo "<itunes:category text='$subcatname' />";
+						$parent = htmlspecialchars( $catname );
+						$child = htmlspecialchars( $subcatname );
+						echo "<itunes:category text='$parent'>";
+						echo "<itunes:category text='$child' />";
 						echo "</itunes:category>";
 					}
 				}
@@ -99,13 +102,16 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		foreach ($cats as $catname => $subcats) {
 			$catvalue = strtolower( $catname );
 			if ( !strcmp( $itunes_opt['itunes_category2'], $catvalue ) ) {
-				echo "<itunes:category text='$catname' />";
+				$cat_text = htmlspecialchars( $catname );
+				echo "<itunes:category text='$cat_text' />";
 			} else {
 				foreach ($subcats as $subcat => $subcatname) {
 					$subcatvalue = strtolower( $subcatname );
 					if ( !strcmp( $itunes_opt['itunes_category2'], $subcatvalue ) ) {
-						echo "<itunes:category text='$catname'>";
-						echo "<itunes:category text='$subcatname' />";
+						$parent = htmlspecialchars( $catname );
+						$child = htmlspecialchars( $subcatname );
+						echo "<itunes:category text='$parent'>";
+						echo "<itunes:category text='$child' />";
 						echo "</itunes:category>";
 					}
 				}
@@ -114,13 +120,16 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		foreach ($cats as $catname => $subcats) {
 			$catvalue = strtolower( $catname );
 			if ( !strcmp( $itunes_opt['itunes_category3'], $catvalue ) ) {
-				echo "<itunes:category text='$catname' />";
+				$cat_text = htmlspecialchars( $catname );
+				echo "<itunes:category text='$cat_text' />";
 			} else {
 				foreach ($subcats as $subcat => $subcatname) {
 					$subcatvalue = strtolower( $subcatname );
 					if ( !strcmp( $itunes_opt['itunes_category3'], $subcatvalue ) ) {
-						echo "<itunes:category text='$catname'>";
-						echo "<itunes:category text='$subcatname' />";
+						$parent = htmlspecialchars( $catname );
+						$child = htmlspecialchars( $subcatname );
+						echo "<itunes:category text='$parent'>";
+						echo "<itunes:category text='$child' />";
 						echo "</itunes:category>";
 					}
 				}
@@ -133,14 +142,15 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<item>
 		<title><?php the_title_rss() ?></title>
 		<link><?php the_permalink() ?></link>
-		<!-- TODO: put in settings -->
 		<itunes:author><?php dp_get_speaker(); ?></itunes:author>
+		<!-- TODO: Add subtitle/summary/image metadata to episodes and include them here -->
 		<itunes:subtile>A short subtitle</itunes:subtile>
 		<itunes:summary>a summary</itunes:summary>
 		<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg" />
 		<enclosure url="<?php echo get_post_meta( $post->ID, '_dicentis_podcast_medialink', true ); ?>" length="8727310" type="audio/mpeg" />
 		<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 		<guid><?php echo get_permalink( $post->ID ); ?></guid>
+		<!-- TODO: calculate duration or add metafield to post -->
 		<itunes:duration>Media duration</itunes:duration>
 	<?php rss_enclosure(); ?>
 	<?php do_action( 'rss2_item' ); ?>
