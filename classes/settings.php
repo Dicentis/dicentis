@@ -18,19 +18,291 @@ if ( !class_exists('Dicentis_Settings') ) {
 		 */
 		public function admin_init() {
 			// register the settings for this plugin
-			register_setting( 'dicentis-group', 'setting_a' );
-			register_setting( 'dicentis-group', 'setting_b' );
+			// iTunes Settings for RSS Feed
+			register_setting( 'dipo_itunes_options', 'dipo_itunes_options', array( $this, 'validate_options' ) );
+
+			// iTunes section settings
+			add_settings_section(
+				'dipo_itunes_main', // id
+				__( 'iTunes Settings', 'dicentis' ), // title
+				array( $this, 'plugin_section_text' ),
+				'dipo_itunes'
+			);
+
+			add_settings_field(
+				'dipo_itunes_owner',
+				__( 'iTunes Owner', 'dicentis' ),
+				array( $this, 'itunes_owner_string' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_owner_mail',
+				__( 'iTunes Owner E-Mail', 'dicentis' ),
+				array( $this, 'itunes_owner_mail' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_title',
+				__( 'iTunes Title', 'dicentis' ),
+				array( $this, 'itunes_title_string' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_subtitle',
+				__( 'iTunes Subtitle', 'dicentis' ),
+				array( $this, 'itunes_subtitle_string' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_author',
+				__( 'iTunes Author', 'dicentis' ),
+				array( $this, 'itunes_author_string' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_language',
+				__( 'iTunes Subtitle', 'dicentis' ),
+				array( $this, 'itunes_language_dropdown' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_cat1',
+				__( 'iTunes Category 1', 'dicentis' ),
+				array( $this, 'itunes_category1' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_cat2',
+				__( 'iTunes Category 2', 'dicentis' ),
+				array( $this, 'itunes_category2' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
+			add_settings_field(
+				'dipo_itunes_cat3',
+				__( 'iTunes Category 3', 'dicentis' ),
+				array( $this, 'itunes_category3' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
 		} // END public function admin_init()
+
+		public function plugin_section_text() {
+			echo '<p>';
+			_e( 'Main description of this section here.', 'dicentis' );
+			echo '</p>';
+		}
+
+		public function itunes_owner_string() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$owner = $options['itunes_owner'];
+			// echo the field
+			echo "<input id='dipo_itunes_owner' name='dipo_itunes_options[itunes_owner]' size='40' type='text' value='$owner' />";
+		}
+
+		public function itunes_owner_mail() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$owner_mail = $options['itunes_owner_mail'];
+			// echo the field
+			echo "<input id='dipo_itunes_owner_mail' name='dipo_itunes_options[itunes_owner_mail]' size='40' type='mail' value='$owner_mail' />";
+		}
+
+		public function itunes_title_string() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$text_string = $options['itunes_title'];
+			// echo the field
+			echo "<input id='dipo_itunes_title' name='dipo_itunes_options[itunes_title]' size='40' type='text' value='$text_string' />";
+		}
+
+		public function itunes_subtitle_string() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$text_string = $options['itunes_subtitle'];
+			// echo the field
+			echo "<input id='dipo_itunes_subtitle' name='dipo_itunes_options[itunes_subtitle]' size='40' type='text' value='$text_string' />";
+		}
+
+		public function itunes_author_string() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$author = $options['itunes_author'];
+			// echo the field
+			echo "<input id='dipo_itunes_author' name='dipo_itunes_options[itunes_author]' size='40' type='text' value='$author' />";
+		}
+
+		public function itunes_language_dropdown() {
+			// get languages codes in ISO 639
+			include_once plugin_dir_path( __FILE__ ) . '../lib/languages.php';
+
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$lang = $options['itunes_language'];
+
+			echo "<select id='dipo_itunes_language' name='dipo_itunes_options[itunes_language]'>";
+			foreach ($languages as $key => $value) {
+				echo "<option value='$value[1]'";
+				echo ( !strcmp( $lang, $value[1] ) ) ? " selected>" : ">" ;
+				echo $value[2] . " ($value[1])";
+				echo "</option>";
+			}
+			echo '</select>';
+		}
+
+		public function itunes_category1() {
+			// get itunes categories as array
+			require plugin_dir_path( __FILE__ ) . '../lib/itunes-categories.php';
+
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$cat1 = $options['itunes_category1'];
+
+			echo "<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>";
+
+			echo "<option value=''>";
+			echo __( 'None', 'dicentis' );
+			echo "</option>";
+
+			foreach ($cats as $catname => $subcats) {
+				// list main cats
+				$catvalue = strtolower( $catname );
+				echo "<option value='$catvalue'";
+				echo ( !strcmp( $cat1, $catvalue ) ) ? " selected>" : ">" ;
+				echo $catname;
+				echo "</option>";
+
+				foreach ($subcats as $subcat => $subcatname) {
+					$subcatvalue = strtolower( $subcatname );
+					echo "<option value='$subcatvalue'";
+					echo ( !strcmp( $cat1, $subcatvalue ) ) ? " selected>" : ">" ;
+					echo $catname . " &gt; " . $subcatname;
+					echo "</option>";
+				}
+			}
+			echo '</select>';
+		}
+
+		public function itunes_category2() {
+			// get itunes categories as array
+			require plugin_dir_path( __FILE__ ) . '../lib/itunes-categories.php';
+
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$cat2 = $options['itunes_category2'];
+
+			echo "<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>";
+
+			echo "<option value=''>";
+			echo __( 'None', 'dicentis' );
+			echo "</option>";
+
+			foreach ($cats as $catname => $subcats) {
+				// list main cats
+				$catvalue = strtolower( $catname );
+				echo "<option value='$catvalue'";
+				echo ( !strcmp( $cat2, $catvalue ) ) ? " selected>" : ">" ;
+				echo $catname;
+				echo "</option>";
+
+				foreach ($subcats as $subcat => $subcatname) {
+					$subcatvalue = strtolower( $subcatname );
+					echo "<option value='$subcatvalue'";
+					echo ( !strcmp( $cat2, $subcatvalue ) ) ? " selected>" : ">" ;
+					echo $catname . " &gt; " . $subcatname;
+					echo "</option>";
+				}
+			}
+			echo '</select>';
+		}
+
+		public function itunes_category3() {
+			// get itunes categories as array
+			require plugin_dir_path( __FILE__ ) . '../lib/itunes-categories.php';
+
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$cat3 = $options['itunes_category3'];
+
+			echo "<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>";
+
+			echo "<option value=''>";
+			echo __( 'None', 'dicentis' );
+			echo "</option>";
+
+			foreach ($cats as $catname => $subcats) {
+				// list main cats
+				$catvalue = strtolower( $catname );
+				echo "<option value='$catvalue'";
+				echo ( !strcmp( $cat3, $catvalue ) ) ? " selected>" : ">" ;
+				echo $catname;
+				echo "</option>";
+
+				foreach ($subcats as $subcat => $subcatname) {
+					$subcatvalue = strtolower( $subcatname );
+					echo "<option value='$subcatvalue'";
+					echo ( !strcmp( $cat3, $subcatvalue ) ) ? " selected>" : ">" ;
+					echo $catname . " &gt; " . $subcatname;
+					echo "</option>";
+				}
+			}
+			echo '</select>';
+		}
+
+		public function validate_options( $input ) {
+			$valid = array();
+
+			// TODO: RegEx definieren
+			$valid['itunes_owner'] = $input['itunes_owner'];
+			$email = $input['itunes_owner_mail'];
+			$valid['itunes_owner_mail'] = ( is_email( $email ) ) ? $input['itunes_owner_mail'] : 'n.a.';
+
+			$valid['itunes_title'] = preg_replace(
+				'/[^a-zA-Z0-9 ]/',
+				'',
+				$input['itunes_title']);
+
+			$valid['itunes_subtitle'] = preg_replace(
+				'/[^a-zA-Z0-9 ]/',
+				'',
+				$input['itunes_subtitle']);
+
+			$valid['itunes_author'] = $input['itunes_author'];
+
+			$valid['itunes_language'] = $input['itunes_language'];
+
+			$valid['itunes_category1'] = $input['itunes_category1'];
+			$valid['itunes_category2'] = $input['itunes_category2'];
+			$valid['itunes_category3'] = $input['itunes_category3'];
+
+			return $valid;
+		}
 
 		/**
 		 * Add a page to podcast post type to manage
 		 * this plugin's settings
 		 */
 		public function add_menu() {
-			add_submenu_page(
-				'edit.php?post_type=podcast', // add to podcast menu
-				__( 'Dicentis Podcast Settings', 'dicentis' ),
-				__( 'Seetings', 'dicentis' ),
+			add_options_page(
+				__( 'dicentis Podcast Settings', 'dicentis' ),
+				__( 'dicentis Podcast', 'dicentis' ),
 				'manage_options', // capabilities
 				'dicentis_settings', // slug
 				array( $this, 'dicentis_settings_page' )
@@ -42,7 +314,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 		 */
 		public function dicentis_settings_page() {
 			if( !current_user_can('manage_options') ) {
-				wp_die( __('You do not have sufficient permissions to access this page.') );
+				wp_die( __('You do not have sufficient permissions to access this page.', 'dicentis' ) );
 			}
 
 			// Render the settings template
@@ -50,4 +322,3 @@ if ( !class_exists('Dicentis_Settings') ) {
 		} // END public function dicentis_settings_page()
 	} // END class Dicentis_Settings
 } // END if ( !class_exists('Dicentis_Settings') )
-?>
