@@ -42,13 +42,34 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// add additional filter options to podcast site
 			add_action( 'restrict_manage_posts', array( $this, 'filter_posts' ) );
 
+			// register shortcodes
+			add_shortcode( 'podcasts', array( $this, 'sc1_all_podcasts' ) );
+
 			// script & style action with page detection
 			add_action( 'admin_print_scripts-post.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_style-post.php', array( $this, 'media_admin_style' ) );
 			add_action( 'admin_print_style-post-new.php', array( $this, 'media_admin_style' ) );
+
+			add_action('admin_enqueue_scripts', array ( $this, 'dipo_scripts' ) );
 		} // END public function init()
 
+		public function dipo_scripts() {
+			// Include JS/CSS only if we're on our options page
+			// if (is_my_plugin_screen()) {
+				wp_enqueue_style('dipo_flaticon', plugins_url( 'dicentis/assets/css/flaticon.css' ) );
+				// wp_enqueue_script('farbtastic');
+			// }
+		}
+
+		public function is_my_plugin_screen() {
+			$screen = get_current_screen();
+			if (is_object($screen) && $screen->id == 'settings_page_my_plugin') {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		/**
 		 * Create the post type
 		 */
@@ -75,7 +96,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 					'thumbnail',
 					'title',
 				),
-				'menu_icon' => plugins_url( 'dicentis/assets/img/podcast-icon.png' ),
+				// 'menu_icon' => plugins_url( 'dicentis/assets/img/podcast-icon.png' ),
+				'menu_icon' => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPCEtLSBHZW5lcmF0b3I6IEljb01vb24uaW8gLS0+IDwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+IDxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9IiMwMDAwMDAiPiA8cGF0aCBkPSJNIDM4Ljg1LDEyLjE1M2MtOC4yMDItOC4yMDItMjEuNDk4LTguMjAyLTI5LjY5NywwLjAwTCA0LjkwOCw3LjkwOCBjIDEwLjU0NS0xMC41NDUsIDI3LjY0Mi0xMC41NDUsIDM4LjE4NywwLjAwTCAzOC44NSwxMi4xNTN6IE0gMTUuNTE2LDE4LjUxNkwgMTEuMjc0LDE0LjI3MWMgNy4wMjktNy4wMjksIDE4LjQyNi03LjAyOSwgMjUuNDUyLDAuMDBsLTQuMjQyLDQuMjQ1IEMgMjcuODAxLDEzLjgyNywgMjAuMTk5LDEzLjgyNywgMTUuNTE2LDE4LjUxNnogTSAzOS4wMCw0NS4wMGMwLjAwLDEuNjU5LTEuMzQxLDMuMDAtMy4wMCwzLjAwTDEyLjAwLDQ4LjAwIGMtMS42NTksMC4wMC0zLjAwLTEuMzQxLTMuMDAtMy4wMGwwLjAwLC0zLjAwIGMgMC44Ny00LjI3NSwgMy44NTUtNy44OSwgNy41MTgtMTAuMDAyIEMgMTUuNTY0LDMwLjU2NywgMTUuMDAsMjguODUxLCAxNS4wMCwyNy4wMGMwLjAwLTQuOTcxLCA0LjAyOS05LjAwLCA5LjAwLTkuMDBzIDkuMDAsNC4wMjksIDkuMDAsOS4wMGMwLjAwLDEuODUxLTAuNTY0LDMuNTY3LTEuNTE4LDQuOTk4QyAzNS4xNDUsMzQuMTEsIDM4LjEzLDM3LjcyNSwgMzkuMDAsNDIuMDBMMzkuMDAsNDUuMDAgeiBNIDI0LjAwLDI0LjAwQyAyMi4zNDEsMjQuMDAsIDIxLjAwLDI1LjM0MSwgMjEuMDAsMjcuMDBzIDEuMzQxLDMuMDAsIDMuMDAsMy4wMHMgMy4wMC0xLjM0MSwgMy4wMC0zLjAwUyAyNS42NTksMjQuMDAsIDI0LjAwLDI0LjAweiBNIDMyLjQ0OCw0Mi4wMEMgMzEuMjA5LDM4LjUxNCwgMjcuOTE1LDM2LjAwLCAyNC4wMCwzNi4wMHMtNy4yMDksMi41MTQtOC40NDgsNi4wMCBMMzIuNDQ4LDQyLjAwIHoiID48L3BhdGg+PC9zdmc+',
 				'can_export' => 'true',
 				// 'capabilities' => array(
 				// 	'edit_post' => 'edit_podcast',
@@ -344,6 +366,12 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				echo join( ', ', $post_terms );
 			}
 			else echo '<i>No terms.</i>';
+		}
+
+
+		public function sc1_all_podcasts( ) {
+			// include( sprintf('%s/../templates/sc1_all_podcasts.php', dirname(__FILE__) ) );
+			// return 'hi';
 		}
 
 		// public function updated_messages( $messages ) {
