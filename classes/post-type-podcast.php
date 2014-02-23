@@ -50,26 +50,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_style-post.php', array( $this, 'media_admin_style' ) );
 			add_action( 'admin_print_style-post-new.php', array( $this, 'media_admin_style' ) );
-
-			add_action('admin_enqueue_scripts', array ( $this, 'dipo_scripts' ) );
 		} // END public function init()
 
-		public function dipo_scripts() {
-			// Include JS/CSS only if we're on our options page
-			// if (is_my_plugin_screen()) {
-				wp_enqueue_style('dipo_flaticon', plugins_url( 'dicentis/assets/css/flaticon.css' ) );
-				// wp_enqueue_script('farbtastic');
-			// }
-		}
-
-		public function is_my_plugin_screen() {
-			$screen = get_current_screen();
-			if (is_object($screen) && $screen->id == 'settings_page_my_plugin') {
-				return true;
-			} else {
-				return false;
-			}
-		}
 		/**
 		 * Create the post type
 		 */
