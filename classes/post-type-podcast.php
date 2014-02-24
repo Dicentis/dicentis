@@ -102,11 +102,26 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			}
 		} // END public function register_podcast_post_type()
 
+/**
+/$$$$$$$$
+|__  $$__/
+   | $$  /$$$$$$  /$$   /$$  /$$$$$$  /$$$$$$$   /$$$$$$  /$$$$$$/$$$$  /$$   /$$
+   | $$ |____  $$|  $$ /$$/ /$$__  $$| $$__  $$ /$$__  $$| $$_  $$_  $$| $$  | $$
+   | $$  /$$$$$$$ \  $$$$/ | $$  \ $$| $$  \ $$| $$  \ $$| $$ \ $$ \ $$| $$  | $$
+   | $$ /$$__  $$  >$$  $$ | $$  | $$| $$  | $$| $$  | $$| $$ | $$ | $$| $$  | $$
+   | $$|  $$$$$$$ /$$/\  $$|  $$$$$$/| $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$
+   |__/ \_______/|__/  \__/ \______/ |__/  |__/ \______/ |__/ |__/ |__/ \____  $$
+                                                                        /$$  | $$
+                                                                       |  $$$$$$/
+                                                                        \______/
+**/
 		/**
 		 * creates custom taxonomies for categorizing podcasts
 		 * in series
 		 */
 		public function register_podcast_taxonomy() {
+
+
 			$podcast_show_args = array(
 				'hierarchical' => true,
 				'query_var' => 'podcast_show',
@@ -188,14 +203,10 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			if ( taxonomy_exists( 'celebration_series' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_series', self::POST_TYPE );
-				// array_push( $this->_tax, 'celebration_series' );
-				$the_tax = get_taxonomy( 'celebration_series' );
-				$this->_tax['celebration_series'] = $the_tax->labels->name;
 			} else if ( taxonomy_exists( 'podcast_series' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
-				// array_push( $this->_tax, 'podcast_series' );
 				$the_tax = get_taxonomy( 'podcast_series' );
 				$this->_tax['podcast_series'] = $the_tax->labels->name;
 			}
@@ -204,14 +215,10 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			if ( taxonomy_exists( 'celebration_preachers' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_preachers', self::POST_TYPE );
-				// array_push( $this->_tax, 'celebration_preachers' );
-				$the_tax = get_taxonomy( 'celebration_preachers' );
-				$this->_tax['celebration_preachers'] = $the_tax->labels->name;
 			} else if ( taxonomy_exists( 'podcast_speaker' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
-				// array_push( $this->_tax, 'podcast_speaker' );
 				$the_tax = get_taxonomy( 'podcast_speaker' );
 				$this->_tax['podcast_speaker'] = $the_tax->labels->name;
 			}
