@@ -60,15 +60,15 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			$podcast_args = array(
 				'labels' => array(
 					'name' => __( 'Podcasts', 'dicentis' ),
-					'singular_name' => __( 'Podcast', 'dicentis' ),
-					'add_new' => __( 'Add New Podcast', 'dicentis' ),
-					'add_new_item' => __( 'Add New Podcast', 'dicentis' ),
-					'edit_item' => __( 'Edit Podcast', 'dicentis' ),
-					'new_item' => __( 'New Podcast', 'dicentis' ),
-					'view_item' => __( 'View Podcast', 'dicentis' ),
-					'search_items' => __( 'Search Podcast', 'dicentis' ),
-					'not_found' => __( 'No Podcasts Found', 'dicentis' ),
-					'not_found_in_trash' => __( 'No Podcast Found In Trash', 'dicentis' )
+					'singular_name' => __( 'Episode', 'dicentis' ),
+					'add_new' => __( 'Add New Episode', 'dicentis' ),
+					'add_new_item' => __( 'Add New Episode', 'dicentis' ),
+					'edit_item' => __( 'Edit Episodes', 'dicentis' ),
+					'new_item' => __( 'New Episodes', 'dicentis' ),
+					'view_item' => __( 'View Episodes', 'dicentis' ),
+					'search_items' => __( 'Search Episodes', 'dicentis' ),
+					'not_found' => __( 'No Episodes Found', 'dicentis' ),
+					'not_found_in_trash' => __( 'No Episodes Found In Trash', 'dicentis' )
 				),
 				'public' => true,
 				'has_archive' => true,
