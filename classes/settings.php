@@ -321,27 +321,26 @@ if ( !class_exists('Dicentis_Settings') ) {
 			}
 
 			// Render the settings template
-			// include( sprintf( "%s/../templates/settings.php", dirname(__FILE__) ) );
-			$this->ilc_settings_page();
+			$this->dipo_settings_pages();
 		} // END public function dicentis_settings_page()
 
-		public function ilc_admin_tabs( $current='homepage' ) {
-			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' );
-			echo '<div id="icon-themes" class="icon32"><br></div>';
-			echo '<h2 class="nav-tab-wrapper">';
-			foreach($tabs as $tab => $name){
-				$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-				echo "<a class='nav-tab$class' href='?page=dicentis_settings&tab=$tab'>$name</a>";
-			}
-			echo'</h2>';
-		}
+		public function dipo_setting_tabs( $current='homepage' ) {
+			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' ); ?>
+			<div id="icon-themes" class="icon32"><br></div>
+			<h2 class="nav-tab-wrapper">
+			<?php foreach($tabs as $tab => $name){
+				$class = ( $tab == $current ) ? ' nav-tab-active' : ''; ?>
+				<a class='nav-tab<?php echo $class; ?>' href='?page=dicentis_settings&tab=<?php echo $tab; ?>'><? echo $name ?></a>
+			<?php } ?>
+			</h2>
+		<?php }
 
-		public function ilc_settings_page(){
+		public function dipo_settings_pages(){
 			global $pagenow;
 			//generic HTML and code goes here
 
-			if( isset ( $_GET['tab'] ) ) $this->ilc_admin_tabs( $_GET['tab'] );
-			else $this->ilc_admin_tabs( 'general' );
+			if( isset ( $_GET['tab'] ) ) $this->dipo_setting_tabs( $_GET['tab'] );
+			else $this->dipo_setting_tabs( 'general' );
 
 			if( $pagenow == 'options-general.php'&& $_GET['page'] == 'dicentis_settings' ) {
 				if( isset ( $_GET['tab'] ) )
