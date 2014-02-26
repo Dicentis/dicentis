@@ -326,7 +326,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 		} // END public function dicentis_settings_page()
 
 		public function ilc_admin_tabs( $current='homepage' ) {
-			$tabs = array( 'homepage' => 'Home Settings', 'general' => 'General', 'footer' => 'Footer' );
+			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' );
 			echo '<div id="icon-themes" class="icon32"><br></div>';
 			echo '<h2 class="nav-tab-wrapper">';
 			foreach($tabs as $tab => $name){
@@ -338,13 +338,31 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 		public function ilc_settings_page(){
 			global $pagenow;
-			// $settings = get_option( "ilc_theme_settings" );
 			//generic HTML and code goes here
 
-			if( isset ($_GET['tab']) ) $this->ilc_admin_tabs( $_GET['tab'] );
-			else $this->ilc_admin_tabs( 'homepage' );
+			if( isset ( $_GET['tab'] ) ) $this->ilc_admin_tabs( $_GET['tab'] );
+			else $this->ilc_admin_tabs( 'general' );
 
-			include( sprintf( "%s/../templates/settings.php", dirname(__FILE__) ) );
+			if( $pagenow == 'options-general.php'&& $_GET['page'] == 'dicentis_settings' ) {
+				if( isset ( $_GET['tab'] ) )
+					$tab = $_GET['tab'];
+				else
+					$tab='general';
+
+				switch ( $tab ) {
+					case 'general':
+						include( sprintf( "%s/../templates/settings-general.php", dirname(__FILE__) ) );
+						break;
+
+					case 'itunes':
+						include( sprintf( "%s/../templates/settings-itunes.php", dirname(__FILE__) ) );
+						break;
+
+					default:
+						# code...
+						break;
+				}
+			}
 		}
 	} // END class Dicentis_Settings
 } // END if ( !class_exists('Dicentis_Settings') )
