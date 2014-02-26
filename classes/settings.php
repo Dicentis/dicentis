@@ -322,7 +322,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// Render the settings template
 			// include( sprintf( "%s/../templates/settings.php", dirname(__FILE__) ) );
-			Dicentis_Settings::ilc_settings_page();
+			$this->ilc_settings_page();
 		} // END public function dicentis_settings_page()
 
 		public function ilc_admin_tabs( $current='homepage' ) {
@@ -331,7 +331,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			echo '<h2 class="nav-tab-wrapper">';
 			foreach($tabs as $tab => $name){
 				$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-				echo "<a class='nav-tab$class' href='?page=theme-settings&tab=$tab'>$name</a>";
+				echo "<a class='nav-tab$class' href='?page=dicentis_settings&tab=$tab'>$name</a>";
 			}
 			echo'</h2>';
 		}
@@ -341,8 +341,8 @@ if ( !class_exists('Dicentis_Settings') ) {
 			// $settings = get_option( "ilc_theme_settings" );
 			//generic HTML and code goes here
 
-			if( isset ($_GET['tab']) ) Dicentis_Settings::ilc_admin_tabs( $_GET['tab'] );
-			else Dicentis_Settings::ilc_admin_tabs( 'homepage' );
+			if( isset ($_GET['tab']) ) $this->ilc_admin_tabs( $_GET['tab'] );
+			else $this->ilc_admin_tabs( 'homepage' );
 
 			include( sprintf( "%s/../templates/settings.php", dirname(__FILE__) ) );
 		}
