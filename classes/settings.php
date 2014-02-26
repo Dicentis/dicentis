@@ -25,7 +25,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			add_settings_section(
 				'dipo_itunes_main', // id
 				__( 'iTunes Settings', 'dicentis' ), // title
-				array( $this, 'plugin_section_text' ),
+				array( $this, 'itunes_settings_description' ),
 				'dipo_itunes'
 			);
 
@@ -71,7 +71,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_language',
-				__( 'iTunes Subtitle', 'dicentis' ),
+				__( 'iTunes Language', 'dicentis' ),
 				array( $this, 'itunes_language_dropdown' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -103,51 +103,56 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 		} // END public function admin_init()
 
-		public function plugin_section_text() {
-			echo '<p>';
-			_e( 'Main description of this section here.', 'dicentis' );
-			echo '</p>';
-		}
+		public function itunes_settings_description() { ?>
+			<p>
+			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis' ); ?>
+			</p>
+		<?php }
 
 		public function itunes_owner_string() {
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
 			$owner = $options['itunes_owner'];
-			// echo the field
-			echo "<input id='dipo_itunes_owner' name='dipo_itunes_options[itunes_owner]' size='40' type='text' value='$owner' />";
-		}
+			// echo the field ?>
+			<input id='dipo_itunes_owner' name='dipo_itunes_options[itunes_owner]' size='40' type='text' value='<?php echo $owner; ?>' />
+			<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', 'dicentis' ); ?></p>
+		<?php }
 
 		public function itunes_owner_mail() {
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
 			$owner_mail = $options['itunes_owner_mail'];
-			// echo the field
-			echo "<input id='dipo_itunes_owner_mail' name='dipo_itunes_options[itunes_owner_mail]' size='40' type='mail' value='$owner_mail' />";
-		}
+			// echo the field ?>
+			<input id='dipo_itunes_owner_mail' name='dipo_itunes_options[itunes_owner_mail]' size='40' type='mail' value='<?php echo $owner_mail; ?>' />
+			<p class="description"><?php _e('Email address of owner for contact options', 'dicentis' ); ?></p>
+		<?php }
 
 		public function itunes_title_string() {
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
 			$text_string = $options['itunes_title'];
-			// echo the field
-			echo "<input id='dipo_itunes_title' name='dipo_itunes_options[itunes_title]' size='40' type='text' value='$text_string' />";
-		}
+			// echo the field ?>
+			<input id='dipo_itunes_title' name='dipo_itunes_options[itunes_title]' size='40' type='text' value='<?php echo $text_string; ?>' />
+			<p class="description"><?php _e('Title of podcast show. If multitple shows are defined please use local settings for shows.', 'dicentis' ); ?></p>
+		<?php }
 
 		public function itunes_subtitle_string() {
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
 			$text_string = $options['itunes_subtitle'];
-			// echo the field
-			echo "<input id='dipo_itunes_subtitle' name='dipo_itunes_options[itunes_subtitle]' size='40' type='text' value='$text_string' />";
-		}
+			// echo the field ?>
+			<input id='dipo_itunes_subtitle' name='dipo_itunes_options[itunes_subtitle]' size='40' type='text' value='<?php echo $text_string; ?>' />
+			<p class="description"><?php _e('Subtitle of podcast show. If multitple shows are defined please use local settings for shows.', 'dicentis' ); ?></p>
+		<?php }
 
 		public function itunes_author_string() {
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
 			$author = $options['itunes_author'];
-			// echo the field
-			echo "<input id='dipo_itunes_author' name='dipo_itunes_options[itunes_author]' size='40' type='text' value='$author' />";
-		}
+			// echo the field ?>
+			<input id='dipo_itunes_author' name='dipo_itunes_options[itunes_author]' size='40' type='text' value='<?php echo $author; ?>' />
+			<p class="description"><?php _e('The content of this tag is shown in the Artist column in iTunes', 'dicentis' ); ?></p>
+		<?php }
 
 		public function itunes_language_dropdown() {
 			// get languages codes in ISO 639
@@ -155,17 +160,18 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
-			$lang = $options['itunes_language'];
+			$lang = $options['itunes_language']; ?>
 
-			echo "<select id='dipo_itunes_language' name='dipo_itunes_options[itunes_language]'>";
-			foreach ($languages as $key => $value) {
+			<select id='dipo_itunes_language' name='dipo_itunes_options[itunes_language]'>
+			<?php foreach ($languages as $key => $value) {
 				echo "<option value='$value[1]'";
 				echo ( !strcmp( $lang, $value[1] ) ) ? " selected>" : ">" ;
 				echo $value[2] . " ($value[1])";
 				echo "</option>";
-			}
-			echo '</select>';
-		}
+			} ?>
+			</select>
+			<p class="description"><?php _e('Because iTunes operates sites worldwide, it is critical to specify the language of a podcast' ); ?></p>
+		<?php }
 
 		public function itunes_category1() {
 			// get itunes categories as array
@@ -173,15 +179,14 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
-			$cat1 = $options['itunes_category1'];
+			$cat1 = $options['itunes_category1']; ?>
 
-			echo "<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>";
+			<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>
+				<option value=''>
+				<?php _e( 'None', 'dicentis' ); ?>
+				</option>
 
-			echo "<option value=''>";
-			echo __( 'None', 'dicentis' );
-			echo "</option>";
-
-			foreach ($cats as $catname => $subcats) {
+			<?php foreach ($cats as $catname => $subcats) {
 				// list main cats
 				$catvalue = strtolower( $catname );
 				echo "<option value='$catvalue'";
@@ -196,9 +201,9 @@ if ( !class_exists('Dicentis_Settings') ) {
 					echo $catname . " &gt; " . $subcatname;
 					echo "</option>";
 				}
-			}
-			echo '</select>';
-		}
+			} ?>
+			</select>
+		<?php }
 
 		public function itunes_category2() {
 			// get itunes categories as array
@@ -206,15 +211,14 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
-			$cat2 = $options['itunes_category2'];
+			$cat2 = $options['itunes_category2']; ?>
 
-			echo "<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>";
+			<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>
+				<option value=''>
+				<?php _e( 'None', 'dicentis' ); ?>
+				</option>
 
-			echo "<option value=''>";
-			echo __( 'None', 'dicentis' );
-			echo "</option>";
-
-			foreach ($cats as $catname => $subcats) {
+			<?php foreach ($cats as $catname => $subcats) {
 				// list main cats
 				$catvalue = strtolower( $catname );
 				echo "<option value='$catvalue'";
@@ -229,9 +233,9 @@ if ( !class_exists('Dicentis_Settings') ) {
 					echo $catname . " &gt; " . $subcatname;
 					echo "</option>";
 				}
-			}
-			echo '</select>';
-		}
+			} ?>
+			</select>
+		<?php }
 
 		public function itunes_category3() {
 			// get itunes categories as array
@@ -239,15 +243,14 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// get option 'dipo_itunes_options'
 			$options = get_option( 'dipo_itunes_options' );
-			$cat3 = $options['itunes_category3'];
+			$cat3 = $options['itunes_category3']; ?>
 
-			echo "<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>";
+			<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>
+				<option value=''>
+				<?php _e( 'None', 'dicentis' ); ?>
+				</option>
 
-			echo "<option value=''>";
-			echo __( 'None', 'dicentis' );
-			echo "</option>";
-
-			foreach ($cats as $catname => $subcats) {
+			<?php foreach ($cats as $catname => $subcats) {
 				// list main cats
 				$catvalue = strtolower( $catname );
 				echo "<option value='$catvalue'";
@@ -262,9 +265,9 @@ if ( !class_exists('Dicentis_Settings') ) {
 					echo $catname . " &gt; " . $subcatname;
 					echo "</option>";
 				}
-			}
-			echo '</select>';
-		}
+			} ?>
+			</select>
+		<?php }
 
 		public function validate_options( $input ) {
 			$valid = array();
@@ -318,7 +321,47 @@ if ( !class_exists('Dicentis_Settings') ) {
 			}
 
 			// Render the settings template
-			include( sprintf( "%s/../templates/settings.php", dirname(__FILE__) ) );
+			$this->settings_pages();
 		} // END public function dicentis_settings_page()
+
+		public function setting_tabs( $current='homepage' ) {
+			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' ); ?>
+			<div id="icon-themes" class="icon32"><br></div>
+			<h2 class="nav-tab-wrapper">
+			<?php foreach($tabs as $tab => $name){
+				$class = ( $tab == $current ) ? ' nav-tab-active' : ''; ?>
+				<a class='nav-tab<?php echo $class; ?>' href='?page=dicentis_settings&tab=<?php echo $tab; ?>'><? echo $name ?></a>
+			<?php } ?>
+			</h2>
+		<?php }
+
+		public function settings_pages(){
+			global $pagenow;
+			//generic HTML and code goes here
+			?><h2>
+			<?php _e( 'Dicentis Podcast Settings', 'dicentis'); ?>
+			</h2><?php
+
+			if( isset ( $_GET['tab'] ) ) $this->setting_tabs( $_GET['tab'] );
+			else $this->setting_tabs( 'general' );
+
+			if( $pagenow == 'options-general.php'&& $_GET['page'] == 'dicentis_settings' ) {
+				if( isset ( $_GET['tab'] ) )
+					$tab = $_GET['tab'];
+				else
+					$tab='general';
+
+				switch ( $tab ) {
+					default:
+					case 'general':
+						include( sprintf( "%s/../templates/settings-general.php", dirname(__FILE__) ) );
+						break;
+
+					case 'itunes':
+						include( sprintf( "%s/../templates/settings-itunes.php", dirname(__FILE__) ) );
+						break;
+				}
+			}
+		}
 	} // END class Dicentis_Settings
 } // END if ( !class_exists('Dicentis_Settings') )
