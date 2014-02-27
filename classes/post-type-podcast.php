@@ -276,11 +276,22 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
 			if( $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) ) {
-				foreach ($this->_meta as $field_name)
-				{
+				foreach ( $this->_meta as $field_name ) {
 					// update the post's meta field
-					if ( strcmp( $field_name, '_dipo_medialink' ) == 0 ) {
-						update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dicentis-podcast-medialink' ] ) );
+					if ( strcmp( $field_name, '_dipo_medialink' ) == 0 ||
+						 strcmp( $field_name, '_dipo_image' ) == 0 ) {
+						switch ( $field_name ) {
+							case '_dipo_medialink':
+								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_medialink' ] ) );
+								break;
+
+							case '_dipo_image':
+								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_image' ] ) );
+								break;
+
+							default:
+								break;
+						}
 					} else {
 						update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
 					}

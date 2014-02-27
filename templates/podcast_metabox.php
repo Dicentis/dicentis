@@ -34,8 +34,7 @@
 			<label for="dipo_medialink">Media Link</label>
 		</th>
 		<td>
-			<input id="dipo-podcast-medialink" type="text" size="75"
-		name="dipo-podcast-medialink" value="<?php echo esc_url( $dipo_medialink ); ?>" />
+			<input id="dipo_medialink" type="text" name="dipo_medialink" value="<?php echo esc_url( $dipo_medialink ); ?>" />
 			<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
 			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', 'dicentis' ); ?></p>
 		</td>
@@ -43,10 +42,10 @@
 
 	<tr valign="top">
 		<th class="metabox_label_column">
-			<label for="dipo-mediatype">Media type</label>
+			<label for="dipo_mediatype">Media type</label>
 		</th>
 		<td>
-			<input type="text" id="dipo-mediatype" name="dipo-mediatype" value="<?php echo esc_attr( $dipo_mediatype ); ?>" />
+			<input type="text" id="dipo_mediatype" name="dipo_mediatype" value="<?php echo esc_attr( $dipo_mediatype ); ?>" />
 		</td>
 	</tr>
 
@@ -55,8 +54,7 @@
 			<label for="dipo_image">Episode Image</label>
 		</th>
 		<td>
-			<input id="dipo-image" type="text" size="75"
-		name="dipo-image" value="<?php echo esc_url( $dipo_image ); ?>" />
+			<input id="dipo_image" type="text" name="dipo_image" value="<?php echo esc_url( $dipo_image ); ?>" />
 			<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
 			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', 'dicentis' ); ?></p>
 		</td>
@@ -64,28 +62,29 @@
 
 	<tr valign="top">
 		<th class="metabox_label_column">
-			<label for="dipo-guid">guid</label>
+			<label for="dipo_guid">guid</label>
 		</th>
 		<td>
-			<input type="text" id="dipo-guid" name="dipo-guid" value="<?php echo esc_attr( $dipo_guid ); ?>" />
+			<input type="text" id="dipo_guid" name="dipo_guid" value="<?php echo esc_attr( $dipo_guid ); ?>" />
 		</td>
 	</tr>
 
 	<tr valign="top">
 		<th class="metabox_label_column">
-			<label for="dipo-duration">Duration</label>
+			<label for="dipo_duration">Duration</label>
 		</th>
 		<td>
-			<input type="number" id="dipo-duration" name="dipo-duration" value="<?php echo esc_attr( $dipo_duration ); ?>" />
+			<input type="number" id="dipo_duration" name="dipo_duration" value="<?php echo esc_attr( $dipo_duration ); ?>" />
 		</td>
 	</tr>
 
 	<tr valign="top">
 		<th class="metabox_label_column">
-			<label for="dipo-explicit">Explicit</label>
+			<label for="dipo_explicit">Explicit</label>
 		</th>
 		<td>
-			<input type="checkbox" id="dipo-explicit" name="dipo-explicit" value="<?php echo esc_attr( $dipo_explicit ); ?>" />
+			<input type="checkbox" id="dipo_explicit" name="dipo_explicit" value="explicit"
+				<?php if ( strcmp( $dipo_explicit, 'explicit' ) == 0 ) echo "checked"; ?> />
 			<p class="description"><?php _e( 'Use of explicit content in the title, description, language or cover art of the podcast.', 'dicentis' ); ?></p>
 		</td>
 	</tr>
