@@ -131,8 +131,12 @@ if( !class_exists('Dicentis') ) {
 
 		public function feed_template() {
 			// Render the feed template
-			if ( in_array($_GET['post_type'], array('podcast')) &&
-				 in_array($_GET['feed'], array('itunes')) ) {
+			$get_array = array( 'podcast', 'itunes' );
+			if ( isset( $_GET['post_type'] )
+				 and isset( $_GET['feed'] )
+				 and in_array($_GET['post_type'], $get_array )
+				 and in_array($_GET['feed'], $get_array )
+				) {
 				// load rss template and exit afterwards
 				// to exclude html code
 				$file = dirname( __FILE__ ) . '/templates/feed-itunes.php';
