@@ -9,10 +9,14 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	class Dicentis_Podcast_CPT {
 		const POST_TYPE = 'podcast';
 		private $_meta  = array(
-			'_meta_a',
-			'_meta_b',
-			'_meta_c',
-			'_dicentis_podcast_medialink'
+			'_dipo_subtitle',
+			'_dipo_summary',
+			'_dipo_medialink',
+			'_dipo_image',
+			'_dipo_guid',
+			'_dipo_duration',
+			'_dipo_explicit',
+			'_dipo_mediatype',
 		);
 		/* push each taxonomy name, which is used in this plugin
 		 * into this->_tax array. filter_posts() uses this array
@@ -309,19 +313,27 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function save_post( $post_id ) {
 			// verify if this is an auto save routine
 			// If it is our form has not been submitted, so we don't want to do anything
-			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			{
-				return;
-			}
+			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
 			if( isset( $_POST['post_type'] ) && $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
 			{
 				foreach ($this->_meta as $field_name)
 				{
 					// update the post's meta field
-					if ( strcmp( $field_name, '_dicentis_podcast_medialink' ) == 0 ) {
-						update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dicentis-podcast-medialink' ] ) );
-						
+					if ( strcmp( $field_name, '_dipo_medialink' ) == 0 ||
+						 strcmp( $field_name, '_dipo_image' ) == 0 ) {
+						switch ( $field_name ) {
+							case '_dipo_medialink':
+								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_medialink' ] ) );
+								break;
+
+							case '_dipo_image':
+								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_image' ] ) );
+								break;
+
+							default:
+								break;
+						}
 					} else {
 						update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
 					}
