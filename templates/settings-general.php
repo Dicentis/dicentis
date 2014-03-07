@@ -1,7 +1,9 @@
 <div class="wrap">
 	<div id="icon-tools" class="icon32"></div>
-	<h2><?php _e( 'General Settings', 'dicentis'); ?></h2>
 	<form method="POST" action="options.php">
-		<p>Nothing here, please go.</p>
+		<?php settings_fields( 'dipo_general_options' ); ?>
+		<?php do_settings_sections( 'dipo_general' ); ?>
+
+		<?php submit_button(); ?>
 	</form>
 </div>

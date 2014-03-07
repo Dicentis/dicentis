@@ -18,8 +18,17 @@ if ( !class_exists('Dicentis_Settings') ) {
 		 */
 		public function admin_init() {
 			// register the settings for this plugin
+			register_setting( 'dipo_general_options', 'dipo_general_options', array( $this, 'validate_general_options' ) );
 			// iTunes Settings for RSS Feed
-			register_setting( 'dipo_itunes_options', 'dipo_itunes_options', array( $this, 'validate_options' ) );
+			register_setting( 'dipo_itunes_options', 'dipo_itunes_options', array( $this, 'validate_itunes_options' ) );
+
+			// General section settings
+			add_settings_section(
+				'dipo_general_main', // id
+				__( 'general Settings', 'dicentis' ), // title
+				array( $this, 'general_settings_description' ),
+				'dipo_general'
+			);
 
 			// iTunes section settings
 			add_settings_section(
@@ -29,6 +38,16 @@ if ( !class_exists('Dicentis_Settings') ) {
 				'dipo_itunes'
 			);
 
+			// General Fields
+			add_settings_field(
+				'dipo_general_assets_url',
+				__( 'Asstets URL', 'dicentis' ),
+				array( $this, 'general_assets_url' ),
+				'dipo_general',
+				'dipo_general_main'
+			);
+
+			// iTunes Fields
 			add_settings_field(
 				'dipo_itunes_owner',
 				__( 'iTunes Owner', 'dicentis' ),
@@ -103,10 +122,26 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 		} // END public function admin_init()
 
+		public function general_settings_description() { ?>
+			<p>
+			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis' ); ?>
+			</p>
+		<?php }
+
 		public function itunes_settings_description() { ?>
 			<p>
 			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis' ); ?>
 			</p>
+		<?php }
+
+		public function general_assets_url() {
+			// get option 'dipo_general_options'
+			$options = get_option( 'dipo_general_options' );
+			$assets = ( isset( $options['general_assets_url'] ) ) ? $options['general_assets_url'] : '' ;
+
+			// echo the field ?>
+			<input id='dipo_general_assets_url' name='dipo_general_options[general_assets_url]' size='40' type='text' value='<?php echo $assets; ?>' />
+			<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', 'dicentis' ); ?></p>
 		<?php }
 
 		public function itunes_owner_string() {
@@ -269,7 +304,15 @@ if ( !class_exists('Dicentis_Settings') ) {
 			</select>
 		<?php }
 
-		public function validate_options( $input ) {
+		public function validate_general_options( $input ) {
+			$valid = array();
+			
+			$valid['general_assets_url'] = $input['general_assets_url'];
+
+			return $valid;
+		}
+
+		public function validate_itunes_options( $input ) {
 			$valid = array();
 
 			// TODO: RegEx definieren

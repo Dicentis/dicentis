@@ -3,6 +3,27 @@
 	$dipo_subtitle = get_post_meta( $post->ID, '_dipo_subtitle', true );
 	$dipo_summary = get_post_meta( $post->ID, '_dipo_summary', true );
 	$dipo_medialink = get_post_meta( $post->ID, '_dipo_medialink', true );
+	$dipo_general_options = get_option( 'dipo_general_options' );
+	$assets = '';
+	if ( isset( $dipo_medialink ) ):
+		if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			$assets = $dipo_general_options['general_assets_url'];
+			
+			if ( 0 < strlen( strstr( $dipo_medialink, 'http://' ) ) ):
+				if ( 0 < strlen( strstr( $dipo_medialink, $assets ) ) ):
+					$dipo_medialink = str_replace( $assets, '', $dipo_medialink );
+				else:
+					$assets = '';
+				endif;
+			endif;
+		endif;
+	else:
+		// get option 'dipo_general_options'
+		if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			$assets = $dipo_general_options['general_assets_url'];
+		endif;
+	endif;
+
 	$dipo_image = get_post_meta( $post->ID, '_dipo_image', true );
 	$dipo_guid = get_post_meta( $post->ID, '_dipo_guid', true );
 	$dipo_duration = get_post_meta( $post->ID, '_dipo_duration', true );
@@ -34,8 +55,9 @@
 			<label for="dipo_medialink">Media Link</label>
 		</th>
 		<td>
-			<input id="dipo_medialink" type="text" name="dipo_medialink" value="<?php echo esc_url( $dipo_medialink ); ?>" />
-			<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
+			<span><?php echo $assets; ?></span>
+			<input id="dipo_medialink" type="text" name="dipo_medialink" value="<?php echo $dipo_medialink; ?>" />
+			<!-- <input id="upload_media_button" type="button" value="Media Library" class="button-secondary" /> -->
 			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', 'dicentis' ); ?></p>
 		</td>
 	</tr>

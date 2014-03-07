@@ -62,11 +62,11 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			add_action( 'admin_print_style-post-new.php', array( $this, 'media_admin_style' ) );
 
 			// Creating Form Input on Show Tax Page
-			add_action( 'podcast_show_add_form_fields', array( $this, 'podcast_show_metabox_add' ), 10, 1 );
-			add_action( 'podcast_show_edit_form_fields', array( $this, 'podcast_show_metabox_edit' ), 10, 1 );
+			// add_action( 'podcast_show_add_form_fields', array( $this, 'podcast_show_metabox_add' ), 10, 1 );
+			// add_action( 'podcast_show_edit_form_fields', array( $this, 'podcast_show_metabox_edit' ), 10, 1 );
 			// saving Term Metadata
-			add_action( 'created_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
-			add_action( 'edited_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
+			// add_action( 'created_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
+			// add_action( 'edited_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
 
 		} // END public function init()
 
@@ -221,7 +221,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			if ( taxonomy_exists( 'celebration_series' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_series', self::POST_TYPE );
-			} else if ( taxonomy_exists( 'podcast_series' ) ) {
+			} elseif ( taxonomy_exists( 'podcast_series' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
@@ -233,7 +233,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			if ( taxonomy_exists( 'celebration_preachers' ) ) {
 				// avantgarde-celebration plugin is installed and active
 				register_taxonomy_for_object_type( 'celebration_preachers', self::POST_TYPE );
-			} else if ( taxonomy_exists( 'podcast_speaker' ) ) {
+			} elseif ( taxonomy_exists( 'podcast_speaker' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
@@ -315,16 +315,32 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// If it is our form has not been submitted, so we don't want to do anything
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
-			if( isset( $_POST['post_type'] ) && $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
-			{
-				foreach ($this->_meta as $field_name)
-				{
+			if( isset( $_POST['post_type'] ) && $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) ):
+
+				// get option 'dipo_general_options'
+				$general_options = get_option( 'dipo_general_options' );
+				$asset_prefix = ( isset( $general_options['general_assets_url'] ) ) ? $general_options['general_assets_url'] : '' ;
+
+				foreach ($this->_meta as $field_name):
 					// update the post's meta field
 					if ( strcmp( $field_name, '_dipo_medialink' ) == 0 ||
 						 strcmp( $field_name, '_dipo_image' ) == 0 ) {
 						switch ( $field_name ) {
 							case '_dipo_medialink':
-								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_medialink' ] ) );
+								$dipo_medialink = $_POST[ 'dipo_medialink' ];
+
+								if ( '' == $asset_prefix ):
+									update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_medialink ) );
+								elseif ( '' != $asset_prefix ):
+
+									if ( FALSE == strstr( $dipo_medialink, 'http://' ) ):
+										$link = $asset_prefix . $dipo_medialink;
+									else:
+										$link = $dipo_medialink;
+									endif;
+
+									update_post_meta( $post_id, $field_name, $link );								
+								endif;
 								break;
 
 							case '_dipo_image':
@@ -335,14 +351,14 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 								break;
 						}
 					} else {
-						update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
+						if ( isset( $_POST[substr($field_name, 1)] ) ) {
+							update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
+						}
 					}
-				}
-			}
-			else
-			{
+				endforeach;
+			else:
 				return;
-			} // if( $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
+			endif; // if( $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
 		} // END public function save_post( $post_id )
 
 		/**
