@@ -1,5 +1,7 @@
 <?php
 
+include plugin_dir_path( __FILE__ ) . '../lib/simple-term-meta.php';
+
 if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	/**
 	 * The Podcast Post Type
@@ -23,6 +25,10 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// register actions
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+			// setup new tables by simple-term-meta
+			// used for additional meta data in podcast_show taxonomy
+			simple_term_meta_install();
 		} // END public function __construct()
 
 		/**
@@ -50,6 +56,14 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
 			add_action( 'admin_print_style-post.php', array( $this, 'media_admin_style' ) );
 			add_action( 'admin_print_style-post-new.php', array( $this, 'media_admin_style' ) );
+
+			// Creating Form Input on Show Tax Page
+			add_action( 'podcast_show_add_form_fields', array( $this, 'podcast_show_metabox_add' ), 10, 1 );
+			add_action( 'podcast_show_edit_form_fields', array( $this, 'podcast_show_metabox_edit' ), 10, 1 );
+			// saving Term Metadata
+			add_action( 'created_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
+			add_action( 'edited_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
+
 		} // END public function init()
 
 		/**
@@ -224,6 +238,32 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			}
 		} // END public function register_podcast_taxonomy()
 
+		public function podcast_show_metabox_add( $tag ) { ?>
+			<div class="form-field">
+				<label for="image-url"><?php _e( 'Image URL', 'dicentis' ); ?></label>
+				<input name="image-url" id="image-url" type="text" value="" size="40" aria-required="true" />
+				<p class="description"><?php _e( 'This image will be the thumbnail shown on the category page.', 'dicentis' ); ?></p>
+			</div>
+		<?php }
+
+		public function podcast_show_metabox_edit( $tag ) { ?>
+			<tr class="form-field">
+				<th scope="row" valign="top">
+					<label for="image-url"><?php _e( 'Image URL', 'dicentis' ); ?></label>
+				</th>
+				<td>
+					<input name="image-url" id="image-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'image-url', true  ); ?>" size="40" aria-require="true" />
+					<p class="description"><?php _e( 'This image will be the thumbnail shown on the category page.', 'dicentis' ); ?></p>
+				</td>
+			</tr>
+		<?php }
+
+		public function save_podcast_show_metadata( $term_id ) {
+			if ( isset( $_POST['image-url'] ) ) {
+				update_term_meta( $term_id, 'image-url', $_POST['image-url'] );
+			}
+		}
+
 		/**
 		 * add additional filter options to post type site for each
 		 * taxonomy which is used for this plugin
@@ -274,7 +314,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				return;
 			}
 
-			if( $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
+			if( isset( $_POST['post_type'] ) && $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
 			{
 				foreach ($this->_meta as $field_name)
 				{
