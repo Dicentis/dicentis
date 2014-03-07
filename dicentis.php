@@ -85,16 +85,18 @@ if( !class_exists('Dicentis') ) {
 				// if ( $page == $find_page ) {
 					// loop thru $find_page item and look for
 					// $find_sub b/c we want to reorder it
-					foreach ( $submenu[$find_page] as $id => $meta ) {
-						if ( $meta[0] == $find_sub ) {
-							// $find_sub is found so assing it to
-							// first place (0-based) in sub-array and unset
-							// its former entry.
-							// Last but not least sort it again.
-							// 'Dashboard' is now at the top of this submenu
-							$submenu[$find_page][0] = $meta;
-							unset( $submenu[$find_page][$id] );
-							ksort( $submenu[$find_page] );
+					if ( isset( $submenu[$find_page] ) ) {
+						foreach ( $submenu[$find_page] as $id => $meta ) {
+							if ( $meta[0] == $find_sub ) {
+								// $find_sub is found so assing it to
+								// first place (0-based) in sub-array and unset
+								// its former entry.
+								// Last but not least sort it again.
+								// 'Dashboard' is now at the top of this submenu
+								$submenu[$find_page][0] = $meta;
+								unset( $submenu[$find_page][$id] );
+								ksort( $submenu[$find_page] );
+							}
 						}
 					}
 				// }
