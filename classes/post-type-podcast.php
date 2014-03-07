@@ -240,27 +240,27 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 
 		public function podcast_show_metabox_add( $tag ) { ?>
 			<div class="form-field">
-				<label for="image-url"><?php _e( 'Image URL', 'dicentis' ); ?></label>
-				<input name="image-url" id="image-url" type="text" value="" size="40" aria-required="true" />
-				<p class="description"><?php _e( 'This image will be the thumbnail shown on the category page.', 'dicentis' ); ?></p>
+				<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
+				<input name="asset-url" id="asset-url" type="text" value="" size="40" aria-required="true" />
+				<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
 			</div>
 		<?php }
 
 		public function podcast_show_metabox_edit( $tag ) { ?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
-					<label for="image-url"><?php _e( 'Image URL', 'dicentis' ); ?></label>
+					<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
 				</th>
 				<td>
-					<input name="image-url" id="image-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'image-url', true  ); ?>" size="40" aria-require="true" />
-					<p class="description"><?php _e( 'This image will be the thumbnail shown on the category page.', 'dicentis' ); ?></p>
+					<input name="asset-url" id="asset-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'asset-url', true  ); ?>" size="40" aria-require="true" />
+					<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
 				</td>
 			</tr>
 		<?php }
 
 		public function save_podcast_show_metadata( $term_id ) {
-			if ( isset( $_POST['image-url'] ) ) {
-				update_term_meta( $term_id, 'image-url', $_POST['image-url'] );
+			if ( isset( $_POST['asset-url'] ) ) {
+				update_term_meta( $term_id, 'asset-url', $_POST['asset-url'] );
 			}
 		}
 
