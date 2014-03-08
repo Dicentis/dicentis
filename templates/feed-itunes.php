@@ -7,35 +7,48 @@
 
 require_once dirname( __FILE__ ) . '/../lib/itunes-categories.php';
 
-function dp_get_show_details( $type = 'name' ) {
-	$slug = $_GET['podcast_show'];
+function dipo_get_show_details( $type = 'name' ) {
+	$slug = '';
 
-	switch ( $type ):
-		case 'name':
-			$value = get_term_by( 'slug', $slug, 'podcast_show')->name;
-			echo " > " . $value;
-		break;
+	if ( isset( $_GET['podcast_show'] ) ):
+		$slug = $_GET['podcast_show'];
 
-		case 'description':
-			echo get_term_by( 'slug', $slug, 'podcast_show')->description;
-		break;
+		switch ( $type ):
+			case 'name':
+				$value = get_term_by( 'slug', $slug, 'podcast_show')->name;
+				echo " > " . $value;
+			break;
 
-		default:
-			echo "";
-	endswitch;
+			case 'description':
+				echo get_term_by( 'slug', $slug, 'podcast_show')->description;
+			break;
+
+			default:
+				echo "";
+		endswitch;
+	endif;
 }
 
-function dp_get_speaker( $id ) {
-	$terms = get_the_terms( $id , 'podcast_speaker' );
+function dipo_get_speaker( $id ) {
 	$text = "";
-	$count = 1;
-	foreach ($terms as $term) {
-		$text .= $term->name;
-		if ( count( $terms ) > $count ) {
-			$text .= ", ";
-			$count++;
-		}
-	}
+
+	if ( taxonomy_exists( 'celebration_preachers' ) ):
+		$terms = get_the_terms( $id , 'celebration_preachers' );
+	else:
+		$terms = get_the_terms( $id , 'podcast_speaker' );
+	endif;
+
+	if ( !is_wp_error( $terms ) and $terms ):
+		$count = 1;
+		foreach ( $terms as $term ):
+			$text .= $term->name;
+			if ( count( $terms ) > $count ) {
+				$text .= ", ";
+				$count++;
+			}
+		endforeach;
+	endif;
+
 	echo $text;
 }
 
@@ -59,7 +72,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 >
 
 <channel>
-	<title><?php bloginfo_rss('name'); dp_get_show_details(); ?></title>
+	<title><?php bloginfo_rss('name'); dipo_get_show_details(); ?></title>
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), false); ?></lastBuildDate>
 	<language><?php
@@ -70,8 +83,8 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<copyright>&#x2117; &amp; &#xA9; 2005 John Doe &amp; Family</copyright>
 	<itunes:subtitle><?php echo $itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
 	<itunes:author><?php echo $itunes_opt['itunes_author']; ?></itunes:author>
-	<itunes:summary><?php dp_get_show_details( 'description' ); ?></itunes:summary>
-	<description><?php dp_get_show_details( 'description' ); ?></description>
+	<itunes:summary><?php dipo_get_show_details( 'description' ); ?></itunes:summary>
+	<description><?php dipo_get_show_details( 'description' ); ?></description>
 	<itunes:owner>
 		<itunes:name><?php echo $itunes_opt['itunes_owner']; ?></itunes:name>
 		<itunes:email><?php echo $itunes_opt['itunes_owner_mail']; ?></itunes:email>
@@ -142,12 +155,12 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<item>
 		<title><?php the_title_rss() ?></title>
 		<link><?php the_permalink() ?></link>
-		<itunes:author><?php dp_get_speaker(); ?></itunes:author>
+		<itunes:author><?php dipo_get_speaker( $post->ID ); ?></itunes:author>
 		<!-- TODO: Add subtitle/summary/image metadata to episodes and include them here -->
 		<itunes:subtile>A short subtitle</itunes:subtile>
 		<itunes:summary>a summary</itunes:summary>
 		<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg" />
-		<enclosure url="<?php echo get_post_meta( $post->ID, '_dicentis_podcast_medialink', true ); ?>" length="8727310" type="audio/mpeg" />
+		<enclosure url="<?php echo get_post_meta( $post->ID, '_dipo_medialink', true ); ?>" length="8727310" type="audio/mpeg" />
 		<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 		<guid><?php echo get_permalink( $post->ID ); ?></guid>
 		<!-- TODO: calculate duration or add metafield to post -->
