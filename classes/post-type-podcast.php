@@ -327,7 +327,11 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 						 strcmp( $field_name, '_dipo_image' ) == 0 ) {
 						switch ( $field_name ) {
 							case '_dipo_medialink':
-								$dipo_medialink = $_POST[ 'dipo_medialink' ];
+								if ( isset( $_POST['dipo_medialink'] ) ) {
+									$dipo_medialink = $_POST['dipo_medialink'];
+								} else {
+									$dipo_medialink = "";
+								}
 
 								if ( '' == $asset_prefix ):
 									update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_medialink ) );
@@ -344,7 +348,13 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 								break;
 
 							case '_dipo_image':
-								update_post_meta( $post_id, $field_name, esc_url_raw( $_POST[ 'dipo_image' ] ) );
+								if ( isset( $_POST[ 'dipo_image' ] ) ) {
+									$dipo_image = $_POST[ 'dipo_image' ];
+								} else {
+									$dipo_image = "";
+								}
+
+								update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_image ) );
 								break;
 
 							default:
