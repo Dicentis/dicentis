@@ -8,6 +8,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	 */
 	class Dicentis_Podcast_CPT {
 		const POST_TYPE = 'podcast';
+
 		private $_meta  = array(
 			'_dipo_subtitle',
 			'_dipo_summary',
@@ -53,7 +54,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			add_action( 'restrict_manage_posts', array( $this, 'filter_posts' ) );
 
 			// register shortcodes
-			add_shortcode( 'podcasts', array( $this, 'sc1_all_podcasts' ) );
+			add_shortcode( 'podcasts', array( $this, 'shortcode_podcast_show' ) );
 
 			// script & style action with page detection
 			add_action( 'admin_print_scripts-post.php', array( $this, 'media_admin_script' ) );
@@ -436,27 +437,87 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		}
 
 
-		public function sc1_all_podcasts( ) {
-			// include( sprintf('%s/../templates/sc1_all_podcasts.php', dirname(__FILE__) ) );
-			// return 'hi';
+		public function shortcode_podcast_show( $attr ) {
+			$err = -1;
+			$show = "";
+			$all_shows = get_terms( 'podcast_show', 'hide_empty=0' );
+
+			if ( $this->is_avantgarde_plugin_active() ) {
+				$speaker_tax = 'celebration_preachers';
+				$series_tax = 'celebration_series';
+			} else {
+				$speaker_tax = 'podcast_speaker';
+				$series_tax = 'podcast_series';
+			}
+
+			// Error #2: No showname in shortcode given!
+			if ( empty( $attr ) )
+				$err = 2;
+
+			// if attributes are given check if these are
+			// podcast_show slugs and list only these shows
+			if ( !empty( $attr ) and isset( $attr['show'] ) ) {
+				$possible_shows = $this->get_all_shows( $all_shows );
+
+				// Asume: Error #3: No show exists with that name!
+				$err = 3;
+				foreach ( $attr as $key => $value ) {
+					if ( in_array( $value, $possible_shows ) ) {
+						$show = $value;
+						$err = -1;
+					}
+				}
+			}
+
+			$args = array(
+				'post_type' => 'podcast',
+				'order' => 'DESC',
+				'oderby' => 'date',
+				'tax_query' => array(
+					'relation' => 'AND',
+					array(
+						'taxonomy' => 'podcast_show',
+						'field' => 'slug',
+						'terms' => $show,
+					),
+				),
+			);
+			$category_posts = new WP_Query($args);
+
+			$episodes = array();
+			while( $category_posts->have_posts() ) : $category_posts->the_post();
+				$i = array_push( $episodes, $category_posts->post );
+
+				$postID = $episodes[$i-1]->ID;
+
+				// $post_tax = array();
+				// $post_tax['podcast_show'] = wp_get_post_terms( $postID, 'podcast_show' );
+				// $post_tax['podcast_speaker'] = wp_get_post_terms( $postID, $speaker_tax );
+				// $post_tax['podcast_series'] = wp_get_post_terms( $postID, $series_tax );
+				// $episodes[$i-1]->taxonomies = $post_tax;
+				$episodes[$i-1]->taxonomies = get_the_taxonomies( $postID );
+
+				$episodes[$i-1]->metadata = get_metadata( 'post', $postID );
+			endwhile;
+
+			include( sprintf('%s/../templates/shortcode_podcast_show.php', dirname(__FILE__) ) );
 		}
 
-		// public function updated_messages( $messages ) {
-		// 	global $post, $post_ID;
-		// 	$messages['podcast'] = array(
-		// 		0 => '',
-		// 		1 => sprintf( __('Podcast updated. <a href="%s">View podcast</a>'), esc_url( get_permalink($post_ID) ) ),
-		// 		2 => __('Custom field updated.'),
-		// 		3 => __('Custom field deleted.'),
-		// 		4 => __('Podcast updated.'),
-		// 		5 => isset($_GET['revision']) ? sprintf( __('Podcast restored from revision from %s'), wp_post_revision_title_( (int) $_GET['revision'], false ) ) : false,
-		// 		6 => sprintf( __('Podcast published. <a href="%s">View podcast</a>'), esc_url( get_permalink($post_ID) ) ),
-		// 		7 => __('Podcast saved.'),
-		// 		8 => sprintf( __('Podcast submitted. <a target="_blank" href="%s">Preview podcast</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		// 		9 => sprintf( __('Podcast scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview podcast</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		// 		10 => sprintf( __('Podcast draft updated. <a target="_blank" href="%s">Preview podcast</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		// 	);
-		// 	return $messages;
-		// }
+		public function is_avantgarde_plugin_active() {
+			/**
+			 * Detect plugin. For use on Front End only.
+			 */
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+			return is_plugin_active( 'avantgarde-celebrations/avantgarde-celebrations.php' );
+		}
+
+		public function get_all_shows( $all_shows ) {
+			$shows = array();
+			foreach ( $all_shows as $id => $show ) {
+				array_push( $shows, $show->slug );
+			}
+			return $shows;
+		}
 	} // END class Dicentis_Podcast_CPT
 } // END if( !class_exists( 'Dicentis_Podcast_CPT' ) )
