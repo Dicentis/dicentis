@@ -7,7 +7,7 @@ Version: 0.0.1
 Author: Hans-Helge Buerger
 Author URI: http://hanshelgebuerger.de
 GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
-GitHub Branch: testUpdate
+GitHub Branch: master
 GitHub Access Token: 06f0508db3f02e704d0e1bbdce452be7d50aa308
 
 Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
