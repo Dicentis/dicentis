@@ -373,7 +373,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			<h2 class="nav-tab-wrapper">
 			<?php foreach($tabs as $tab => $name){
 				$class = ( $tab == $current ) ? ' nav-tab-active' : ''; ?>
-				<a class='nav-tab<?php echo $class; ?>' href='?page=dicentis_settings&tab=<?php echo $tab; ?>'><? echo $name ?></a>
+				<a class='nav-tab<?php echo $class; ?>' href='?page=dicentis_settings&tab=<?php echo $tab; ?>'><?php echo $name ?></a>
 			<?php } ?>
 			</h2>
 		<?php }
