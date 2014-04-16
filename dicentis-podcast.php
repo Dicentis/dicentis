@@ -6,6 +6,8 @@ Description: Manage multiple podcasts with ease in one plugin
 Version: 0.0.1
 Author: Hans-Helge Buerger
 Author URI: http://hanshelgebuerger.de
+Text Domain: dicentis
+Domain Path: /languages/
 GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
 GitHub Branch: master
 GitHub Access Token: 06f0508db3f02e704d0e1bbdce452be7d50aa308
