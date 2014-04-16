@@ -14,6 +14,8 @@ Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
 License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
+include_once 'lib/tgm-plugin.php';
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( !class_exists('Dicentis') ) {
