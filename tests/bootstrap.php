@@ -12,12 +12,12 @@ $GLOBALS['wp_tests_options'] = array(
 	'active_plugins' => array( 'dicentis-podcast/dicentis-podcast.php' ),
 );
 
-// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
+// If the develop repo location is defined (as WP_TESTS_DIR), use that
 // location. Otherwise, we'll just assume that this plugin is installed in a
 // WordPress develop SVN checkout.
 
-if( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
-	require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
+if( false !== getenv( 'WP_TESTS_DIR' ) ) {
+	require getenv( 'WP_TESTS_DIR' ) . 'includes/bootstrap.php';
 } else {
-	require '/Users/RetinaObst/Documents/code/PHP/WordPress/wordpress-dev/trunk/tests/phpunit/includes/bootstrap.php';
+	require '/Users/RetinaObst/Documents/Code/PHP/WordPress/plugins/vagrant-local/www/wordpress-develop/tests/phpunit/includes/bootstrap.php';
 }

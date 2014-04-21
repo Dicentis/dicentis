@@ -3,7 +3,7 @@
 /**
  * An example test case
  */
-class Dipo_WP_Test_Example extends WP_UnitTestCase {
+class Dipo_WP_Tests_Example extends WP_UnitTestCase {
 	/**
 	 * An example test.
 	 *
@@ -12,15 +12,6 @@ class Dipo_WP_Test_Example extends WP_UnitTestCase {
 	function test_false_is_false() {
 
 		$this->assertFalse( false );
-
-	}
-
-	/**
-	 * Ensure that the plugin has been installed and activated.
-	 */
-	function test_plugin_activated() {
-
-		$this->assertTrue( is_plugin_active( 'dicentis-podcast/dicentis-podcast.php' ) );
 
 	}
 
