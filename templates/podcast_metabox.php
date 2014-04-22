@@ -31,83 +31,56 @@
 	$dipo_mediatype = get_post_meta( $post->ID, '_dipo_mediatype', true );
 ?>
 
-<table>
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_subtitle"><?php _e( 'Subtitle', 'dicentis' ); ?></label>
-		</th>
-		<td>
-			<input type="text" id="dipo_subtitle" name="dipo_subtitle" value="<?php echo esc_attr( $dipo_subtitle ); ?>" style="width: 100%;"/>
-		</td>
-	</tr>
+<div class="inside">
+	<div>
+		<label for="dipo_subtitle"><strong><?php _e( 'Subtitle', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<input type="text" id="dipo_subtitle" name="dipo_subtitle" value="<?php echo esc_attr( $dipo_subtitle ); ?>" />
+		<p id="subtitle_counter" class="counter">0</p>
+	</div>
 
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_summary"><?php _e( 'Summary', 'dicentis' ); ?></label>
-		</th>
-		<td>
-			<textarea id="dipo_summary" name="dipo_summary" style="width: 100%;" ><?php echo esc_attr( $dipo_summary ); ?></textarea>
-		</td>
-	</tr>
+	<div>
+		<label for="dipo_summary"><strong><?php _e( 'Summary', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<textarea id="dipo_summary" name="dipo_summary" ><?php echo esc_attr( $dipo_summary ); ?></textarea>
+		<p id="summary_counter" class="counter">0</p>
+	</div>
 
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_medialink">Media Link</label>
-		</th>
-		<td>
-			<span><?php echo $assets; ?></span>
-			<input id="dipo_medialink" type="text" name="dipo_medialink" value="<?php echo $dipo_medialink; ?>" />
-			<!-- <input id="upload_media_button" type="button" value="Media Library" class="button-secondary" /> -->
-			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', 'dicentis' ); ?></p>
-		</td>
-	</tr>
+	<div>
+		<label for="dipo_mediafiles"><strong><?php _e( 'Media Files', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<table>
+			<tbody>
+				<tr>
+					<th><?php _e( 'Medialink', DIPO_TEXTDOMAIN ); ?></th>
+					<th><?php _e( 'Media Type', DIPO_TEXTDOMAIN ); ?></th>
+					<th><?php _e( 'Duration', DIPO_TEXTDOMAIN ); ?></th>
+					<th><?php _e( 'Size', DIPO_TEXTDOMAIN ); ?></th>
+				</tr>
+				<tr>
+					<td><input id="dipo_mediafiles1" type="text" name="dipo_mediafiles1" value="<?php  ?>" /></td>
+					<td><input id="dipo_mediafiles2" type="text" name="dipo_mediafiles2" value="<?php  ?>" /></td>
+					<td><input id="dipo_mediafiles3" type="text" name="dipo_mediafiles3" value="<?php  ?>" /></td>
+					<td><input id="dipo_mediafiles4" type="text" name="dipo_mediafiles4" value="<?php  ?>" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', DIPO_TEXTDOMAIN ); ?></p>
+	</div>
 
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_mediatype">Media type</label>
-		</th>
-		<td>
-			<input type="text" id="dipo_mediatype" name="dipo_mediatype" value="<?php echo esc_attr( $dipo_mediatype ); ?>" />
-		</td>
-	</tr>
+	<div>
+		<label for="dipo_image"><strong><?php _e( 'Episode Image', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<input id="dipo_image" type="text" name="dipo_image" value="<?php echo esc_url( $dipo_image ); ?>" />
+		<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
+		<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', DIPO_TEXTDOMAIN ); ?></p>
+	</div>
 
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_image">Episode Image</label>
-		</th>
-		<td>
-			<input id="dipo_image" type="text" name="dipo_image" value="<?php echo esc_url( $dipo_image ); ?>" />
-			<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
-			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', 'dicentis' ); ?></p>
-		</td>
-	</tr>
+	<div>
+		<label for="dipo_guid"><strong><?php _e( 'GUID', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<p><?php echo $dipo_guid; ?> <a href=#><?php _e( 'Regenerate', DIPO_TEXTDOMAIN ); ?></a></p>
+	</div>
 
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_guid">guid</label>
-		</th>
-		<td>
-			<input type="text" id="dipo_guid" name="dipo_guid" value="<?php echo esc_attr( $dipo_guid ); ?>" />
-		</td>
-	</tr>
-
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_duration">Duration</label>
-		</th>
-		<td>
-			<input type="number" id="dipo_duration" name="dipo_duration" value="<?php echo esc_attr( $dipo_duration ); ?>" />
-		</td>
-	</tr>
-
-	<tr valign="top">
-		<th class="metabox_label_column">
-			<label for="dipo_explicit">Explicit</label>
-		</th>
-		<td>
-			<input type="checkbox" id="dipo_explicit" name="dipo_explicit" value="explicit"
-				<?php if ( strcmp( $dipo_explicit, 'explicit' ) == 0 ) echo "checked"; ?> />
-			<p class="description"><?php _e( 'Use of explicit content in the title, description, language or cover art of the podcast.', 'dicentis' ); ?></p>
-		</td>
-	</tr>
-</table>
+	<div>
+		<label for="dipo_explicit"><strong><?php _e( 'Explicit', DIPO_TEXTDOMAIN ); ?></strong></label>
+		<input type="checkbox" id="dipo_explicit" name="dipo_explicit" value="explicit"
+			<?php if ( strcmp( $dipo_explicit, 'explicit' ) == 0 ) echo "checked"; ?> />
+		<p class="description"><?php _e( 'Use of explicit content in the title, description, language or cover art of the podcast.', 'dicentis' ); ?></p>
+	</div>
+</div>

@@ -30,4 +30,23 @@ jQuery(document).ready(function($) {
 			window.original_send_to_editor(html);
 		}
 	};
+
+	// Update Counter 
+	$('#dipo_subtitle').keyup( function() {
+		char_counter( this, $('#subtitle_counter'), 255 )
+	}).triggerHandler('keyup');
+
+	$('#dipo_summary').keyup( function() {
+		char_counter( this, $('#summary_counter'), 4000 )
+	}).triggerHandler('keyup');
 });
+
+function char_counter ( input, counter, limit ) {
+	var n = input.value.replace(/{.*?}/g, '').length;
+	if ( n > limit ) {
+		input.value = input.value.substr(0, input.value.length + limit - n );
+		n = limit;
+	}
+
+	counter.text( limit - n );
+}

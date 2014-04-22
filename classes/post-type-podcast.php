@@ -1,6 +1,7 @@
 <?php
 
 include plugin_dir_path( __FILE__ ) . '../lib/simple-term-meta.php';
+include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
 
 if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	/**
@@ -57,10 +58,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			add_shortcode( 'podcasts', array( $this, 'shortcode_podcast_show' ) );
 
 			// script & style action with page detection
-			add_action( 'admin_print_scripts-post.php', array( $this, 'media_admin_script' ) );
-			add_action( 'admin_print_scripts-post-new.php', array( $this, 'media_admin_script' ) );
-			add_action( 'admin_print_style-post.php', array( $this, 'media_admin_style' ) );
-			add_action( 'admin_print_style-post-new.php', array( $this, 'media_admin_style' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'load_custom_wp_admin_style' ) );
 
 			// Creating Form Input on Show Tax Page
 			// add_action( 'podcast_show_add_form_fields', array( $this, 'podcast_show_metabox_add' ), 10, 1 );
@@ -388,7 +386,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// Add this metabox to every selected post
 			add_meta_box(
 				sprintf( 'dicentis_%s_selection', self::POST_TYPE ),
-				sprintf( __( '%s Information', 'dicentis' ), ucwords(str_replace("_", " ", self::POST_TYPE)) ),
+				sprintf( __( '%s Information', 'dicentis' ), ucwords( str_replace( "_", " ", self::POST_TYPE ) ) ),
 				array( $this, 'add_inner_meta_boxes' ),
 				self::POST_TYPE
 			);
@@ -400,18 +398,18 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		 */
 		public function add_inner_meta_boxes( $post ) {
 			// Render the job order metabox
-			include( sprintf('%s/../templates/%s_metabox.php', dirname(__FILE__), self::POST_TYPE) );
+			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE ) );
 		} // END public function add_inner_meta_boxes( $post )
 
-		public function media_admin_script() {
+		public function load_custom_wp_admin_style( $hook ) {
+
+			if( 'post.php' != $hook and 'post-new.php' != $hook )
+				return;
+
 			wp_enqueue_script( 'dicentis-media-upload',
-				// plugin_dir_path( __FILE__ ) . '../assets/js/dicentis-medialink.js',
-				plugins_url( 'dicentis/assets/js/dicentis-medialink.js' ),
+				DIPO_ASSETS_URL . '/js/dicentis-metabox.js',
 				array( 'jquery', 'media-upload', 'thickbox' )
 			);
-		}
-
-		public function media_admin_style() {
 			wp_enqueue_style( 'thickbox' );
 		}
 
