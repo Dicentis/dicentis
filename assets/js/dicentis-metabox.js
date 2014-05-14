@@ -44,30 +44,30 @@ jQuery(document).ready(function($) {
 		var id = parseInt( $('#dipo_mediafiles_count').val() ) + 1;
 		$('#dipo_mediafiles_count').val(id);
 
-		$('#dipo_mediafiles_table > tbody:last').append(
-			'<tr>' +
+		var new_file = '<tr>' +
 			'<input id="dipo_mediafile' + id +
 				'" type="hidden" name="dipo_mediafile' + id +
-				'" value="update" />' +
-			'<td><input id="dipo_mediafile' + id +
+				'" value="update" />';
+		new_file += '<td><input id="dipo_mediafile' + id +
 				'_link" type="text" name="dipo_mediafile' + id +
-				'_link" value="" /></td>' +
-			'<td><input id="dipo_mediafile' + id +
-				'_type" type="text" name="dipo_mediafile' + id +
-				'_type" value="" /></td>' +
-			'<td><input id="dipo_mediafile' + id +
+				'_link" value="" /></td>';
+		new_file += '<td class="mediatype-list"></td>';
+		new_file += '<td><input id="dipo_mediafile' + id +
 				'_duration" type="text" name="dipo_mediafile' + id +
-				'_duration" value="" /></td>' +
-			'<td><input id="dipo_mediafile' + id +
+				'_duration" value="" /></td>';
+		new_file += '<td><input id="dipo_mediafile' + id +
 				'_size" type="text" name="dipo_mediafile' + id +
 				'_size" value="" /></td>' +
-			'<td>' +
-			'<div file="' + id +
+			'<td>';
+		new_file += '<div file="' + id +
 			'" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i>' +
 			'Remove</div>' +
 			'</td>' +
-			'</tr>'
-		);
+			'</tr>';
+		$('#dipo_mediafiles_table > tbody:last').append( new_file );
+
+		$('.mediatype-list').append( get_select_mediatypes( id, $('#dipo_mediafile1_type') ) );
+		$('.mediatype-list').removeClass('mediatype-list')
 	});
 
 	$('.remove_mediafile').live("click", function( event ) {
@@ -85,4 +85,10 @@ function char_counter ( input, counter, limit ) {
 	}
 
 	counter.text( limit - n );
+}
+
+function get_select_mediatypes( id, se ) {
+	var select_tag = se.clone().attr('id', 'dipo_mediafile' + id + '_type' );
+	select_tag.attr('name', 'dipo_mediafile' + id + '_type' );
+	return select_tag;
 }

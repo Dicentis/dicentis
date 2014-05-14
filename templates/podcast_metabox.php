@@ -27,6 +27,22 @@
 	$dipo_image = get_post_meta( $post->ID, '_dipo_image', true );
 	$dipo_guid = get_post_meta( $post->ID, '_dipo_guid', true );
 	$dipo_explicit = get_post_meta( $post->ID, '_dipo_explicit', true );
+
+	function get_select_mediatypes( $mediatypes, $mediafile_num = '1', $selected = 'mp3' ) {
+		// prepare <select> mediatypes
+		$select_mediatypes = "<select id='dipo_mediafile" . $mediafile_num . "_type' name='dipo_mediafile" . $mediafile_num . "_type'>";
+		foreach ( $mediatypes as $file_type ) {
+			if ( $selected == $file_type['mime_type'] ) {
+				$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "' selected>" . $file_type['extension'] . "</option>";
+			} else {
+				$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "'>" . $file_type['extension'] . "</option>";
+			}
+		}
+		$select_mediatypes .= "</select>";
+
+		return $select_mediatypes;
+	}
+
 ?>
 
 <div class="inside">
@@ -53,12 +69,14 @@
 					<th><?php _e( 'Size', DIPO_TEXTDOMAIN ); ?></th>
 					<th></th>
 				</tr>
-				<?php if ( empty($mediafiles) ) { 
+				<?php 
+				/* @TODO Information for mediatypes and that one type should only appear once per post */
+				if ( empty($mediafiles) ) { 
 					$media_count = 1; ?>
 					<tr>
 						<input id="dipo_mediafile1" type="hidden" name="dipo_mediafile1" value="update" />
 						<td><input id="dipo_mediafile1_link" type="text" name="dipo_mediafile1_link" value="" /></td>
-						<td><input id="dipo_mediafile1_type" type="text" name="dipo_mediafile1_type" value="" /></td>
+						<td><?php echo get_select_mediatypes( $mediatypes ); ?></td>
 						<td><input id="dipo_mediafile1_duration" type="text" name="dipo_mediafile1_duration" value="" /></td>
 						<td><input id="dipo_mediafile1_size" type="text" name="dipo_mediafile1_size" value="" /></td>
 						<td>
@@ -70,7 +88,7 @@
 						<tr>
 							<input id="dipo_mediafile<?php echo $mediafile['id']; ?>" type="hidden" name="dipo_mediafile<?php echo $mediafile['id']; ?>" value="update" />
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_link" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link" value="<?php echo $mediafile['medialink']; ?>" /></td>
-							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_type" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_type" value="<?php echo $mediafile['mediatype']; ?>" /></td>
+							<td><?php echo get_select_mediatypes( $mediatypes, $mediafile['id'], $mediafile['mediatype'] ); ?></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" value="<?php echo $mediafile['duration']; ?>" /></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /></td>
 							<td>
