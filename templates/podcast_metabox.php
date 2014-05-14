@@ -46,22 +46,31 @@
 
 	<div>
 		<label for="dipo_mediafiles"><strong><?php _e( 'Media Files', DIPO_TEXTDOMAIN ); ?></strong></label>
-		<table>
+		<input id="dipo_mediafiles_count" name="dipo_mediafiles_count" type="hidden" value="<?php echo 1 ?>" />
+		<table id="dipo_mediafiles_table">
 			<tbody>
 				<tr>
 					<th><?php _e( 'Medialink', DIPO_TEXTDOMAIN ); ?></th>
 					<th><?php _e( 'Media Type', DIPO_TEXTDOMAIN ); ?></th>
 					<th><?php _e( 'Duration', DIPO_TEXTDOMAIN ); ?></th>
 					<th><?php _e( 'Size', DIPO_TEXTDOMAIN ); ?></th>
+					<th></th>
 				</tr>
-				<tr>
-					<td><input id="dipo_mediafiles1" type="text" name="dipo_mediafiles1" value="<?php  ?>" /></td>
-					<td><input id="dipo_mediafiles2" type="text" name="dipo_mediafiles2" value="<?php  ?>" /></td>
-					<td><input id="dipo_mediafiles3" type="text" name="dipo_mediafiles3" value="<?php  ?>" /></td>
-					<td><input id="dipo_mediafiles4" type="text" name="dipo_mediafiles4" value="<?php  ?>" /></td>
-				</tr>
+				<?php foreach ( $mediafiles as $key => $mediafile) { ?>
+					<tr>
+						<input id="dipo_mediafile<?php echo $mediafile['id']; ?>" type="hidden" name="dipo_mediafile<?php echo $mediafile['id']; ?>" value="update" />
+						<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_link" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link" value="<?php echo $mediafile['medialink']; ?>" /></td>
+						<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_type" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_type" value="<?php echo $mediafile['mediatype']; ?>" /></td>
+						<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" value="<?php echo $mediafile['duration']; ?>" /></td>
+						<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /></td>
+						<td>
+							<div file="<?php echo $mediafile['id']; ?>" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i><?php _e('Remove', DIPO_TEXTDOMAIN ); ?></div>
+						</td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
+		<div id="add_mediafile" class="button-primary"><i class="dashicons-before dashicons-admin-media"></i><?php _e('Add Mediafile', DIPO_TEXTDOMAIN ); ?></div>
 		<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', DIPO_TEXTDOMAIN ); ?></p>
 	</div>
 

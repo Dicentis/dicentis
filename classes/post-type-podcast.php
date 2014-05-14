@@ -13,7 +13,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		private $_meta  = array(
 			'_dipo_subtitle',
 			'_dipo_summary',
-			'_dipo_medialink',
+			'_dipo_mediafile',
 			'_dipo_image',
 			'_dipo_guid',
 			'_dipo_duration',
@@ -320,55 +320,69 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				$general_options = get_option( 'dipo_general_options' );
 				$asset_prefix = ( isset( $general_options['general_assets_url'] ) ) ? $general_options['general_assets_url'] : '' ;
 
+				$this->save_mediafiles_of_post( $post_id );
+
 				foreach ($this->_meta as $field_name):
 					// update the post's meta field
-					if ( strcmp( $field_name, '_dipo_medialink' ) == 0 ||
-						 strcmp( $field_name, '_dipo_image' ) == 0 ) {
-						switch ( $field_name ) {
-							case '_dipo_medialink':
-								if ( isset( $_POST['dipo_medialink'] ) ) {
-									$dipo_medialink = $_POST['dipo_medialink'];
-								} else {
-									$dipo_medialink = "";
-								}
+					switch ( $field_name ):
+						case '_dipo_image':
+							if ( isset( $_POST[ 'dipo_image' ] ) ) {
+								$dipo_image = $_POST[ 'dipo_image' ];
+							} else {
+								$dipo_image = "";
+							}
 
-								if ( '' == $asset_prefix ):
-									update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_medialink ) );
-								elseif ( '' != $asset_prefix ):
+							update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_image ) );
+							break;
 
-									if ( FALSE == strstr( $dipo_medialink, 'http://' ) ):
-										$link = $asset_prefix . $dipo_medialink;
-									else:
-										$link = $dipo_medialink;
-									endif;
-
-									update_post_meta( $post_id, $field_name, $link );								
-								endif;
-								break;
-
-							case '_dipo_image':
-								if ( isset( $_POST[ 'dipo_image' ] ) ) {
-									$dipo_image = $_POST[ 'dipo_image' ];
-								} else {
-									$dipo_image = "";
-								}
-
-								update_post_meta( $post_id, $field_name, esc_url_raw( $dipo_image ) );
-								break;
-
-							default:
-								break;
-						}
-					} else {
-						if ( isset( $_POST[substr($field_name, 1)] ) ) {
-							update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
-						}
-					}
+						default:
+							if ( isset( $_POST[substr($field_name, 1)] ) ) {
+								update_post_meta( $post_id, $field_name, $_POST[substr($field_name, 1)] );
+							}
+							break;
+					endswitch;
 				endforeach;
 			else:
 				return;
 			endif; // if( $_POST['post_type'] == self::POST_TYPE && current_user_can( 'edit_post', $post_id ) )
 		} // END public function save_post( $post_id )
+
+		public function save_mediafiles_of_post( $post_id ) {
+			/*
+			 * 1. Check max number of mediafiles
+			 * 2. look what to do for each mediafile (update|remove)
+			 * 3. if update: create array and update (starting from 1)
+			 * 4. remove all mediafiles from DB with number > updated mediafile
+			*/
+
+			$max_number  = 0;
+			$media_count = 0;
+			if ( isset( $_POST['dipo_mediafiles_count'] ) )
+				$max_number = $_POST['dipo_mediafiles_count'];
+			else
+				return;
+
+			for ( $i=1; $i <= $max_number; $i++ ) { 
+				if ( isset( $_POST['dipo_mediafile' . $i] ) and "update" == $_POST['dipo_mediafile' . $i] ) {
+					$media_count++;
+					$medialink = ( isset($_POST['dipo_mediafile' . $media_count . "_link"]) ) ? esc_url_raw( $_POST['dipo_mediafile' . $media_count . "_link"] ): "";
+					$mediatype = ( isset($_POST['dipo_mediafile' . $media_count . "_type"]) ) ? htmlspecialchars( $_POST['dipo_mediafile' . $media_count . "_type"] ): "";
+					$duration  = ( isset($_POST['dipo_mediafile' . $media_count . "_duration"]) ) ? htmlspecialchars( $_POST['dipo_mediafile' . $media_count . "_duration"] ): "";
+					$filesize  = ( isset($_POST['dipo_mediafile' . $media_count . "_size"]) ) ? htmlspecialchars( $_POST['dipo_mediafile' . $media_count . "_size"] ): "";
+
+					$mediafile = array(
+						'id'        => $media_count,
+						'medialink' => $medialink,
+						'mediatype' => $mediatype,
+						'duration'  => $duration,
+						'filesize'  => $filesize );
+
+					$field_name = '_mediafile' . $media_count;
+					update_post_meta( $post_id, $field_name,  $mediafile );
+				}
+			}
+			update_post_meta( $post_id, "_max_mediafile_number", $media_count );
+		}
 
 		/**
 		 * hook into WP's admin_init action hook
@@ -397,9 +411,25 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		 * @param [type] $post [description]
 		 */
 		public function add_inner_meta_boxes( $post ) {
-			// Render the job order metabox
+			// get mediafile information for $post
+			$mediafiles = $this->get_mediafile_info( $post->ID );
+			$media_count = get_post_meta( $post->ID, '_max_mediafile_number', true );
+
 			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE ) );
 		} // END public function add_inner_meta_boxes( $post )
+
+		public function get_mediafile_info( $post_id ) {
+			$media_count = get_post_meta( $post_id, '_max_mediafile_number', true );
+
+			$mediafiles = array();
+
+			for ( $i=1; $i <= $media_count; $i++ ) { 
+				$temp_mediafile = get_post_meta( $post_id, '_mediafile' . $i, true );
+				array_push( $mediafiles, $temp_mediafile );
+			}
+
+			return $mediafiles;
+		}
 
 		public function load_custom_wp_admin_style( $hook ) {
 
