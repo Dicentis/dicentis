@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
 		char_counter( this, $('#summary_counter'), 4000 );
 	}).triggerHandler('keyup');
 
-	$('#add_mediafile').click( function() {
+	$('#add_mediafile').on('click', function() {
 		var id = parseInt( $('#dipo_mediafiles_count').val() ) + 1;
 		$('#dipo_mediafiles_count').val(id);
 
@@ -70,7 +70,7 @@ jQuery(document).ready(function($) {
 		$('.mediatype-list').removeClass('mediatype-list')
 	});
 
-	$('.remove_mediafile').live("click", function( event ) {
+	$(document).on('click', '.remove_mediafile', function() {
 		var id = $(this).attr('file');
 		$(this).parent().parent().css('display', 'none');
 		$('#dipo_mediafile' + id).val('remove');
