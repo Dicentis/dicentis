@@ -1,50 +1,3 @@
-<?php
-	// retrieve the metadata values if they exist
-	$dipo_subtitle = get_post_meta( $post->ID, '_dipo_subtitle', true );
-	$dipo_summary = get_post_meta( $post->ID, '_dipo_summary', true );
-	$dipo_medialink = get_post_meta( $post->ID, '_dipo_medialink', true );
-	$dipo_general_options = get_option( 'dipo_general_options' );
-	$assets = '';
-	if ( isset( $dipo_medialink ) ):
-		if ( isset( $dipo_general_options['general_assets_url'] ) ):
-			$assets = $dipo_general_options['general_assets_url'];
-			
-			if ( 0 < strlen( strstr( $dipo_medialink, 'http://' ) ) ):
-				if ( 0 < strlen( strstr( $dipo_medialink, $assets ) ) ):
-					$dipo_medialink = str_replace( $assets, '', $dipo_medialink );
-				else:
-					$assets = '';
-				endif;
-			endif;
-		endif;
-	else:
-		// get option 'dipo_general_options'
-		if ( isset( $dipo_general_options['general_assets_url'] ) ):
-			$assets = $dipo_general_options['general_assets_url'];
-		endif;
-	endif;
-
-	$dipo_image = get_post_meta( $post->ID, '_dipo_image', true );
-	$dipo_guid = get_post_meta( $post->ID, '_dipo_guid', true );
-	$dipo_explicit = get_post_meta( $post->ID, '_dipo_explicit', true );
-
-	function get_select_mediatypes( $mediatypes, $mediafile_num = '1', $selected = 'mp3' ) {
-		// prepare <select> mediatypes
-		$select_mediatypes = "<select id='dipo_mediafile" . $mediafile_num . "_type' name='dipo_mediafile" . $mediafile_num . "_type'>";
-		foreach ( $mediatypes as $file_type ) {
-			if ( $selected == $file_type['mime_type'] ) {
-				$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "' selected>" . $file_type['extension'] . "</option>";
-			} else {
-				$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "'>" . $file_type['extension'] . "</option>";
-			}
-		}
-		$select_mediatypes .= "</select>";
-
-		return $select_mediatypes;
-	}
-
-?>
-
 <div class="inside">
 	<div>
 		<label for="dipo_subtitle"><strong><?php _e( 'Subtitle', DIPO_TEXTDOMAIN ); ?></strong></label>
@@ -76,7 +29,7 @@
 					<tr>
 						<input id="dipo_mediafile1" type="hidden" name="dipo_mediafile1" value="update" />
 						<td><input id="dipo_mediafile1_link" type="text" name="dipo_mediafile1_link" value="" /></td>
-						<td><?php echo get_select_mediatypes( $mediatypes ); ?></td>
+						<td><?php echo Dicentis_Podcast_CPT::get_select_mediatypes(); ?></td>
 						<td><input id="dipo_mediafile1_duration" type="text" name="dipo_mediafile1_duration" value="" /></td>
 						<td><input id="dipo_mediafile1_size" type="text" name="dipo_mediafile1_size" value="" /></td>
 						<td>
@@ -88,7 +41,7 @@
 						<tr>
 							<input id="dipo_mediafile<?php echo $mediafile['id']; ?>" type="hidden" name="dipo_mediafile<?php echo $mediafile['id']; ?>" value="update" />
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_link" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link" value="<?php echo $mediafile['medialink']; ?>" /></td>
-							<td><?php echo get_select_mediatypes( $mediatypes, $mediafile['id'], $mediafile['mediatype'] ); ?></td>
+							<td><?php echo Dicentis_Podcast_CPT::get_select_mediatypes( $mediafile['id'], $mediafile['mediatype'] ); ?></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" value="<?php echo $mediafile['duration']; ?>" /></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /></td>
 							<td>

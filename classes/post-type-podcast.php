@@ -419,6 +419,34 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			$media_count = get_post_meta( $post->ID, '_dipo_max_mediafile_number', true );
 			$mediatypes  = $this->get_mediatypes();
 
+			// retrieve the metadata values if they exist
+			$dipo_subtitle = get_post_meta( $post->ID, '_dipo_subtitle', true );
+			$dipo_summary  = get_post_meta( $post->ID, '_dipo_summary', true );
+			$dipo_image    = get_post_meta( $post->ID, '_dipo_image', true );
+			$dipo_guid     = get_post_meta( $post->ID, '_dipo_guid', true );
+			$dipo_explicit = get_post_meta( $post->ID, '_dipo_explicit', true );
+
+			// $dipo_general_options = get_option( 'dipo_general_options' );
+			// $assets = '';
+			// if ( isset( $dipo_medialink ) ):
+			// 	if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			// 		$assets = $dipo_general_options['general_assets_url'];
+					
+			// 		if ( 0 < strlen( strstr( $dipo_medialink, 'http://' ) ) ):
+			// 			if ( 0 < strlen( strstr( $dipo_medialink, $assets ) ) ):
+			// 				$dipo_medialink = str_replace( $assets, '', $dipo_medialink );
+			// 			else:
+			// 				$assets = '';
+			// 			endif;
+			// 		endif;
+			// 	endif;
+			// else:
+			// 	// get option 'dipo_general_options'
+			// 	if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			// 		$assets = $dipo_general_options['general_assets_url'];
+			// 	endif;
+			// endif;
+
 			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE ) );
 		} // END public function add_inner_meta_boxes( $post )
 
@@ -435,7 +463,23 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			return $mediafiles;
 		}
 
-		public function get_mediatypes() {
+		public static function get_select_mediatypes( $mediafile_num = '1', $selected = 'mp3' ) {
+			$mediatypes = Dicentis_Podcast_CPT::get_mediatypes();
+			// prepare <select> mediatypes
+			$select_mediatypes = "<select id='dipo_mediafile" . $mediafile_num . "_type' name='dipo_mediafile" . $mediafile_num . "_type'>";
+			foreach ( $mediatypes as $file_type ) {
+				if ( $selected == $file_type['mime_type'] ) {
+					$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "' selected>" . $file_type['extension'] . "</option>";
+				} else {
+					$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "'>" . $file_type['extension'] . "</option>";
+				}
+			}
+			$select_mediatypes .= "</select>";
+
+			return $select_mediatypes;
+		}
+
+		public static function get_mediatypes() {
 			return $default_types = array(
 				array( 'name' => 'MP3 Audio',              'type' => 'audio',    'mime_type' => 'audio/mpeg',  'extension' => 'mp3' ),
 				array( 'name' => 'BitTorrent (MP3 Audio)', 'type' => 'audio',    'mime_type' => 'application/x-bittorrent',  'extension' => 'mp3.torrent' ),
