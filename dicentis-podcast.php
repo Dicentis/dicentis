@@ -66,7 +66,7 @@ if( !class_exists('Dicentis') ) {
 		} // END public function add_menu()
 
 		public function dicentis_dashboard_page() {
-			if ( !current_user_can('edit_post') ) {
+			if ( !current_user_can('edit_posts') ) {
 				wp_die( __('You do not have sufficient permissions to access this page.') );
 			}
 
