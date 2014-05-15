@@ -17,6 +17,8 @@ License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
 include_once 'lib/tgm-plugin.php';
+include_once plugin_dir_path( __FILE__ ) . 'dicentis-define.php';
+include_once plugin_dir_path( __FILE__ ) . 'classes/rss.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -38,7 +40,7 @@ if( !class_exists('Dicentis') ) {
 			require_once( sprintf("%s/classes/post-type-podcast.php", dirname(__FILE__)) );
 			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
 
-			add_action( 'template_redirect', array( $this, 'feed_template' ) );
+			add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
 			add_filter( 'single_template', array( $this, 'single_template' ) );
 			add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 		} // END public function __construct()
@@ -138,20 +140,9 @@ if( !class_exists('Dicentis') ) {
 
 		} // END public static function deactivate()
 
-		public function feed_template() {
-			// Render the feed template
-			$get_array = array( 'podcast', 'itunes' );
-			if ( isset( $_GET['post_type'] )
-				 and isset( $_GET['feed'] )
-				 and in_array($_GET['post_type'], $get_array )
-				 and in_array($_GET['feed'], $get_array )
-				) {
-				// load rss template and exit afterwards
-				// to exclude html code
-				$file = dirname( __FILE__ ) . '/templates/feed-itunes.php';
-				load_template( $file );
-				exit();
-			}
+		public function create_rss_feed() {
+			$feed = new RSS();
+			$feed->generate_podcast_feed();
 		}
 
 		public function single_template( $single_template ) {
