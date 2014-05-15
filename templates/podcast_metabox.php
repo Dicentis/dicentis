@@ -40,7 +40,7 @@
 					foreach ( $mediafiles as $key => $mediafile ) { ?>
 						<tr>
 							<input id="dipo_mediafile<?php echo $mediafile['id']; ?>" type="hidden" name="dipo_mediafile<?php echo $mediafile['id']; ?>" value="update" />
-							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_link" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link" value="<?php echo $mediafile['medialink']; ?>" /></td>
+							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_link" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link" value="<?php echo esc_url( $mediafile['medialink'] ); ?>" /></td>
 							<td><?php echo Dicentis_Podcast_CPT::get_select_mediatypes( $mediafile['id'], $mediafile['mediatype'] ); ?></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" value="<?php echo $mediafile['duration']; ?>" /></td>
 							<td><input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /></td>
@@ -60,14 +60,14 @@
 	<div>
 		<label for="dipo_image"><strong><?php _e( 'Episode Image', DIPO_TEXTDOMAIN ); ?></strong></label>
 		<input id="dipo_image" type="text" name="dipo_image" value="<?php echo esc_url( $dipo_image ); ?>" />
-		<input id="upload_media_button" type="button" value="Media Library" class="button-secondary" />
+		<!-- <input id="upload_media_button" type="button" value="Media Library" class="button-secondary" /> -->
 		<p class="description"><?php _e('Enter a media URL or use a file from the Media Library', DIPO_TEXTDOMAIN ); ?></p>
 	</div>
 
-	<div>
+	<!-- <div>
 		<label for="dipo_guid"><strong><?php _e( 'GUID', DIPO_TEXTDOMAIN ); ?></strong></label>
 		<p><?php echo $dipo_guid; ?> <a href=#><?php _e( 'Regenerate', DIPO_TEXTDOMAIN ); ?></a></p>
-	</div>
+	</div> -->
 
 	<div>
 		<label for="dipo_explicit"><strong><?php _e( 'Explicit', DIPO_TEXTDOMAIN ); ?></strong></label>
