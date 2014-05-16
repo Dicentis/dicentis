@@ -30,6 +30,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function __construct() {
 			// register actions
 			add_action( 'init', array( $this, 'init' ) );
+			add_action( 'query_vars', array( $this, 'rrs_add_query_var' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 			// setup new tables by simple-term-meta
@@ -60,6 +61,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// script & style action with page detection
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_custom_wp_admin_style' ) );
 
+			// $this->rrs_add_rules();
+			// add_action( 'query_vars', array( $this, 'rrs_add_query_var' ), 10, 1 );
+
 			// Creating Form Input on Show Tax Page
 			// add_action( 'podcast_show_add_form_fields', array( $this, 'podcast_show_metabox_add' ), 10, 1 );
 			// add_action( 'podcast_show_edit_form_fields', array( $this, 'podcast_show_metabox_edit' ), 10, 1 );
@@ -68,6 +72,19 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// add_action( 'edited_podcast_show', array( $this, 'save_podcast_show_metadata' ), 10, 1 );
 
 		} // END public function init()
+
+		public static function rrs_add_rules() {
+			global $wp_query;
+
+			// create rewrite Rule for podcast show
+			add_rewrite_rule( 'podcast/show/?$', 'index.php?post_type=podcast', 'top' );
+			$wp_query->query_vars[] = 'podcast_show'; 
+		}
+
+		public function rrs_add_query_var( $qvars ) {
+			array_push( $qvars, 'podcast_show_asdf' );
+			return $qvars;
+		}
 
 		/**
 		 * Create the post type

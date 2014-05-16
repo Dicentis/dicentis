@@ -43,7 +43,10 @@ if( !class_exists('Dicentis') ) {
 			add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
 			add_filter( 'single_template', array( $this, 'single_template' ) );
 			add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
+
+			add_action( 'init', 'RSS::add_podcast_feed' );
 		} // END public function __construct()
+
 
 		/**
 		 * Hook into WP's admin_init hook and do some admin stuff
@@ -130,6 +133,10 @@ if( !class_exists('Dicentis') ) {
 			// register deactivation hook only then plugin is activated
 			// and not on every plugin load.
 			register_deactivation_hook( __FILE__, array('Dicentis', 'deactivate') );
+
+			// Dicentis_Podcast_CPT::rrs_add_rules();
+			RSS::add_podcast_feed();
+			flush_rewrite_rules();
 		} // END public static function activate()
 
 		/**
@@ -137,7 +144,7 @@ if( !class_exists('Dicentis') ) {
 		 * @return [type] [description]
 		 */
 		public static function deactivate() {
-
+			flush_rewrite_rules();
 		} // END public static function deactivate()
 
 		public function create_rss_feed() {
@@ -158,9 +165,9 @@ if( !class_exists('Dicentis') ) {
 		public function podcast_archive_template( $archive_template ) {
 			global $post;
 
-			 if ( is_post_type_archive ( 'podcast' ) ) {
-				$archive_template = dirname( __FILE__ ) . '/templates/podcast-archive.php';
-			}
+			//  if ( is_post_type_archive ( 'podcast' ) ) {
+			// 	$archive_template = dirname( __FILE__ ) . '/templates/podcast-archive.php';
+			// }
 
 			return $archive_template;
 		}
