@@ -128,9 +128,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
    | $$ /$$__  $$  >$$  $$ | $$  | $$| $$  | $$| $$  | $$| $$ | $$ | $$| $$  | $$
    | $$|  $$$$$$$ /$$/\  $$|  $$$$$$/| $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$
    |__/ \_______/|__/  \__/ \______/ |__/  |__/ \______/ |__/ |__/ |__/ \____  $$
-                                                                        /$$  | $$
-                                                                       |  $$$$$$/
-                                                                        \______/
+																		/$$  | $$
+																	   |  $$$$$$/
+																		\______/
 **/
 		/**
 		 * creates custom taxonomies for categorizing podcasts
@@ -373,6 +373,10 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 					$duration  = ( isset($_POST[$next_file . "_duration"]) ) ? htmlspecialchars( $_POST[$next_file . "_duration"] ): "";
 					$filesize  = ( isset($_POST[$next_file . "_size"]) ) ? htmlspecialchars( $_POST[$next_file . "_size"] ): "";
 
+					if ( empty($filesize) ) {
+						$filesize = $this->curl_get_file_size( $medialink );
+					}
+
 					$mediafile = array(
 						'id'        => $media_count,
 						'medialink' => $medialink,
@@ -385,6 +389,77 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				}
 			}
 			update_post_meta( $post_id, "_dipo_max_mediafile_number", $media_count );
+		}
+
+		/**
+		 * Returns the size of a file without downloading it, or -1 if the file
+		 * size could not be determined.
+		 *
+		 * @param $url - The location of the remote file to download. Cannot
+		 * be null or empty.
+		 *
+		 * @return The size of the file referenced by $url, or -1 if the size
+		 * could not be determined.
+		 *
+		 * @link http://stackoverflow.com/questions/2602612/php-remote-file-size-without-downloading-file
+		 */
+		public function curl_get_file_size( $url ) {
+			// Assume failure.
+			$result = -1;
+
+			$curl = curl_init( $url );
+
+			// Issue a HEAD request and follow any redirects.
+			curl_setopt( $curl, CURLOPT_NOBODY, true );
+			curl_setopt( $curl, CURLOPT_HEADER, true );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, true );
+			// curl_setopt( $curl, CURLOPT_USERAGENT, get_user_agent_string() );
+
+			$data = curl_exec( $curl );
+			curl_close( $curl );
+
+			if( $data ) {
+			$content_length = "unknown";
+			$status = "unknown";
+
+			if( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $data, $matches ) ) {
+				$status = (int)$matches[1];
+			}
+
+			if( preg_match( "/Content-Length: (\d+)/", $data, $matches ) ) {
+				$content_length = (int)$matches[1];
+			}
+
+			// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+			if( $status == 200 || ($status > 300 && $status <= 308) ) {
+				$result = $content_length;
+			}
+			}
+
+			return $result;
+		}
+
+		/**
+		 * Returns a human readable filesize
+		 *
+		 * @author      wesman20 (php.net)
+		 * @author      Jonas John
+		 * @version     0.3
+		 * @link        http://www.jonasjohn.de/snippets/php/readable-filesize.htm
+		 */
+		public function human_readable_filesize($size) {
+		
+			// Adapted from: http://www.php.net/manual/en/function.filesize.php
+		 
+			$mod = 1024;
+		 
+			$units = explode(' ','B KB MB GB TB PB');
+			for ($i = 0; $size > $mod; $i++) {
+				$size /= $mod;
+			}
+		 
+			return round($size, 2) . ' ' . $units[$i];
 		}
 
 		/**
