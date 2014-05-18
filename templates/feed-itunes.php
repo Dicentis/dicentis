@@ -5,55 +5,10 @@
  * @package WordPress
  */
 
-require_once dirname( __FILE__ ) . '/../lib/itunes-categories.php';
+include_once dirname( __FILE__ ) . '/../classes/rss.php';
 
-function dipo_get_show_details( $type = 'name' ) {
-	$slug = '';
-
-	if ( isset( $_GET['podcast_show'] ) ):
-		$slug = $_GET['podcast_show'];
-
-		switch ( $type ):
-			case 'name':
-				$value = get_term_by( 'slug', $slug, 'podcast_show')->name;
-				echo " > " . $value;
-			break;
-
-			case 'description':
-				echo get_term_by( 'slug', $slug, 'podcast_show')->description;
-			break;
-
-			default:
-				echo "";
-		endswitch;
-	endif;
-}
-
-function dipo_get_speaker( $id ) {
-	$text = "";
-
-	if ( taxonomy_exists( 'celebration_preachers' ) ):
-		$terms = get_the_terms( $id , 'celebration_preachers' );
-	else:
-		$terms = get_the_terms( $id , 'podcast_speaker' );
-	endif;
-
-	if ( !is_wp_error( $terms ) and $terms ):
-		$count = 1;
-		foreach ( $terms as $term ):
-			$text .= $term->name;
-			if ( count( $terms ) > $count ) {
-				$text .= ", ";
-				$count++;
-			}
-		endforeach;
-	endif;
-
-	echo $text;
-}
-
-// get iTunes specific options from DB
-$itunes_opt = get_option( 'dipo_itunes_options' );
+$feed = new RSS();
+$feed->get_itunes_options();
 
 
 header( 'Content-Type: application/xml; charset=' . get_option( 'blog_charset' ), true );
@@ -72,102 +27,48 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 >
 
 <channel>
-	<title><?php bloginfo_rss('name'); dipo_get_show_details(); ?></title>
+	<title><?php bloginfo_rss('name'); $feed->get_show_details(); ?></title>
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), false); ?></lastBuildDate>
 	<language><?php
-		$iso_code = preg_replace('/[_]/', '-', $itunes_opt['itunes_language']);
+		$iso_code = preg_replace('/[_]/', '-', $feed->itunes_opt['itunes_language']);
 		echo $iso_code;
 	?></language>
-	<!-- TODO: Add Copyright Setting -->
+	<!-- @TODO: Add Copyright Setting -->
 	<copyright>&#x2117; &amp; &#xA9; 2005 John Doe &amp; Family</copyright>
-	<itunes:subtitle><?php echo $itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
-	<itunes:author><?php echo $itunes_opt['itunes_author']; ?></itunes:author>
-	<itunes:summary><?php dipo_get_show_details( 'description' ); ?></itunes:summary>
-	<description><?php dipo_get_show_details( 'description' ); ?></description>
+	<itunes:subtitle><?php echo $feed->itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
+	<itunes:author><?php echo $feed->itunes_opt['itunes_author']; ?></itunes:author>
+	<!-- @TODO: Take Summary from Show -->
+	<itunes:summary><?php $feed->get_show_details( 'description' ); ?></itunes:summary>
+	<!-- @TODO: Take Description from Show -->
+	<description><?php $feed->get_show_details( 'description' ); ?></description>
 	<itunes:owner>
-		<itunes:name><?php echo $itunes_opt['itunes_owner']; ?></itunes:name>
-		<itunes:email><?php echo $itunes_opt['itunes_owner_mail']; ?></itunes:email>
+		<itunes:name><?php echo $feed->itunes_opt['itunes_owner']; ?></itunes:name>
+		<itunes:email><?php echo $feed->itunes_opt['itunes_owner_mail']; ?></itunes:email>
 	</itunes:owner>
-	<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything.jpg" />
-	<!-- TODO: Refactore Categories -->
-	<?php
-		// TODO: It's ugly and needs to be refactored but it works
-		foreach ($cats as $catname => $subcats) {
-			$catvalue = strtolower( $catname );
-			if ( !strcmp( $itunes_opt['itunes_category1'], $catvalue ) ) {
-				$cat_text = htmlspecialchars( $catname );
-				echo "<itunes:category text='$cat_text' />";
-			} else {
-				foreach ($subcats as $subcat => $subcatname) {
-					$subcatvalue = strtolower( $subcatname );
-					if ( !strcmp( $itunes_opt['itunes_category1'], $subcatvalue ) ) {
-						$parent = htmlspecialchars( $catname );
-						$child = htmlspecialchars( $subcatname );
-						echo "<itunes:category text='$parent'>";
-						echo "<itunes:category text='$child' />";
-						echo "</itunes:category>";
-					}
-				}
-			}
-		}
+	<!-- @TODO: Take Description from Show -->
+	<itunes:image href="" />
+	<?php $feed->print_itunes_categories();
 
-		foreach ($cats as $catname => $subcats) {
-			$catvalue = strtolower( $catname );
-			if ( !strcmp( $itunes_opt['itunes_category2'], $catvalue ) ) {
-				$cat_text = htmlspecialchars( $catname );
-				echo "<itunes:category text='$cat_text' />";
-			} else {
-				foreach ($subcats as $subcat => $subcatname) {
-					$subcatvalue = strtolower( $subcatname );
-					if ( !strcmp( $itunes_opt['itunes_category2'], $subcatvalue ) ) {
-						$parent = htmlspecialchars( $catname );
-						$child = htmlspecialchars( $subcatname );
-						echo "<itunes:category text='$parent'>";
-						echo "<itunes:category text='$child' />";
-						echo "</itunes:category>";
-					}
-				}
-			}
-		}
-		foreach ($cats as $catname => $subcats) {
-			$catvalue = strtolower( $catname );
-			if ( !strcmp( $itunes_opt['itunes_category3'], $catvalue ) ) {
-				$cat_text = htmlspecialchars( $catname );
-				echo "<itunes:category text='$cat_text' />";
-			} else {
-				foreach ($subcats as $subcat => $subcatname) {
-					$subcatvalue = strtolower( $subcatname );
-					if ( !strcmp( $itunes_opt['itunes_category3'], $subcatvalue ) ) {
-						$parent = htmlspecialchars( $catname );
-						$child = htmlspecialchars( $subcatname );
-						echo "<itunes:category text='$parent'>";
-						echo "<itunes:category text='$child' />";
-						echo "</itunes:category>";
-					}
-				}
-			}
-		}
-	?>
-
-	<?php do_action( 'rss2_head' ); ?>
+	do_action( 'rss2_head' ); ?>
 	<?php while( have_posts()) : the_post(); ?>
-	<item>
-		<title><?php the_title_rss() ?></title>
-		<link><?php the_permalink() ?></link>
-		<itunes:author><?php dipo_get_speaker( $post->ID ); ?></itunes:author>
-		<!-- TODO: Add subtitle/summary/image metadata to episodes and include them here -->
-		<itunes:subtile>A short subtitle</itunes:subtile>
-		<itunes:summary>a summary</itunes:summary>
-		<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg" />
-		<enclosure url="<?php echo get_post_meta( $post->ID, '_dipo_medialink', true ); ?>" length="8727310" type="audio/mpeg" />
-		<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
-		<guid><?php echo get_permalink( $post->ID ); ?></guid>
-		<!-- TODO: calculate duration or add metafield to post -->
-		<itunes:duration>Media duration</itunes:duration>
-	<?php rss_enclosure(); ?>
-	<?php do_action( 'rss2_item' ); ?>
-	</item>
+	<?php if ( $feed->exists_mediafile( $post->ID ) ) : ?>
+		<item>
+			<title><?php the_title_rss() ?></title>
+			<link><?php the_permalink() ?></link>
+			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
+			<itunes:subtile><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtile>
+			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
+			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
+			<?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
+			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
+			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
+			<guid><?php echo get_permalink( $post->ID ); ?></guid>
+			<itunes:duration><?php echo $post_mediafile['duration']; ?></itunes:duration>
+		<?php rss_enclosure(); ?>
+		<?php do_action( 'rss2_item' ); ?>
+		</item>
+	<?php endif; ?>
 	<?php endwhile; ?>
 </channel>
 </rss>

@@ -128,9 +128,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
    | $$ /$$__  $$  >$$  $$ | $$  | $$| $$  | $$| $$  | $$| $$ | $$ | $$| $$  | $$
    | $$|  $$$$$$$ /$$/\  $$|  $$$$$$/| $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$
    |__/ \_______/|__/  \__/ \______/ |__/  |__/ \______/ |__/ |__/ |__/ \____  $$
-                                                                        /$$  | $$
-                                                                       |  $$$$$$/
-                                                                        \______/
+																		/$$  | $$
+																	   |  $$$$$$/
+																		\______/
 **/
 		/**
 		 * creates custom taxonomies for categorizing podcasts
@@ -373,6 +373,10 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 					$duration  = ( isset($_POST[$next_file . "_duration"]) ) ? htmlspecialchars( $_POST[$next_file . "_duration"] ): "";
 					$filesize  = ( isset($_POST[$next_file . "_size"]) ) ? htmlspecialchars( $_POST[$next_file . "_size"] ): "";
 
+					if ( empty($filesize) ) {
+						$filesize = $this->curl_get_file_size( $medialink );
+					}
+
 					$mediafile = array(
 						'id'        => $media_count,
 						'medialink' => $medialink,
@@ -385,6 +389,77 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				}
 			}
 			update_post_meta( $post_id, "_dipo_max_mediafile_number", $media_count );
+		}
+
+		/**
+		 * Returns the size of a file without downloading it, or -1 if the file
+		 * size could not be determined.
+		 *
+		 * @param $url - The location of the remote file to download. Cannot
+		 * be null or empty.
+		 *
+		 * @return The size of the file referenced by $url, or -1 if the size
+		 * could not be determined.
+		 *
+		 * @link http://stackoverflow.com/questions/2602612/php-remote-file-size-without-downloading-file
+		 */
+		public function curl_get_file_size( $url ) {
+			// Assume failure.
+			$result = -1;
+
+			$curl = curl_init( $url );
+
+			// Issue a HEAD request and follow any redirects.
+			curl_setopt( $curl, CURLOPT_NOBODY, true );
+			curl_setopt( $curl, CURLOPT_HEADER, true );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, true );
+			// curl_setopt( $curl, CURLOPT_USERAGENT, get_user_agent_string() );
+
+			$data = curl_exec( $curl );
+			curl_close( $curl );
+
+			if( $data ) {
+			$content_length = "unknown";
+			$status = "unknown";
+
+			if( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $data, $matches ) ) {
+				$status = (int)$matches[1];
+			}
+
+			if( preg_match( "/Content-Length: (\d+)/", $data, $matches ) ) {
+				$content_length = (int)$matches[1];
+			}
+
+			// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+			if( $status == 200 || ($status > 300 && $status <= 308) ) {
+				$result = $content_length;
+			}
+			}
+
+			return $result;
+		}
+
+		/**
+		 * Returns a human readable filesize
+		 *
+		 * @author      wesman20 (php.net)
+		 * @author      Jonas John
+		 * @version     0.3
+		 * @link        http://www.jonasjohn.de/snippets/php/readable-filesize.htm
+		 */
+		public function human_readable_filesize($size) {
+		
+			// Adapted from: http://www.php.net/manual/en/function.filesize.php
+		 
+			$mod = 1024;
+		 
+			$units = explode(' ','B KB MB GB TB PB');
+			for ($i = 0; $size > $mod; $i++) {
+				$size /= $mod;
+			}
+		 
+			return round($size, 2) . ' ' . $units[$i];
 		}
 
 		/**
@@ -419,6 +494,34 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			$media_count = get_post_meta( $post->ID, '_dipo_max_mediafile_number', true );
 			$mediatypes  = $this->get_mediatypes();
 
+			// retrieve the metadata values if they exist
+			$dipo_subtitle = get_post_meta( $post->ID, '_dipo_subtitle', true );
+			$dipo_summary  = get_post_meta( $post->ID, '_dipo_summary', true );
+			$dipo_image    = get_post_meta( $post->ID, '_dipo_image', true );
+			$dipo_guid     = get_post_meta( $post->ID, '_dipo_guid', true );
+			$dipo_explicit = get_post_meta( $post->ID, '_dipo_explicit', true );
+
+			// $dipo_general_options = get_option( 'dipo_general_options' );
+			// $assets = '';
+			// if ( isset( $dipo_medialink ) ):
+			// 	if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			// 		$assets = $dipo_general_options['general_assets_url'];
+					
+			// 		if ( 0 < strlen( strstr( $dipo_medialink, 'http://' ) ) ):
+			// 			if ( 0 < strlen( strstr( $dipo_medialink, $assets ) ) ):
+			// 				$dipo_medialink = str_replace( $assets, '', $dipo_medialink );
+			// 			else:
+			// 				$assets = '';
+			// 			endif;
+			// 		endif;
+			// 	endif;
+			// else:
+			// 	// get option 'dipo_general_options'
+			// 	if ( isset( $dipo_general_options['general_assets_url'] ) ):
+			// 		$assets = $dipo_general_options['general_assets_url'];
+			// 	endif;
+			// endif;
+
 			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE ) );
 		} // END public function add_inner_meta_boxes( $post )
 
@@ -435,7 +538,23 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			return $mediafiles;
 		}
 
-		public function get_mediatypes() {
+		public static function get_select_mediatypes( $mediafile_num = '1', $selected = 'mp3' ) {
+			$mediatypes = Dicentis_Podcast_CPT::get_mediatypes();
+			// prepare <select> mediatypes
+			$select_mediatypes = "<select id='dipo_mediafile" . $mediafile_num . "_type' name='dipo_mediafile" . $mediafile_num . "_type'>";
+			foreach ( $mediatypes as $file_type ) {
+				if ( $selected == $file_type['mime_type'] ) {
+					$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "' selected>" . $file_type['extension'] . "</option>";
+				} else {
+					$select_mediatypes .= "<option value='" . $file_type['mime_type'] . "'>" . $file_type['extension'] . "</option>";
+				}
+			}
+			$select_mediatypes .= "</select>";
+
+			return $select_mediatypes;
+		}
+
+		public static function get_mediatypes() {
 			return $default_types = array(
 				array( 'name' => 'MP3 Audio',              'type' => 'audio',    'mime_type' => 'audio/mpeg',  'extension' => 'mp3' ),
 				array( 'name' => 'BitTorrent (MP3 Audio)', 'type' => 'audio',    'mime_type' => 'application/x-bittorrent',  'extension' => 'mp3.torrent' ),
