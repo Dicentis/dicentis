@@ -150,6 +150,32 @@ if( !class_exists( 'RSS' ) ) {
 			return ( -1 == $id ) ? "" : get_post_meta( $id, '_dipo_image', true );
 		}
 
+		public function get_episodes_keywords( $id = -1 ) {
+			if ( -1 == $id )
+				return "";
+
+			$i = 0;
+			$tags_string = '';
+			$tags = wp_get_post_tags( $id, array( 'fields' => 'names' ) );
+
+			foreach ($tags as $key => $value) {
+				$tags_string .= $value;
+
+				if ( ++$i !== count( $tags ) )
+					$tags_string .= ", ";
+			}
+
+			return $tags_string;
+		}
+
+		public function episode_has_keywords( $id = -1 ) {
+			if ( -1 == $id )
+				return false;
+
+			$tag_count = wp_get_post_tags( $id, array( 'fields' => 'names' ) );
+			return ( 0 < count($tag_count) ) ? true : false;
+		}
+
 		public function get_episodes_mediafile( $id = -1 ) {
 			if ( -1 == $id )
 				return false;
