@@ -18,7 +18,7 @@ if( !class_exists( 'RSS' ) ) {
 		public function generate_podcast_feed() {
 			global $wp_query;
 
-			if ( $wp_query->is_comment_feed )
+			if ( $wp_query->is_comment_feed() )
 				load_template( ABSPATH . WPINC . '/feed-rss2-comments.php');
 			else if ( $this->is_podcast_feed() ) {
 				// load rss template and exit afterwards to exclude html code
@@ -28,7 +28,7 @@ if( !class_exists( 'RSS' ) ) {
 		}
 
 		public function is_podcast_feed() {
-			$get_array = array( 'podcast', 'itunes', 'rss' );
+			$get_array = array( 'podcast', 'itunes', 'rss', 'rss2' );
 			if ( isset( $_GET['post_type'] )
 				 and isset( $_GET['feed'] )
 				 and in_array($_GET['post_type'], $get_array )
@@ -179,6 +179,15 @@ if( !class_exists( 'RSS' ) ) {
 				return $_GET['type'];
 			else
 				return 'audio/mpeg';
+		}
+
+		public static function add_podcast_feed() {
+			add_feed( 'pod', 'RSS::do_podcast_feed' );
+		}
+
+		public static function do_podcast_feed( $in ) {
+			load_template( DIPO_TEMPLATES_DIR . '/feed-itunes.php' );
+			exit();
 		}
 	}
 }

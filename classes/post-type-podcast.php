@@ -30,6 +30,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function __construct() {
 			// register actions
 			add_action( 'init', array( $this, 'init' ) );
+			// add_action( 'query_vars', array( $this, 'rrs_add_query_var' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 			// setup new tables by simple-term-meta
@@ -95,6 +96,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 					'thumbnail',
 					'title',
 				),
+				'rewrite' => array(
+					'slug' => 'podcasts',
+				),
 				// 'menu_icon' => plugins_url( 'dicentis/assets/img/podcast-icon.png' ),
 				'menu_icon' => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPCEtLSBHZW5lcmF0b3I6IEljb01vb24uaW8gLS0+IDwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+IDxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9IiMwMDAwMDAiPiA8cGF0aCBkPSJNIDM4Ljg1LDEyLjE1M2MtOC4yMDItOC4yMDItMjEuNDk4LTguMjAyLTI5LjY5NywwLjAwTCA0LjkwOCw3LjkwOCBjIDEwLjU0NS0xMC41NDUsIDI3LjY0Mi0xMC41NDUsIDM4LjE4NywwLjAwTCAzOC44NSwxMi4xNTN6IE0gMTUuNTE2LDE4LjUxNkwgMTEuMjc0LDE0LjI3MWMgNy4wMjktNy4wMjksIDE4LjQyNi03LjAyOSwgMjUuNDUyLDAuMDBsLTQuMjQyLDQuMjQ1IEMgMjcuODAxLDEzLjgyNywgMjAuMTk5LDEzLjgyNywgMTUuNTE2LDE4LjUxNnogTSAzOS4wMCw0NS4wMGMwLjAwLDEuNjU5LTEuMzQxLDMuMDAtMy4wMCwzLjAwTDEyLjAwLDQ4LjAwIGMtMS42NTksMC4wMC0zLjAwLTEuMzQxLTMuMDAtMy4wMGwwLjAwLC0zLjAwIGMgMC44Ny00LjI3NSwgMy44NTUtNy44OSwgNy41MTgtMTAuMDAyIEMgMTUuNTY0LDMwLjU2NywgMTUuMDAsMjguODUxLCAxNS4wMCwyNy4wMGMwLjAwLTQuOTcxLCA0LjAyOS05LjAwLCA5LjAwLTkuMDBzIDkuMDAsNC4wMjksIDkuMDAsOS4wMGMwLjAwLDEuODUxLTAuNTY0LDMuNTY3LTEuNTE4LDQuOTk4QyAzNS4xNDUsMzQuMTEsIDM4LjEzLDM3LjcyNSwgMzkuMDAsNDIuMDBMMzkuMDAsNDUuMDAgeiBNIDI0LjAwLDI0LjAwQyAyMi4zNDEsMjQuMDAsIDIxLjAwLDI1LjM0MSwgMjEuMDAsMjcuMDBzIDEuMzQxLDMuMDAsIDMuMDAsMy4wMHMgMy4wMC0xLjM0MSwgMy4wMC0zLjAwUyAyNS42NTksMjQuMDAsIDI0LjAwLDI0LjAweiBNIDMyLjQ0OCw0Mi4wMEMgMzEuMjA5LDM4LjUxNCwgMjcuOTE1LDM2LjAwLCAyNC4wMCwzNi4wMHMtNy4yMDksMi41MTQtOC40NDgsNi4wMCBMMzIuNDQ4LDQyLjAwIHoiID48L3BhdGg+PC9zdmc+',
 				'can_export' => 'true',
@@ -135,16 +139,21 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		/**
 		 * creates custom taxonomies for categorizing podcasts
 		 * in series
+		 * @link http://wordpress.stackexchange.com/questions/32934/removing-taxonomy-base-using-wp-rewrite
 		 */
 		public function register_podcast_taxonomy() {
-
 
 			$podcast_show_args = array(
 				'hierarchical' => true,
 				'query_var' => 'podcast_show',
+				'show_ui' => true,
+				'show_tagcloud' => false,
+				// 'show_admin_column' => true,
 				'rewrite' => array(
+					// 'slug' => self::POST_TYPE . '/show',
 					'slug' => self::POST_TYPE . '/show',
 				),
+				// 'rewrite' => false,
 				'labels' => array(
 					'name' => __( 'Podcast Shows', 'dicentis' ),
 					'singular_name' => __( 'Podcast Show', 'dicentis' ),
@@ -206,7 +215,6 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				/* @TODO: show admin notice */
 			} else {
 				register_taxonomy( 'podcast_show', array( self::POST_TYPE ), $podcast_show_args );
-				// array_push( $this->_tax, 'podcast_show' );
 				$the_tax = get_taxonomy( 'podcast_show' );
 				$this->_tax['podcast_show'] = $the_tax->labels->name;
 			}
