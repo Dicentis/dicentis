@@ -48,11 +48,11 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	</itunes:owner>
 	<!-- @TODO: Take Description from Show -->
 	<itunes:image href="" />
-	<?php $feed->print_itunes_categories();
+<?php $feed->print_itunes_categories();
 
 	do_action( 'rss2_head' ); ?>
-	<?php while( have_posts()) : the_post(); ?>
-	<?php if ( $feed->exists_mediafile( $post->ID ) ) : ?>
+<?php while( have_posts()) : the_post(); ?>
+<?php if ( $feed->exists_mediafile( $post->ID ) ) : ?>
 		<item>
 			<title><?php the_title_rss() ?></title>
 			<link><?php the_permalink() ?></link>
@@ -60,13 +60,16 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<itunes:subtile><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtile>
 			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
 			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
-			<?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
+<?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
 			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 			<guid><?php echo get_permalink( $post->ID ); ?></guid>
 			<itunes:duration><?php echo $post_mediafile['duration']; ?></itunes:duration>
-		<?php rss_enclosure(); ?>
-		<?php do_action( 'rss2_item' ); ?>
+<?php if ( $feed->episode_has_keywords( $post->ID ) ) : ?>
+			<itunes:keywords><?php echo $feed->get_episodes_keywords( $post->ID ); ?></itunes:keywords>
+<?php endif; ?>
+<?php rss_enclosure(); ?>
+<?php do_action( 'rss2_item' ); ?>
 		</item>
 	<?php endif; ?>
 	<?php endwhile; ?>
