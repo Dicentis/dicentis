@@ -1,4 +1,7 @@
 <?php
+
+include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
+
 if ( !class_exists('Dicentis_Settings') ) {
 
 	/**
@@ -368,7 +371,12 @@ if ( !class_exists('Dicentis_Settings') ) {
 		} // END public function dicentis_settings_page()
 
 		public function setting_tabs( $current='homepage' ) {
-			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' ); ?>
+			$tabs = array(
+				'general' => 'General',
+				'itunes' => 'iTunes',
+				'import' => 'Import/Export'
+			);
+			?>
 			<div id="icon-themes" class="icon32"><br></div>
 			<h2 class="nav-tab-wrapper">
 			<?php foreach($tabs as $tab => $name){
@@ -397,11 +405,15 @@ if ( !class_exists('Dicentis_Settings') ) {
 				switch ( $tab ) {
 					default:
 					case 'general':
-						include( sprintf( "%s/../templates/settings-general.php", dirname(__FILE__) ) );
+						include( sprintf( "%s/settings-general.php", DIPO_TEMPLATES_DIR ) );
 						break;
 
 					case 'itunes':
-						include( sprintf( "%s/../templates/settings-itunes.php", dirname(__FILE__) ) );
+						include( sprintf( "%s/settings-itunes.php", DIPO_TEMPLATES_DIR ) );
+						break;
+
+					case 'import':
+						include( sprintf( "%s/settings-import.php", DIPO_TEMPLATES_DIR ) );
 						break;
 				}
 			}
