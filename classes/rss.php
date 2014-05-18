@@ -182,13 +182,12 @@ if( !class_exists( 'RSS' ) ) {
 		}
 
 		public static function add_podcast_feed() {
-			add_feed( 'podcast', 'RSS::do_podcast_feed'  );
+			add_feed( 'pod', 'RSS::do_podcast_feed' );
 		}
 
 		public static function do_podcast_feed( $in ) {
-			?>
-			<hallo>
-			<?php
+			load_template( DIPO_TEMPLATES_DIR . '/feed-itunes.php' );
+			exit();
 		}
 	}
 }

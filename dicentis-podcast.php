@@ -27,8 +27,8 @@ if( !class_exists('Dicentis') ) {
 
 		public function __construct() {
 			// Load the plugin's translated strings
-			add_action( 'init' , array( $this, 'load_localisation' ) );
-
+			add_action( 'init', array( $this, 'load_localisation' ) );
+			add_action( 'init', 'RSS::add_podcast_feed' );
 			add_filter( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'add_menu') );
 
@@ -134,7 +134,6 @@ if( !class_exists('Dicentis') ) {
 			// and not on every plugin load.
 			register_deactivation_hook( __FILE__, array('Dicentis', 'deactivate') );
 
-			// Dicentis_Podcast_CPT::rrs_add_rules();
 			RSS::add_podcast_feed();
 			flush_rewrite_rules();
 		} // END public static function activate()
