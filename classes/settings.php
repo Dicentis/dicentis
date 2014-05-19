@@ -1,6 +1,7 @@
 <?php
 
 include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
+include_once DIPO_CLASSES_DIR . '/feed-import.php';
 
 if ( !class_exists('Dicentis_Settings') ) {
 
@@ -99,6 +100,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 				'dipo_itunes_main'
 			);
 
+			/* @TODO: use args argument for callback function and use only one function for itunes_category */
 			add_settings_field(
 				'dipo_itunes_cat1',
 				__( 'iTunes Category 1', DIPO_TEXTDOMAIN ),
@@ -413,6 +415,12 @@ if ( !class_exists('Dicentis_Settings') ) {
 						break;
 
 					case 'import':
+						if ( isset( $_POST['dipo_feed_url'] ) and !empty( $_POST['dipo_feed_url'] ) ) {
+							$feed_importer = new FeedImport();
+							$feed_array = $feed_importer->import_feed( $_POST['dipo_feed_url'] );
+						}
+
+						$shows = get_terms( 'podcast_show' );
 						include( sprintf( "%s/settings-import.php", DIPO_TEMPLATES_DIR ) );
 						break;
 				}
