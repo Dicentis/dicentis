@@ -5,7 +5,7 @@
 	<form method="POST" action="">
 		<div>
 			<label name="dipo_feed_url"><?php _e( 'Feed URL', DIPO_TEXTDOMAIN ); ?></label>
-			<input type="text" id="dipo_feed_url" name="dipo_feed_url" />
+			<input type="text" id="dipo_feed_url" name="dipo_feed_url" value="http://intranet.icf-chur.ch/podcastgenvideo/feed.xml" />
 		</div>
 
 	<?php if ( !is_wp_error( $shows ) ) : ?>
@@ -21,10 +21,18 @@
 		<?php submit_button( __( 'Import Feed', DIPO_TEXTDOMAIN ), 'primary', 'dipo_import_btn' ); ?>
 	</form>
 
+	<?php 
+	// <debug>
+	echo "<pre>";
+	var_dump( $result );
+	echo "</pre>";
+	// </debug>
+	?>
 <?php if ( isset( $feed_array ) and !empty( $feed_array ) ) : ?>
 	<ul>
 <?php foreach ( $feed_array[1] as $item ) : ?>
-		<li><?php echo $item->get_title(); ?></li>
+		<li><?php //echo $item->get_duration(); ?></li>
+		<?php //var_dump( $item->get_enclosure() ); ?>
 	<?php endforeach; ?>
 	</ul>
 <?php endif;//else : ?>

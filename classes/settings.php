@@ -417,7 +417,9 @@ if ( !class_exists('Dicentis_Settings') ) {
 					case 'import':
 						if ( isset( $_POST['dipo_feed_url'] ) and !empty( $_POST['dipo_feed_url'] ) ) {
 							$feed_importer = new FeedImport();
-							$feed_array = $feed_importer->import_feed( $_POST['dipo_feed_url'] );
+							$feed_array = $feed_importer->get_feed_items( $_POST['dipo_feed_url'] );
+							$show_slug = ( isset( $_POST['dipo_show_select'] ) ) ? $_POST['dipo_show_select'] : "";
+							$result = $feed_importer->import_feed( $feed_array[0], $feed_array[1], $show_slug );
 						}
 
 						$shows = get_terms( 'podcast_show' );
