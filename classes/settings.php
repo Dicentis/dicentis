@@ -1,4 +1,8 @@
 <?php
+
+include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
+include_once DIPO_CLASSES_DIR . '/feed-import.php';
+
 if ( !class_exists('Dicentis_Settings') ) {
 
 	/**
@@ -25,7 +29,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			// General section settings
 			add_settings_section(
 				'dipo_general_main', // id
-				__( 'general Settings', 'dicentis' ), // title
+				__( 'general Settings', DIPO_TEXTDOMAIN ), // title
 				array( $this, 'general_settings_description' ),
 				'dipo_general'
 			);
@@ -33,7 +37,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			// iTunes section settings
 			add_settings_section(
 				'dipo_itunes_main', // id
-				__( 'iTunes Settings', 'dicentis' ), // title
+				__( 'iTunes Settings', DIPO_TEXTDOMAIN ), // title
 				array( $this, 'itunes_settings_description' ),
 				'dipo_itunes'
 			);
@@ -41,7 +45,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			// General Fields
 			add_settings_field(
 				'dipo_general_assets_url',
-				__( 'Asstets URL', 'dicentis' ),
+				__( 'Asstets URL', DIPO_TEXTDOMAIN ),
 				array( $this, 'general_assets_url' ),
 				'dipo_general',
 				'dipo_general_main'
@@ -50,7 +54,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			// iTunes Fields
 			add_settings_field(
 				'dipo_itunes_owner',
-				__( 'iTunes Owner', 'dicentis' ),
+				__( 'iTunes Owner', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_owner_string' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -58,7 +62,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_owner_mail',
-				__( 'iTunes Owner E-Mail', 'dicentis' ),
+				__( 'iTunes Owner E-Mail', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_owner_mail' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -66,7 +70,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_title',
-				__( 'iTunes Title', 'dicentis' ),
+				__( 'iTunes Title', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_title_string' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -74,7 +78,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_subtitle',
-				__( 'iTunes Subtitle', 'dicentis' ),
+				__( 'iTunes Subtitle', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_subtitle_string' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -82,7 +86,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_author',
-				__( 'iTunes Author', 'dicentis' ),
+				__( 'iTunes Author', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_author_string' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -90,15 +94,16 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_language',
-				__( 'iTunes Language', 'dicentis' ),
+				__( 'iTunes Language', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_language_dropdown' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
 			);
 
+			/* @TODO: use args argument for callback function and use only one function for itunes_category */
 			add_settings_field(
 				'dipo_itunes_cat1',
-				__( 'iTunes Category 1', 'dicentis' ),
+				__( 'iTunes Category 1', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_category1' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -106,7 +111,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_cat2',
-				__( 'iTunes Category 2', 'dicentis' ),
+				__( 'iTunes Category 2', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_category2' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -114,7 +119,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			add_settings_field(
 				'dipo_itunes_cat3',
-				__( 'iTunes Category 3', 'dicentis' ),
+				__( 'iTunes Category 3', DIPO_TEXTDOMAIN ),
 				array( $this, 'itunes_category3' ),
 				'dipo_itunes',
 				'dipo_itunes_main'
@@ -124,13 +129,13 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 		public function general_settings_description() { ?>
 			<p>
-			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis' ); ?>
+			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', DIPO_TEXTDOMAIN ); ?>
 			</p>
 		<?php }
 
 		public function itunes_settings_description() { ?>
 			<p>
-			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis' ); ?>
+			<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', DIPO_TEXTDOMAIN ); ?>
 			</p>
 		<?php }
 
@@ -141,7 +146,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			// echo the field ?>
 			<input id='dipo_general_assets_url' name='dipo_general_options[general_assets_url]' size='40' type='text' value='<?php echo $assets; ?>' />
-			<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_owner_string() {
@@ -150,7 +155,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$owner = $options['itunes_owner'];
 			// echo the field ?>
 			<input id='dipo_itunes_owner' name='dipo_itunes_options[itunes_owner]' size='40' type='text' value='<?php echo $owner; ?>' />
-			<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_owner_mail() {
@@ -159,7 +164,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$owner_mail = $options['itunes_owner_mail'];
 			// echo the field ?>
 			<input id='dipo_itunes_owner_mail' name='dipo_itunes_options[itunes_owner_mail]' size='40' type='mail' value='<?php echo $owner_mail; ?>' />
-			<p class="description"><?php _e('Email address of owner for contact options', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('Email address of owner for contact options', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_title_string() {
@@ -168,7 +173,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$text_string = $options['itunes_title'];
 			// echo the field ?>
 			<input id='dipo_itunes_title' name='dipo_itunes_options[itunes_title]' size='40' type='text' value='<?php echo $text_string; ?>' />
-			<p class="description"><?php _e('Title of podcast show. If multitple shows are defined please use local settings for shows.', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('Title of podcast show. If multitple shows are defined please use local settings for shows.', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_subtitle_string() {
@@ -177,7 +182,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$text_string = $options['itunes_subtitle'];
 			// echo the field ?>
 			<input id='dipo_itunes_subtitle' name='dipo_itunes_options[itunes_subtitle]' size='40' type='text' value='<?php echo $text_string; ?>' />
-			<p class="description"><?php _e('Subtitle of podcast show. If multitple shows are defined please use local settings for shows.', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('Subtitle of podcast show. If multitple shows are defined please use local settings for shows.', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_author_string() {
@@ -186,7 +191,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$author = $options['itunes_author'];
 			// echo the field ?>
 			<input id='dipo_itunes_author' name='dipo_itunes_options[itunes_author]' size='40' type='text' value='<?php echo $author; ?>' />
-			<p class="description"><?php _e('The content of this tag is shown in the Artist column in iTunes', 'dicentis' ); ?></p>
+			<p class="description"><?php _e('The content of this tag is shown in the Artist column in iTunes', DIPO_TEXTDOMAIN ); ?></p>
 		<?php }
 
 		public function itunes_language_dropdown() {
@@ -218,7 +223,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>
 				<option value=''>
-				<?php _e( 'None', 'dicentis' ); ?>
+				<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
 				</option>
 
 			<?php foreach ($cats as $catname => $subcats) {
@@ -250,7 +255,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>
 				<option value=''>
-				<?php _e( 'None', 'dicentis' ); ?>
+				<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
 				</option>
 
 			<?php foreach ($cats as $catname => $subcats) {
@@ -282,7 +287,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 
 			<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>
 				<option value=''>
-				<?php _e( 'None', 'dicentis' ); ?>
+				<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
 				</option>
 
 			<?php foreach ($cats as $catname => $subcats) {
@@ -347,8 +352,8 @@ if ( !class_exists('Dicentis_Settings') ) {
 		 */
 		public function add_menu() {
 			add_options_page(
-				__( 'dicentis Podcast Settings', 'dicentis' ),
-				__( 'dicentis Podcast', 'dicentis' ),
+				__( 'dicentis Podcast Settings', DIPO_TEXTDOMAIN ),
+				__( 'dicentis Podcast', DIPO_TEXTDOMAIN ),
 				'manage_options', // capabilities
 				'dicentis_settings', // slug
 				array( $this, 'dicentis_settings_page' )
@@ -360,7 +365,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 		 */
 		public function dicentis_settings_page() {
 			if( !current_user_can('manage_options') ) {
-				wp_die( __('You do not have sufficient permissions to access this page.', 'dicentis' ) );
+				wp_die( __('You do not have sufficient permissions to access this page.', DIPO_TEXTDOMAIN ) );
 			}
 
 			// Render the settings template
@@ -368,7 +373,12 @@ if ( !class_exists('Dicentis_Settings') ) {
 		} // END public function dicentis_settings_page()
 
 		public function setting_tabs( $current='homepage' ) {
-			$tabs = array( 'general' => 'General', 'itunes' => 'iTunes' ); ?>
+			$tabs = array(
+				'general' => 'General',
+				'itunes' => 'iTunes',
+				'import' => 'Import/Export'
+			);
+			?>
 			<div id="icon-themes" class="icon32"><br></div>
 			<h2 class="nav-tab-wrapper">
 			<?php foreach($tabs as $tab => $name){
@@ -397,11 +407,27 @@ if ( !class_exists('Dicentis_Settings') ) {
 				switch ( $tab ) {
 					default:
 					case 'general':
-						include( sprintf( "%s/../templates/settings-general.php", dirname(__FILE__) ) );
+						include( sprintf( "%s/settings-general.php", DIPO_TEMPLATES_DIR ) );
 						break;
 
 					case 'itunes':
-						include( sprintf( "%s/../templates/settings-itunes.php", dirname(__FILE__) ) );
+						include( sprintf( "%s/settings-itunes.php", DIPO_TEMPLATES_DIR ) );
+						break;
+
+					case 'import':
+						if ( isset( $_POST['dipo_feed_url'] ) and !empty( $_POST['dipo_feed_url'] ) ) {
+							$feed_importer = new FeedImport( $_POST['dipo_feed_url'] );
+							$feed_array = $feed_importer->get_feed_items();
+							$show_slug = ( isset( $_POST['dipo_show_select'] ) ) ? $_POST['dipo_show_select'] : "";
+							$result = $feed_importer->import_feed( $feed_array[0], $feed_array[1], $show_slug );
+						}
+
+						$args = array(
+							'orderby'    => 'name',
+							'hide_empty' => false,
+						);
+						$shows = get_terms( 'podcast_show', $args );
+						include( sprintf( "%s/settings-import.php", DIPO_TEMPLATES_DIR ) );
 						break;
 				}
 			}
