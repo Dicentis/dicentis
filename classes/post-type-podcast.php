@@ -8,7 +8,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	 * The Podcast Post Type
 	 */
 	class Dicentis_Podcast_CPT {
-		const POST_TYPE = 'podcast';
+		const POST_TYPE = 'dipo_podcast';
 
 		private $_meta  = array(
 			'_dipo_subtitle',
@@ -285,7 +285,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function filter_posts() {
 			global $typenow;
 
-			if( 'podcast' == $typenow ){
+			if( self::POST_TYPE == $typenow ){
 
 				/* push each taxonomy name, which is used in this plugin
 				 * into this->_tax array. filter_posts() uses this array
@@ -662,7 +662,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			}
 
 			$args = array(
-				'post_type' => 'podcast',
+				'post_type' => self::POST_TYPE,
 				'order' => 'DESC',
 				'oderby' => 'date',
 				'tax_query' => array(

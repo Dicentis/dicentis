@@ -61,7 +61,7 @@ if( !class_exists('Dicentis') ) {
 		 */
 		public function add_menu() {
 			add_submenu_page(
-				'edit.php?post_type=podcast', // add to podcast menu
+				'edit.php?post_type=' . Dicentis_Podcast_CPT::POST_TYPE, // add to podcast menu
 				__( 'Dashboard' ),
 				__( 'Dashboard' ),
 				'edit_posts',
@@ -89,7 +89,7 @@ if( !class_exists('Dicentis') ) {
 			global $submenu;
 
 			// Look for $find_page and the submenu $find_sub
-			$find_page = 'edit.php?post_type=podcast';
+			$find_page = 'edit.php?post_type=' . Dicentis_Podcast_CPT::POST_TYPE;
 			$find_sub  = 'Dashboard';
 			// pre_print($submenu);
 			// Loop thru $submenu until $find_page is found
@@ -154,7 +154,7 @@ if( !class_exists('Dicentis') ) {
 		public function single_template( $single_template ) {
 			global $post;
 
-			if ( $post->post_type == 'podcast' ) {
+			if ( $post->post_type == Dicentis_Podcast_CPT::POST_TYPE ) {
 				$single_template = dirname( __FILE__ ) . '/templates/episode-single.php';
 			}
 
@@ -164,7 +164,7 @@ if( !class_exists('Dicentis') ) {
 		public function podcast_archive_template( $archive_template ) {
 			global $post;
 
-			//  if ( is_post_type_archive ( 'podcast' ) ) {
+			//  if ( is_post_type_archive ( Dicentis_Podcast_CPT::POST_TYPE ) ) {
 			// 	$archive_template = dirname( __FILE__ ) . '/templates/podcast-archive.php';
 			// }
 
