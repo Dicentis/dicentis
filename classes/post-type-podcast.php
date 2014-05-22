@@ -8,7 +8,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 	 * The Podcast Post Type
 	 */
 	class Dicentis_Podcast_CPT {
-		const POST_TYPE = 'podcast';
+		const POST_TYPE = 'dipo_podcast';
+		const POST_TYPE_NAME = 'podcast';
 
 		private $_meta  = array(
 			'_dipo_subtitle',
@@ -285,7 +286,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function filter_posts() {
 			global $typenow;
 
-			if( 'podcast' == $typenow ){
+			if( self::POST_TYPE == $typenow ){
 
 				/* push each taxonomy name, which is used in this plugin
 				 * into this->_tax array. filter_posts() uses this array
@@ -488,8 +489,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function add_meta_boxes() {
 			// Add this metabox to every selected post
 			add_meta_box(
-				sprintf( 'dicentis_%s_selection', self::POST_TYPE ),
-				sprintf( __( '%s Information', 'dicentis' ), ucwords( str_replace( "_", " ", self::POST_TYPE ) ) ),
+				sprintf( 'dicentis_%s_selection', self::POST_TYPE_NAME ),
+				sprintf( __( '%s Information', 'dicentis' ), ucwords( str_replace( "_", " ", self::POST_TYPE_NAME ) ) ),
 				array( $this, 'add_inner_meta_boxes' ),
 				self::POST_TYPE
 			);
@@ -533,7 +534,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// 	endif;
 			// endif;
 
-			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE ) );
+			include( sprintf( '%s/%s_metabox.php', DIPO_TEMPLATES_DIR, self::POST_TYPE_NAME ) );
 		} // END public function add_inner_meta_boxes( $post )
 
 		public function get_mediafile_info( $post_id ) {
@@ -662,7 +663,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			}
 
 			$args = array(
-				'post_type' => 'podcast',
+				'post_type' => self::POST_TYPE,
 				'order' => 'DESC',
 				'oderby' => 'date',
 				'tax_query' => array(
