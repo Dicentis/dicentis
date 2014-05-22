@@ -51,6 +51,12 @@
 			</select>
 		</div>
 	<?php endif; ?>
+
+		<div>
+			<label name="dipo_feed_match"><?php _e( 'Try to match with existing episodes', DIPO_TEXTDOMAIN ); ?></label>
+			<input type="checkbox" id="dipo_feed_match" name="dipo_feed_match" />
+			<p class="description"><?php _e( 'If this option is checked Dicentis tries to find a match. That means if an episode with the same date already exists the episode will be merge with the one in WordPress and only the additional medialink is added.', DIPO_TEXTDOMAIN ); ?></p>
+		</div>
 		<?php submit_button( __( 'Import Feed', DIPO_TEXTDOMAIN ), 'primary', 'dipo_import_btn' ); ?>
 	</form>
 </div>

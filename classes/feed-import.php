@@ -8,6 +8,7 @@ include_once( ABSPATH . WPINC . '/feed.php' );
 */
 class FeedImport extends RSS {
 	private $feed_url;
+	private $try_match = false;
 
 	function __construct( $url ) {
 		parent::__construct();
@@ -72,46 +73,90 @@ class FeedImport extends RSS {
 				'post_date'    => $item_date,
 				'post_content' => $item->get_description(),
 				'post_status'  => 'publish',
-				'post_type'    => 'podcast',
+				'post_type'    => Dicentis_Podcast_CPT::POST_TYPE,
 				'tags_input'   => $enclosure->get_keywords(),
 			);
-			
-			$post_id = wp_insert_post($post);
 
-			if ( !empty( $show_slug ) ) {
-				$term_id = term_exists( $show_slug, 'podcast_show' );
-				wp_set_post_terms( $post_id, $term_id, 'podcast_show' );
+			if ( $this->get_try_match() ) {
+				$args = array(
+					'post_type' => Dicentis_Podcast_CPT::POST_TYPE,
+					'tax_query' => array(
+						'taxonomy' => $show_slug,
+					),
+					'date_query' => array(
+						array(
+							'year'  => $item->get_date('Y'),
+							'month' => $item->get_date('m'),
+							'day'   => $item->get_date('d'),
+						),
+					),
+				);
+				$query = new WP_Query( $args );
+				if ( $query->have_posts() and 1 === $query->post_count ) {
+					$query->the_post();
+					$post_id = $query->post->ID;
+
+					$medialink = esc_url_raw( $enclosure->get_link() );
+					$type = htmlspecialchars( $enclosure->get_type() );
+					$duration = htmlspecialchars( $enclosure->get_duration('hh:mm:ss') );
+					$length = htmlspecialchars( $enclosure->get_length() );
+
+					$next_number = get_post_meta( $post_id, '_dipo_max_mediafile_number', true );
+					if ( 0 < $next_number ) {
+						$next_number++;
+					} else {
+						$next_number = 1;
+					}
+
+					$mediafile = array(
+						'id'        => $next_number,
+						'medialink' => $medialink,
+						'mediatype' => $type,
+						'duration'  => $duration,
+						'filesize'  => $length
+					);
+					update_post_meta( $post_id, '_dipo_mediafile' . $next_number, $mediafile );
+					update_post_meta( $post_id, '_dipo_max_mediafile_number', $next_number );
+				}
+			} else {
+
+				$post_id = wp_insert_post($post);
+
+				if ( !empty( $show_slug ) ) {
+					$term_id = term_exists( $show_slug, 'podcast_show' );
+					wp_set_post_terms( $post_id, $term_id, 'podcast_show' );
+				}
+
+				// save episodes data as metadata for post
+				$subtitle = htmlspecialchars( $this->get_subtitle( $item ) );
+				update_post_meta( $post_id, '_dipo_subtitle', $subtitle );
+
+				$summary = htmlspecialchars( $this->get_summary( $item ) );
+				update_post_meta( $post_id, '_dipo_summary', $summary );
+
+				$explicit = htmlspecialchars( strtolower( $this->get_explicit( $item ) ) );
+				$possible_values = array( 'yes', 'no', 'clean' );
+				if ( in_array( $explicit, $possible_values ) ) {
+					update_post_meta( $post_id, '_dipo_explicit', $explicit );
+				}
+
+				$medialink = esc_url_raw( $enclosure->get_link() );
+				$type = htmlspecialchars( $enclosure->get_type() );
+				$duration = htmlspecialchars( $enclosure->get_duration('hh:mm:ss') );
+				$length = htmlspecialchars( $enclosure->get_length() );
+				$mediafile = array(
+					'id'        => 1,
+					'medialink' => $medialink,
+					'mediatype' => $type,
+					'duration'  => $duration,
+					'filesize'  => $length
+				);
+				update_post_meta( $post_id, '_dipo_mediafile1', $mediafile );
+				update_post_meta( $post_id, '_dipo_max_mediafile_number', '1' );
+
+
+				array_push( $result, $post_id );
 			}
-
-			// save episodes data as metadata for post
-			$subtitle = htmlspecialchars( $this->get_subtitle( $item ) );
-			update_post_meta( $post_id, '_dipo_subtitle', $subtitle );
-
-			$summary = htmlspecialchars( $this->get_summary( $item ) );
-			update_post_meta( $post_id, '_dipo_summary', $summary );
-
-			$explicit = htmlspecialchars( strtolower( $this->get_explicit( $item ) ) );
-			$possible_values = array( 'yes', 'no', 'clean' );
-			if ( in_array( $explicit, $possible_values ) ) {
-				update_post_meta( $post_id, '_dipo_explicit', $explicit );
-			}
-
-			$medialink = esc_url_raw( $enclosure->get_link() );
-			$type = htmlspecialchars( $enclosure->get_type() );
-			$duration = htmlspecialchars( $enclosure->get_duration('hh:mm:ss') );
-			$length = htmlspecialchars( $enclosure->get_length() );
-			$mediafile = array(
-				'id'        => 1,
-				'medialink' => $medialink,
-				'mediatype' => $type,
-				'duration'  => $duration,
-				'filesize'  => $length
-			);
-			update_post_meta( $post_id, '_dipo_mediafile1', $mediafile );
-			update_post_meta( $post_id, '_dipo_max_mediafile_number', '1' );
-
-
-			array_push( $result, $post_id );
 		endforeach;
 
 		return $result;
@@ -130,5 +175,14 @@ class FeedImport extends RSS {
 	private function get_explicit( $item ) {
 		$summary = $item->get_item_tags( ITUNES_NAMESPACE, 'explicit' );
 		return $summary[0]['data'];
+	}
+
+	public function set_try_match( $match ) {
+		if ( 'on' == $match )
+			$this->try_match = true;
+	}
+
+	public function get_try_match() {
+		return $this->try_match;
 	}
 }
