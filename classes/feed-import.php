@@ -105,7 +105,7 @@ class FeedImport extends RSS {
 		update_post_meta( $post_id, '_dipo_mediafile1', $mediafile );
 		update_post_meta( $post_id, '_dipo_max_mediafile_number', '1' );
 
-		$this->created_episodes;
+		$this->created_episodes++;
 		return $post_id;
 	}
 
@@ -113,7 +113,11 @@ class FeedImport extends RSS {
 			$args = array(
 				'post_type' => Dicentis_Podcast_CPT::POST_TYPE,
 				'tax_query' => array(
-					'taxonomy' => $show_slug,
+					array(
+						'taxonomy' => 'podcast_show',
+						'field' => 'slug',
+						'terms' => $show_slug
+					)
 				),
 				'date_query' => array(
 					array(
@@ -163,8 +167,6 @@ class FeedImport extends RSS {
 
 				// Either no match is found or multiple episodes exists (ambiguous) -> create new post
 				$post_id = $this->save_new_episode( $item, $show_slug );
-
-				$this->created_episodes;
 				return $post_id;
 
 			endif;
