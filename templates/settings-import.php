@@ -2,32 +2,33 @@
 	<div id="icon-tools" class="icon32"></div>
 	<h3><?php _e( 'Import old Podcast Feeds', DIPO_TEXTDOMAIN ); ?></h3>
 
-<?php if ( isset( $result ) && -1 === $result[0] ) : ?>
+<?php if ( isset( $result ) && -1 === $result['imported'] ) : ?>
 
 	<div class="error settings-error">
 		<h3><?php _e( 'Import Error', DIPO_TEXTDOMAIN ); ?></h3>
-		<strong><?php echo $result[1]; ?></strong>
+		<p><strong><?php echo $result[1]; ?></strong></p>
 	</div>
 
-<?php elseif ( isset( $result ) && 1 === $result[0] ) : ?>
+<?php elseif ( isset( $result ) && 1 === $result['imported'] ) : ?>
 
 	<div class="updated settings-error">
 		<h3><?php _e( 'Import Successful', DIPO_TEXTDOMAIN ); ?></h3>
-		<strong><?php echo sprintf( __( 'Congratulation! %s episode was successfully imported.', DIPO_TEXTDOMAIN ), $result[0] ); ?></strong>
+		<p><strong><?php echo sprintf( __( 'Congratulation! %s episode was successfully imported.', DIPO_TEXTDOMAIN ), $result['imported'] ); ?></strong></p>
 	</div>
 
-<?php elseif ( isset( $result ) && 0 < $result[0] ) : ?>
+<?php elseif ( isset( $result ) && 0 < $result['imported'] ) : ?>
 
 	<div class="updated settings-error">
 		<h3><?php _e( 'Import Successful', DIPO_TEXTDOMAIN ); ?></h3>
-		<strong><?php echo sprintf( __( 'Congratulation! %s episodes were successfully imported.', DIPO_TEXTDOMAIN ), $result[0] ); ?></strong>
+		<p><strong><?php echo sprintf( __( 'Congratulation! %s episodes were successfully imported.', DIPO_TEXTDOMAIN ), $result['imported'] ); ?></strong></p>
+		<p><?php echo sprintf( __( 'Out of %s: New episodes (%s); Updated episodes (%s)', DIPO_TEXTDOMAIN ), $result['imported'], $result['created'], $result['updated'] ); ?></p>
 	</div>
 
 <?php elseif ( isset( $result ) ) : ?>
 
 	<div class="error settings-error">
 		<h3><?php _e( 'Import Error', DIPO_TEXTDOMAIN ); ?></h3>
-		<strong><?php _e( 'An unknown Error occured. :( If the error persists please contact the plugin author and provide detailed information.', DIPO_TEXTDOMAIN ); ?></strong>
+		<p><strong><?php _e( 'An unknown Error occured. :( If the error persists please contact the plugin author and provide detailed information.', DIPO_TEXTDOMAIN ); ?></strong></p>
 	</div>
 
 <?php endif; ?>
