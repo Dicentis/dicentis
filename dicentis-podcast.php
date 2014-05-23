@@ -16,9 +16,10 @@ Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
 License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
-include_once 'lib/tgm-plugin.php';
 include_once plugin_dir_path( __FILE__ ) . 'dicentis-define.php';
-include_once plugin_dir_path( __FILE__ ) . 'classes/rss.php';
+include_once DIPO_LIB_DIR . '/tgm-plugin.php';
+include_once DIPO_CLASSES_DIR . '/rss.php';
+include_once DIPO_CLASSES_DIR . '/taxonomies/series.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
