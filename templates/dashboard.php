@@ -1,9 +1,9 @@
 <?php
 function dp_get_feed_link( $show_slug, $feed = 'rss' ) {
 	$show_feed_rss2 = trailingslashit( get_home_url() ) .
-		"?post_type=podcast&podcast_show=" . $show_slug . "&feed=rss2";
+		"?post_type=dipo_podcast&podcast_show=" . $show_slug . "&feed=rss2";
 	$show_feed_itunes = trailingslashit( get_home_url() ) .
-		"?post_type=podcast&podcast_show=" . $show_slug . "&feed=itunes";
+		"?post_type=dipo_podcast&podcast_show=" . $show_slug . "&feed=itunes";
 
 	switch ( $feed ) {
 		case 'itunes':
