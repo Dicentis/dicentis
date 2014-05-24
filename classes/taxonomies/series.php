@@ -23,11 +23,8 @@ if ( !function_exists('dipo_get_series') ) {
 		)
 	) {
 
-		if ( taxonomy_exists( 'celebration_series' ) ) {
-			$series = get_terms( 'celebration_series', $args );
-		} elseif ( taxonomy_exists( 'podcast_series' ) ) {
-			$series = get_terms( 'podcast_series', $args );
-		}
+		$series_slug = dipo_get_series_slug();
+		$series = get_terms( $series_slug, $args );
 
 		return isset($series) ? $series : null;
 	} // end function dipo_get_series()
@@ -46,7 +43,7 @@ if ( !function_exists('dipo_get_episodes') ) {
 	) {
 
 		$post_type = Dicentis_Podcast_CPT::POST_TYPE;
-		$series_slug = dipo_get_slug();
+		$series_slug = dipo_get_series_slug();
 
 		$args = array(
 			'post_type' => $post_type,
@@ -79,14 +76,77 @@ if ( !function_exists('dipo_get_episodes') ) {
 	} // end function dipo_get_episodes()
 }
 
-if ( !function_exists('dipo_get_slug') ) {
+if ( !function_exists('dipo_get_episode_meta') ) {
+	/**
+	 * With a given episode ID this function gathers all relevant information
+	 * for this episode. This includes: Subtitle, Summary, Image, GUID,
+	 * Explicit, Number of mediafiles, Mediafiles (array), Show (array), 
+	 * Speaker (array), Series (array), Tags (array)
+	 * If $episode_id is not a valid episode of post type 'dipo_podcast' `null`
+	 * is returned.
+	 * @param  int $episode_id post ID of a episode
+	 * @return array             episode information as array
+	 */
+	function dipo_get_episode_meta( $episode_id ) {
+
+		if ( Dicentis_Podcast_CPT::POST_TYPE !== 
+			get_post( $episode_id )->post_type )
+			return null;
+
+		$dipo_media_count = get_post_meta( $episode_id, '_dipo_max_mediafile_number', true );
+		// $mediatypes  = $this->get_mediatypes();
+
+		// retrieve the metadata values if they exist
+		$dipo_subtitle = get_post_meta( $episode_id, '_dipo_subtitle', true );
+		$dipo_summary  = get_post_meta( $episode_id, '_dipo_summary', true );
+		$dipo_image    = get_post_meta( $episode_id, '_dipo_image', true );
+		$dipo_guid     = get_post_meta( $episode_id, '_dipo_guid', true );
+		$dipo_explicit = get_post_meta( $episode_id, '_dipo_explicit', true );
+		$episode_tags  = wp_get_post_tags( $episode_id );
+
+		$dipo_mediafiles = array();
+
+		for ( $i=1; $i <= $dipo_media_count; $i++ ) { 
+			$temp_mediafile = get_post_meta( $episode_id, '_dipo_mediafile' . $i, true );
+			array_push( $dipo_mediafiles, $temp_mediafile );
+		}
+
+
+		$dipo_show  = wp_get_post_terms( $episode_id, 'podcast_show' );
+
+		require_once DIPO_CLASSES_DIR . '/taxonomies/speaker.php';
+		if ( function_exists('dipo_get_speaker_slug') )
+			$dipo_speaker  = wp_get_post_terms( $episode_id, dipo_get_speaker_slug() );
+
+		$dipo_series  = wp_get_post_terms( $episode_id, dipo_get_series_slug() );
+
+		$episode_meta = array(
+			'episode_id' => $episode_id,
+			'dipo_subtitle' => $dipo_subtitle,
+			'dipo_summary' => $dipo_summary,
+			'dipo_image' => $dipo_image,
+			'dipo_guid' => $dipo_guid,
+			'dipo_explicit' => $dipo_explicit,
+			'dipo_media_count' => $dipo_media_count,
+			'dipo_mediafiles' => $dipo_mediafiles,
+			'dipo_podcast_show' => $dipo_show,
+			'dipo_speaker' => $dipo_speaker,
+			'dipo_series' => $dipo_series,
+			'dipo_tags' => $episode_tags,
+
+		);
+		return $episode_meta;
+	}
+}
+
+if ( !function_exists('dipo_get_series_slug') ) {
 	/**
 	 * checks if other plugins are active which registered new series
 	 * taxonomies and returns the correct slug for the active series
 	 * taxonomy
 	 * @return string returns the correct active slug for series taxonomy
 	 */
-	function dipo_get_slug() {
+	function dipo_get_series_slug() {
 		// assume no plugin is active
 		$series_slug = 'podcast_series';
 
@@ -96,7 +156,7 @@ if ( !function_exists('dipo_get_slug') ) {
 		}
 
 		return $series_slug;
-	} // end function dipo_get_slug()
+	} // end function dipo_get_series_slug()
 }
 
 if ( !function_exists('dipo_is_celebration_plugin_active') ) {
