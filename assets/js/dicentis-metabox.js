@@ -45,6 +45,7 @@ jQuery(document).ready(function($) {
 		$('#dipo_mediafiles_count').val(id);
 
 		var $cp = $('#dipo_div_wrapper1').clone();
+		$cp.removeAttr('style');
 		$cp.attr('id', 'dipo_div_wrapper' + id);
 
 		var file = 'dipo_mediafile' + id;
