@@ -44,35 +44,37 @@ jQuery(document).ready(function($) {
 		var id = parseInt( $('#dipo_mediafiles_count').val() ) + 1;
 		$('#dipo_mediafiles_count').val(id);
 
-		var new_file = '<tr>' +
-			'<input id="dipo_mediafile' + id +
-				'" type="hidden" name="dipo_mediafile' + id +
-				'" value="update" />';
-		new_file += '<td><input id="dipo_mediafile' + id +
-				'_link" type="text" name="dipo_mediafile' + id +
-				'_link" value="" /></td>';
-		new_file += '<td class="mediatype-list"></td>';
-		new_file += '<td><input id="dipo_mediafile' + id +
-				'_duration" type="text" name="dipo_mediafile' + id +
-				'_duration" value="" /></td>';
-		new_file += '<td><input id="dipo_mediafile' + id +
-				'_size" type="text" name="dipo_mediafile' + id +
-				'_size" value="" /></td>' +
-			'<td>';
-		new_file += '<div file="' + id +
-			'" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i>' +
-			'Remove</div>' +
-			'</td>' +
-			'</tr>';
-		$('#dipo_mediafiles_table > tbody:last').append( new_file );
+		var $cp = $('#dipo_div_wrapper1').clone();
+		$cp.attr('id', 'dipo_div_wrapper' + id);
 
-		$('.mediatype-list').append( get_select_mediatypes( id, $('#dipo_mediafile1_type') ) );
-		$('.mediatype-list').removeClass('mediatype-list')
+		var file = 'dipo_mediafile' + id;
+		$cp.children().children('#dipo_mediafile1').attr('id', file ).attr('name', file );
+
+		var link = file + '_link';
+		$cp.children().children().children('.dipo_media_link_label').attr('name', link );
+		$cp.children().children().children('.remove_mediafile').attr('file', id );
+		$cp.children().children('#dipo_mediafile1_link').attr('id', link ).attr('name', link ).val('');
+
+		var type     = file + '_type';
+		var duration = file + '_duration';
+		var size     = file + '_size';
+		$cp.children().children().children('.dipo_media_type_label').attr('name', type );
+		$cp.children().children().children('.dipo_media_duration_label').attr('name', duration );
+		$cp.children().children().children('.dipo_media_size_label').attr('name', size );
+
+		$cp.children().children('#dipo_mediafile1_type').attr('id', type).attr('name', type).children('option:selected').val('audio/mpeg');
+		$cp.children().children('#dipo_mediafile1_duration').attr('id', duration).attr('name', duration).val('');
+		$cp.children().children('#dipo_mediafile1_size').attr('id', size).attr('name', size).val('');
+
+		$('#dipo_tab_media').append( $cp );
+
+		// $('.mediatype-list').append( get_select_mediatypes( id, $('#dipo_mediafile1_type') ) );
+		// $('.mediatype-list').removeClass('mediatype-list')
 	});
 
 	$(document).on('click', '.remove_mediafile', function() {
 		var id = $(this).attr('file');
-		$(this).parent().parent().css('display', 'none');
+		$(this).parent().parent().parent().css('display', 'none');
 		$('#dipo_mediafile' + id).val('remove');
 	});
 });

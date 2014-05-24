@@ -1,11 +1,11 @@
 <div class="metabox-tabs-div">
 
 	<ul id="metabox-tabs" class="metabox-tabs">
-		<li class="dipo_tab_general">
-			<a class="" href="javascript:void(null);"><?php _e( 'General', DIPO_TEXTDOMAIN ); ?></a>
+		<li class="active dipo_tab_general">
+			<a class="active" href="javascript:void(null);"><?php _e( 'General', DIPO_TEXTDOMAIN ); ?></a>
 		</li>
-		<li class="active dipo_tab_mediafiles">
-			<a class="active" href="javascript:void(null);"><?php _e( 'Mediafiles', DIPO_TEXTDOMAIN ); ?></a>
+		<li class="dipo_tab_mediafiles">
+			<a href="javascript:void(null);"><?php _e( 'Mediafiles', DIPO_TEXTDOMAIN ); ?></a>
 		</li>
 	</ul>
 
@@ -78,29 +78,49 @@
 	</div>
 
 	<div class="dipo_tab_mediafiles">
-		<div class="dipo_metabox_field">
+		<div id="dipo_tab_media" class="dipo_metabox_field">
 
 			<?php 
 			/* @TODO Information for mediatypes and that one type should only appear once per post */
 			if ( empty($mediafiles) ) :
 				$media_count = 1; ?>
-				<tr>
-					<input id="dipo_mediafile1" type="hidden" name="dipo_mediafile1" value="update" />
-					<td><input id="dipo_mediafile1_link" type="text" name="dipo_mediafile1_link" value="" /></td>
-					<td><?php echo Dicentis_Podcast_CPT::get_select_mediatypes(); ?></td>
-					<td><input id="dipo_mediafile1_duration" type="text" name="dipo_mediafile1_duration" value="" /></td>
-					<td><input id="dipo_mediafile1_size" type="text" name="dipo_mediafile1_size" value="" /></td>
-					<td>
-						<div file="1" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i><?php _e('Remove', DIPO_TEXTDOMAIN ); ?></div>
-					</td>
-				</tr>
+				<div id="dipo_div_wrapper1" class="dipo_file_wrapper">
+
+					<div class="dipo_mediafile_wrapper dipo_medialink">
+						<input id="dipo_mediafile1" type="hidden" name="dipo_mediafile1" value="update" />
+
+						<div class="dipo_mediafile_labels" >
+							<label class="dipo_media_link_label" name="dipo_mediafile1_link"><?php _e( 'Medialink', DIPO_TEXTDOMAIN ); ?></label>
+							<div file="1" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i><?php _e('Remove this mediafile', DIPO_TEXTDOMAIN ); ?></div>
+						</div>
+
+						<input id="dipo_mediafile1_link" type="text" name="dipo_mediafile1_link" value="" />
+
+					</div>
+					<div class="dipo_mediafile_wrapper dipo_mediafile_meta">
+
+						<div class="dipo_mediafile_labels" >
+							<label class="dipo_media_type_label" name="dipo_mediafile1_type"><?php _e( 'Media Type', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_duration_label" name="dipo_mediafile1_duration"><?php _e( 'Duration', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_size_label" name="dipo_mediafile1_size"><?php _e( 'Filesize', DIPO_TEXTDOMAIN ); ?></label>
+						</div>
+
+						<?php echo Dicentis_Podcast_CPT::get_select_mediatypes(); ?>
+						<input id="dipo_mediafile1_duration" type="text" name="dipo_mediafile1_duration" value="" />
+						<input id="dipo_mediafile1_size" type="text" name="dipo_mediafile1_size" value="" />
+
+					</div>
+
+				</div>
 			<?php else :
 				foreach ( $mediafiles as $key => $mediafile ) : ?>
-					<div class="dipo_mediafile_wrapper">
+				<div id="dipo_div_wrapper<?php echo $mediafile['id']; ?>" class="dipo_file_wrapper">
+
+					<div class="dipo_mediafile_wrapper dipo_medialink">
 						<input id="dipo_mediafile<?php echo $mediafile['id']; ?>" type="hidden" name="dipo_mediafile<?php echo $mediafile['id']; ?>" value="update" />
 
 						<div class="dipo_mediafile_labels" >
-							<label class="dipo_medialink_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link"><?php echo $mediafile['id'].'. '; _e( 'Medialink', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_link_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_link"><?php _e( 'Medialink', DIPO_TEXTDOMAIN ); ?></label>
 							<div file="<?php echo $mediafile['id']; ?>" class="remove_mediafile button-secondary"><i class="dashicons-before dashicons-trash"></i><?php _e('Remove this mediafile', DIPO_TEXTDOMAIN ); ?></div>
 						</div>
 
@@ -110,9 +130,9 @@
 					<div class="dipo_mediafile_wrapper dipo_mediafile_meta">
 
 						<div class="dipo_mediafile_labels" >
-							<label class="dipo_medialink_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_type"><?php _e( 'Media Type', DIPO_TEXTDOMAIN ); ?></label>
-							<label class="dipo_medialink_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration"><?php _e( 'Duration', DIPO_TEXTDOMAIN ); ?></label>
-							<label class="dipo_medialink_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size"><?php _e( 'Filesize', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_type_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_type"><?php _e( 'Media Type', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_duration_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration"><?php _e( 'Duration', DIPO_TEXTDOMAIN ); ?></label>
+							<label class="dipo_media_size_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size"><?php _e( 'Filesize', DIPO_TEXTDOMAIN ); ?></label>
 						</div>
 
 						<?php echo Dicentis_Podcast_CPT::get_select_mediatypes( $mediafile['id'], $mediafile['mediatype'] ); ?>
@@ -120,13 +140,16 @@
 						<input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /> (<?php echo $this->human_readable_filesize($mediafile['filesize']); ?>)
 
 					</div>
+
+				</div>
 			<?php endforeach;
 				endif; ?>
 
-			<input id="dipo_mediafiles_count" name="dipo_mediafiles_count" type="hidden" value="<?php echo $media_count ?>" />
-			<div id="add_mediafile" class="button-primary"><i class="dashicons-before dashicons-admin-media"></i><?php _e('Add Mediafile', DIPO_TEXTDOMAIN ); ?></div>
-			<p class="description"><?php _e('Enter a media URL or use a file from the Media Library. The duration should be formatted HH:MM:SS, H:MM:SS, MM:SS, or M:SS (H = hours, M = minutes, S = seconds). The filesize should be in Bytes. If no filesize is given it trys to calculate the filesize automatically (saving takes longer).', DIPO_TEXTDOMAIN ); ?></p>
 		</div>
+
+		<input id="dipo_mediafiles_count" name="dipo_mediafiles_count" type="hidden" value="<?php echo $media_count ?>" />
+		<div id="add_mediafile" class="button-primary"><i class="dashicons-before dashicons-admin-media"></i><?php _e('Add Mediafile', DIPO_TEXTDOMAIN ); ?></div>
+		<p class="description"><?php _e('Enter a media URL or use a file from the Media Library. The duration should be formatted HH:MM:SS, H:MM:SS, MM:SS, or M:SS (H = hours, M = minutes, S = seconds). The filesize should be in Bytes. If no filesize is given it trys to calculate the filesize automatically (saving takes longer).', DIPO_TEXTDOMAIN ); ?></p>
 	</div>
 
 </div>
