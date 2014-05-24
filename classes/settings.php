@@ -16,11 +16,13 @@ if ( !class_exists('Dicentis_Settings') ) {
 			add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		} // END function __construct() 
 
-
 		/**
 		 * hook into WP's admin_init action hok
 		 */
 		public function admin_init() {
+			// script & style action with page detection
+			add_action( 'admin_enqueue_scripts', array( $this, 'load_dipo_import_feed_style' ) );
+
 			// register the settings for this plugin
 			register_setting( 'dipo_general_options', 'dipo_general_options', array( $this, 'validate_general_options' ) );
 			// iTunes Settings for RSS Feed
@@ -434,6 +436,16 @@ if ( !class_exists('Dicentis_Settings') ) {
 						break;
 				}
 			}
+		}
+
+		public function load_dipo_import_feed_style( $hook ) {
+
+			if( 'settings_page_dicentis_settings' != $hook )
+				return;
+
+			wp_register_style( 'dipo_import_feed_style',
+				DIPO_ASSETS_URL . '/css/dipo_import_feed.css' );
+			wp_enqueue_style( 'dipo_import_feed_style' );
 		}
 	} // END class Dicentis_Settings
 } // END if ( !class_exists('Dicentis_Settings') )
