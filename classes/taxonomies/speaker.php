@@ -5,10 +5,10 @@ include_once DIPO_CLASSES_DIR . '/post-type-podcast.php';
 
 if ( !function_exists('dipo_get_speaker_slug') ) {
 	/**
-	 * checks if other plugins are active which registered new series
-	 * taxonomies and returns the correct slug for the active series
+	 * checks if other plugins are active which registered new speaker
+	 * taxonomies and returns the correct slug for the active speaker
 	 * taxonomy
-	 * @return string returns the correct active slug for series taxonomy
+	 * @return string returns the correct active slug for speaker taxonomy
 	 */
 	function dipo_get_speaker_slug() {
 		// assume no plugin is active
