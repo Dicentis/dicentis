@@ -67,9 +67,6 @@ jQuery(document).ready(function($) {
 		$cp.children().children('#dipo_mediafile1_size').attr('id', size).attr('name', size).val('');
 
 		$('#dipo_tab_media').append( $cp );
-
-		// $('.mediatype-list').append( get_select_mediatypes( id, $('#dipo_mediafile1_type') ) );
-		// $('.mediatype-list').removeClass('mediatype-list')
 	});
 
 	$(document).on('click', '.remove_mediafile', function() {
@@ -87,10 +84,4 @@ function char_counter ( input, counter, limit ) {
 	}
 
 	counter.text( limit - n );
-}
-
-function get_select_mediatypes( id, se ) {
-	var select_tag = se.clone().attr('id', 'dipo_mediafile' + id + '_type' );
-	select_tag.attr('name', 'dipo_mediafile' + id + '_type' );
-	return select_tag;
 }
