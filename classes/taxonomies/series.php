@@ -23,11 +23,8 @@ if ( !function_exists('dipo_get_series') ) {
 		)
 	) {
 
-		if ( taxonomy_exists( 'celebration_series' ) ) {
-			$series = get_terms( 'celebration_series', $args );
-		} elseif ( taxonomy_exists( 'podcast_series' ) ) {
-			$series = get_terms( 'podcast_series', $args );
-		}
+		$series_slug = dipo_get_series_slug();
+		$series = get_terms( $series_slug, $args );
 
 		return isset($series) ? $series : null;
 	} // end function dipo_get_series()
@@ -46,7 +43,7 @@ if ( !function_exists('dipo_get_episodes') ) {
 	) {
 
 		$post_type = Dicentis_Podcast_CPT::POST_TYPE;
-		$series_slug = dipo_get_slug();
+		$series_slug = dipo_get_series_slug();
 
 		$args = array(
 			'post_type' => $post_type,
@@ -86,7 +83,7 @@ if ( !function_exists('dipo_get_slug') ) {
 	 * taxonomy
 	 * @return string returns the correct active slug for series taxonomy
 	 */
-	function dipo_get_slug() {
+	function dipo_get_series_slug() {
 		// assume no plugin is active
 		$series_slug = 'podcast_series';
 
@@ -96,7 +93,7 @@ if ( !function_exists('dipo_get_slug') ) {
 		}
 
 		return $series_slug;
-	} // end function dipo_get_slug()
+	} // end function dipo_get_series_slug()
 }
 
 if ( !function_exists('dipo_is_celebration_plugin_active') ) {
