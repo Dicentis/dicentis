@@ -39,7 +39,9 @@ if ( !function_exists('dipo_get_episodes') ) {
 	 * @return array              returns all posts in this series as array
 	 */
 	function dipo_get_episodes(
-		$series_id = 0
+		$series_id  = 0,
+		$show_id    = 0,
+		$speaker_id = 0
 	) {
 
 		$post_type = Dicentis_Podcast_CPT::POST_TYPE;
@@ -63,12 +65,68 @@ if ( !function_exists('dipo_get_episodes') ) {
 			$series_id = $series[0]->term_id;
 		endif;
 
-		$taxonomy = array(
-			'taxonomy' => $series_slug,
-			'field' => 'term_id',
-			'terms' => (int) $series_id,
-		);
-		array_push( $args['tax_query'], $taxonomy ); 
+		if ( is_array( $series_id ) ) {
+			foreach ($series_id as $series => $id) {
+				$taxonomy = array(
+					'taxonomy' => $series_slug,
+					'field' => 'term_id',
+					'terms' => (int) $id,
+				);
+				array_push( $args['tax_query'], $taxonomy ); 
+			}
+		} else {
+			$taxonomy = array(
+				'taxonomy' => $series_slug,
+				'field' => 'term_id',
+				'terms' => (int) $series_id,
+			);
+			array_push( $args['tax_query'], $taxonomy ); 
+		}
+
+
+		if ( 0 !== $speaker_id ) :
+			$speaker_slug = dipo_get_speaker_slug();
+
+			if ( is_array( $speaker_id ) ) {
+				foreach ($speaker_id as $speaker => $id) {
+					$taxonomy = array(
+						'taxonomy' => $speaker_slug,
+						'field' => 'term_id',
+						'terms' => (int) $id,
+					);
+					array_push( $args['tax_query'], $taxonomy ); 
+				}
+			} else {
+				$taxonomy = array(
+					'taxonomy' => $speaker_slug,
+					'field' => 'term_id',
+					'terms' => (int) $speaker_id,
+				);
+				array_push( $args['tax_query'], $taxonomy ); 
+			}
+		endif;
+
+		if ( 0 !== $show_id ) :
+			$show_slug = dipo_get_podcast_show_slug();
+
+			if ( is_array( $show_id ) ) {
+				foreach ($show_id as $show => $id) {
+					$taxonomy = array(
+						'taxonomy' => $show_slug,
+						'field' => 'term_id',
+						'terms' => (int) $id,
+					);
+					array_push( $args['tax_query'], $taxonomy ); 
+				}
+			} else {
+				$taxonomy = array(
+					'taxonomy' => $show_slug,
+					'field' => 'term_id',
+					'terms' => (int) $show_id,
+				);
+				array_push( $args['tax_query'], $taxonomy ); 
+			}
+		endif;
 
 		$series_posts = new WP_Query($args);
 
@@ -85,7 +143,7 @@ if ( !function_exists('dipo_get_episode_meta') ) {
 	 * If $episode_id is not a valid episode of post type 'dipo_podcast' `null`
 	 * is returned.
 	 * @param  int $episode_id post ID of a episode
-	 * @return array             episode information as array
+	 * @return array           episode information as array
 	 */
 	function dipo_get_episode_meta( $episode_id ) {
 

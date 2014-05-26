@@ -20,6 +20,8 @@ include_once plugin_dir_path( __FILE__ ) . 'dicentis-define.php';
 include_once DIPO_LIB_DIR . '/tgm-plugin.php';
 include_once DIPO_CLASSES_DIR . '/rss.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/series.php';
+include_once DIPO_CLASSES_DIR . '/taxonomies/speaker.php';
+include_once DIPO_CLASSES_DIR . '/taxonomies/show.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
