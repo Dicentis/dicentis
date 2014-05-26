@@ -128,7 +128,7 @@ if( !class_exists('Dicentis') ) {
 			// If WP version is not > 3.6 this plugin dies and cannot be used
 			if ( version_compare( get_bloginfo( 'version' ), '3.6', '<' ) ) {
 				// deactivate plugin
-				die( __( 'This Plugin requires WordPress version 3.6 or higher.', 'dicentis' ) );
+				die( __( 'This Plugin requires WordPress version 3.6 or higher.', DIPO_TEXTDOMAIN ) );
 			}
 
 			// register deactivation hook only then plugin is activated
@@ -186,7 +186,7 @@ if ( class_exists('Dicentis') ) {
 	if( isset( $dicentis ) ) {
 		// Add the settings link to the plugin page
 		function dicentis_settings_link( $links ) {
-			$settings_link = __( '<a href="options-general.php?page=dicentis">Settings</a>', 'dicentis' );
+			$settings_link = '<a href="options-general.php?page=dicentis">' . __( 'Settings', DIPO_TEXTDOMAIN ) . '</a>';
 			array_unshift( $links, $settings_link );
 			return $links;
 		}
