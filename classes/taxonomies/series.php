@@ -199,32 +199,13 @@ if ( !function_exists('dipo_get_episode_meta') ) {
 
 if ( !function_exists('dipo_get_series_slug') ) {
 	/**
-	 * checks if other plugins are active which registered new series
-	 * taxonomies and returns the correct slug for the active series
+	 * returns the slug for the active series
 	 * taxonomy
-	 * @return string returns the correct active slug for series taxonomy
+	 * @return string returns the slug for series taxonomy
 	 */
 	function dipo_get_series_slug() {
-		// assume no plugin is active
 		$series_slug = 'podcast_series';
-
-		if ( dipo_is_celebration_plugin_active() ) {
-			if ( taxonomy_exists( 'celebration_series' ) )
-				$series_slug = 'celebration_series';
-		}
 
 		return $series_slug;
 	} // end function dipo_get_series_slug()
-}
-
-if ( !function_exists('dipo_is_celebration_plugin_active') ) {
-	/**
-	 * checks if the ICF Avantgarde Celebration plugin is active
-	 * @return boolean `true` if the Avantgarde Celebration plugin is
-	 * active, otherwise `false`
-	 */
-	function dipo_is_celebration_plugin_active() {
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		return is_plugin_active( 'avantgarde-celebrations/avantgarde-celebrations.php' );
-	} // end function dipo_is_celebration_plugin_active()
 }

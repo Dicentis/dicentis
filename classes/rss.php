@@ -73,11 +73,7 @@ if( !class_exists( 'RSS' ) ) {
 		public function get_speaker( $id ) {
 			$text = "";
 
-			if ( taxonomy_exists( 'celebration_preachers' ) ):
-				$terms = get_the_terms( $id , 'celebration_preachers' );
-			else:
-				$terms = get_the_terms( $id , 'podcast_speaker' );
-			endif;
+			$terms = get_the_terms( $id , 'podcast_speaker' );
 
 			if ( !is_wp_error( $terms ) and $terms ):
 				$count = 1;

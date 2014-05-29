@@ -214,43 +214,27 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				),
 			);
 
-			// register show taxonomy
-			if ( taxonomy_exists( 'podcast_show' ) ) {
-				/* @TODO: show admin notice */
-			} else {
-				register_taxonomy( 'podcast_show', array( self::POST_TYPE ), $podcast_show_args );
-				$the_tax = get_taxonomy( 'podcast_show' );
-				$this->_tax['podcast_show'] = $the_tax->labels->name;
-			}
-
 			/* push each taxonomy name, which is used in this plugin
 			 * into this->_tax array. filter_posts() uses this array
 			 * to know which taxonomy is used and display filter options
 			 * for that
 			 */
+
+			// register show taxonomy
+			register_taxonomy( 'podcast_show', array( self::POST_TYPE ), $podcast_show_args );
+			$the_tax = get_taxonomy( 'podcast_show' );
+			$this->_tax['podcast_show'] = $the_tax->labels->name;
+
 			// register series taxonomy
-			if ( taxonomy_exists( 'celebration_series' ) ) {
-				// avantgarde-celebration plugin is installed and active
-				register_taxonomy_for_object_type( 'celebration_series', self::POST_TYPE );
-			} elseif ( taxonomy_exists( 'podcast_series' ) ) {
-				/* @TODO: show admin notice */
-			} else {
-				register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
-				$the_tax = get_taxonomy( 'podcast_series' );
-				$this->_tax['podcast_series'] = $the_tax->labels->name;
-			}
+			register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
+			$the_tax = get_taxonomy( 'podcast_series' );
+			$this->_tax['podcast_series'] = $the_tax->labels->name;
 
 			// register speaker taxonomy
-			if ( taxonomy_exists( 'celebration_preachers' ) ) {
-				// avantgarde-celebration plugin is installed and active
-				register_taxonomy_for_object_type( 'celebration_preachers', self::POST_TYPE );
-			} elseif ( taxonomy_exists( 'podcast_speaker' ) ) {
-				/* @TODO: show admin notice */
-			} else {
-				register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
-				$the_tax = get_taxonomy( 'podcast_speaker' );
-				$this->_tax['podcast_speaker'] = $the_tax->labels->name;
-			}
+			register_taxonomy( 'podcast_speaker', array( self::POST_TYPE ), $speaker_args );
+			$the_tax = get_taxonomy( 'podcast_speaker' );
+			$this->_tax['podcast_speaker'] = $the_tax->labels->name;
+
 		} // END public function register_podcast_taxonomy()
 
 		public function podcast_show_metabox_add( $tag ) { ?>
@@ -649,13 +633,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			$show = "";
 			$all_shows = get_terms( 'podcast_show', 'hide_empty=0' );
 
-			if ( $this->is_avantgarde_plugin_active() ) {
-				$speaker_tax = 'celebration_preachers';
-				$series_tax = 'celebration_series';
-			} else {
-				$speaker_tax = 'podcast_speaker';
-				$series_tax = 'podcast_series';
-			}
+			$speaker_tax = 'podcast_speaker';
+			$series_tax = 'podcast_series';
 
 			// Error #2: No showname in shortcode given!
 			if ( empty( $attr ) )
@@ -708,15 +687,6 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			endwhile;
 
 			include( sprintf('%s/../templates/shortcode_podcast_show.php', dirname(__FILE__) ) );
-		}
-
-		public function is_avantgarde_plugin_active() {
-			/**
-			 * Detect plugin. For use on Front End only.
-			 */
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-			return is_plugin_active( 'avantgarde-celebrations/avantgarde-celebrations.php' );
 		}
 
 		public function get_all_shows( $all_shows ) {
