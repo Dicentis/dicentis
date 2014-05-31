@@ -346,9 +346,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		public function save_mediafiles_of_post( $post_id ) {
 			/*
 			 * 1. Check max number of mediafiles
-			 * 2. look what to do for each mediafile (update|remove)
-			 * 3. if update: create array and update (starting from 1)
-			 * 4. remove all mediafiles from DB with number > updated mediafile
+			 * 2. remove all mediafiles from DB with numbern
+			 * 3. look what to do for each mediafile (update|remove)
+			 * 4. if update: create array and update (starting from 1)
 			*/
 
 			$max_number  = 0;
@@ -502,7 +502,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			// if ( isset( $dipo_medialink ) ):
 			// 	if ( isset( $dipo_general_options['general_assets_url'] ) ):
 			// 		$assets = $dipo_general_options['general_assets_url'];
-					
+
 			// 		if ( 0 < strlen( strstr( $dipo_medialink, 'http://' ) ) ):
 			// 			if ( 0 < strlen( strstr( $dipo_medialink, $assets ) ) ):
 			// 				$dipo_medialink = str_replace( $assets, '', $dipo_medialink );
