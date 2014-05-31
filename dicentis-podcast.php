@@ -69,18 +69,41 @@ if( !class_exists('Dicentis') ) {
 				__( 'Dashboard' ),
 				'edit_posts',
 				'dicentis_dashboard',
-				array( $this, 'dicentis_dashboard_page' )
+				array( $this, 'render_dashboard_page' )
 			);
 		} // END public function add_menu()
 
-		public function dicentis_dashboard_page() {
+		public function render_dashboard_page() {
 			if ( !current_user_can('edit_posts') ) {
 				wp_die( __('You do not have sufficient permissions to access this page.') );
 			}
 
+			$show_feeds = array();
+			$show_terms = get_terms( dipo_get_podcast_show_slug() );
+			foreach ( $show_terms as $show_index => $show ) {
+				
+				$show_feed = trailingslashit( get_home_url() )
+					. "?post_type=" . Dicentis_Podcast_CPT::POST_TYPE
+					. "&podcast_show=" . $show->slug
+					. "&feed=pod";
+
+				$show_pretty_feed = trailingslashit( get_home_url() )
+					. "podcast/show/" . $show->slug
+					. "/feed/pod";
+
+				$show_array = array(
+					'name' => $show->name,
+					'slug' => $show->slug,
+					'feed' => $show_feed,
+					'pretty_feed' => $show_pretty_feed
+				 );
+
+				array_push( $show_feeds, $show_array );
+			}
+
 			// Render the dashboard template
-			include( sprintf( "%s/templates/dashboard.php", dirname(__FILE__) ) );
-		} // END public function dicentis_dashboard_page()
+			include( sprintf( "%s/dashboard.php", DIPO_TEMPLATES_DIR ) );
+		} // END public function render_dashboard_page()
 
 		/**
 		 * create a custom menu order to display the dashboard
