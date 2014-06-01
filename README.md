@@ -19,7 +19,7 @@ You can download and install Dicentis using the built in WordPress plugin instal
 FAQ will surely come in the future.
 
 ## Changelog
-### 0.1.0 (Bloddy Mary) [2014-06-01]
+### 0.1.0 (Bloody Mary) [2014-06-01]
 
 * [FEATURE] Create multiple podcast shows
 * [FEATURE] Create multiple speaker
