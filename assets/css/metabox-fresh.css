@@ -1,0 +1,15 @@
+/**
+ * Metabox Tabs
+ */
+ul.metabox-tabs li.active {
+	background-color: #FAFAFA;
+}
+ul.metabox-tabs li.active, div.tab-content {
+	border-color: #DFDFDF;
+}
+.metabox-tabs .active a {
+	color: #333;
+}
+div.tab-content {
+	background-color: #FAFAFA;
+}

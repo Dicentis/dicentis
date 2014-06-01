@@ -1,0 +1,87 @@
+.dipo_metabox_field {
+	width: 100%;
+	height: 84px;
+	display: inline;
+}
+
+.dipo_metabox_field .dipo_label {
+	width: 100px;
+	padding: 20px 10px 5px 0;
+	float: left;
+}
+
+.dipo_metabox_field .dipo_label label {
+	font-size: 110%;
+}
+
+.dipo_metabox_field .dipo_field {
+	padding: 20px 0 20px 0;
+}
+
+.dipo_metabox_field .dipo_field input {
+	width: 100%;
+}
+
+.dipo_metabox_field .dipo_field #dipo_summary {
+	width: 100%;
+	height: 8em;
+}
+
+.dipo_metabox_field .dipo_field input[type='checkbox'] {
+	width: 10px;
+}
+
+.dipo_metabox_field .dipo_field .dipo_char_count {
+	float: right;
+}
+
+.dipo_mediafile_wrapper {
+	width: 100%;
+	padding: 0 0 10px 0;
+}
+
+.dipo_mediafile_wrapper .dipo_mediafile_labels {
+	font-weight: bold;
+	font-size: 110%;
+	padding: 0 0 10px 0;
+}
+
+.dipo_mediafile_wrapper .dipo_mediafile_labels .remove_mediafile {
+	float: right;
+}
+
+.dipo_mediafile_wrapper input[id$='_link'] {
+	width: 100%;
+}
+
+.dipo_mediafile_meta {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #DFDFDF;
+}
+
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_type'],
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_duration'],
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_size'] {
+	padding: 0 0 0 5px;
+}
+
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_type'],
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_duration'] {
+	float: left;
+}
+
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_type'],
+.dipo_mediafile_meta select[id$='_type'] {
+	width: 20%;
+}
+
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_duration'],
+.dipo_mediafile_meta input[id$='_duration'] {
+	width: 30%;
+}
+
+.dipo_mediafile_meta .dipo_mediafile_labels label[name$='_size'],
+.dipo_mediafile_meta input[id$='_size'] {
+	width: 40%;
+}

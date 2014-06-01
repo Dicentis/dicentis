@@ -1,0 +1,23 @@
+.dipo_field_wrapper {
+	width: 100%;
+	height: 84px;
+}
+
+.dipo_field_wrapper .dipo_label {
+	width: 200px;
+	padding: 20px 10px 20px 0;
+	float: left;
+}
+
+.dipo_field_wrapper .dipo_field {
+	padding: 20px 10px 20px 0;
+}
+
+.dipo_field_wrapper .dipo_label label {
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.dipo_field_wrapper #dipo_feed_url {
+	width: 500px;
+}
