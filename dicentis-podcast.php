@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: dicentis Podcast
-Plugin URI: http://
+Plugin Name: Dicentis Podcast
+Plugin URI: http://hanshelgebuerger.de
 Description: Manage multiple podcasts with ease in one plugin
-Version: 0.0.1
+Version: 0.1.0
 Author: Hans-Helge Buerger
 Author URI: http://hanshelgebuerger.de
 Text Domain: dicentis
