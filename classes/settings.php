@@ -127,6 +127,14 @@ if ( !class_exists('Dicentis_Settings') ) {
 				'dipo_itunes_main'
 			);
 
+			add_settings_field(
+				'dipo_itunes_copyright',
+				__( 'iTunes Copyright', DIPO_TEXTDOMAIN ),
+				array( $this, 'itunes_copyright' ),
+				'dipo_itunes',
+				'dipo_itunes_main'
+			);
+
 		} // END public function admin_init()
 
 		public function general_settings_description() { ?>
@@ -311,6 +319,18 @@ if ( !class_exists('Dicentis_Settings') ) {
 			</select>
 		<?php }
 
+		public function itunes_copyright() {
+			// get option 'dipo_itunes_options'
+			$options = get_option( 'dipo_itunes_options' );
+			$author = isset( $options['itunes_copyright'] ) ? $options['itunes_copyright'] : "";
+			// echo the field ?>
+			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#xA9;">&#xA9;</span>
+			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2117;">&#x2117;</span>
+			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2122;">&#x2122;</span>
+			<input id='dipo_itunes_copyright' name='dipo_itunes_options[itunes_copyright]' size='40' type='text' value='<?php echo $author; ?>' />
+			<p class="description"><?php _e('State your copyright for the podcasts', DIPO_TEXTDOMAIN ); ?></p>
+		<?php }
+
 		public function validate_general_options( $input ) {
 			$valid = array();
 			
@@ -344,6 +364,8 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$valid['itunes_category1'] = $input['itunes_category1'];
 			$valid['itunes_category2'] = $input['itunes_category2'];
 			$valid['itunes_category3'] = $input['itunes_category3'];
+
+			$valid['itunes_copyright'] = esc_html( $input['itunes_copyright'] );
 
 			return $valid;
 		}
@@ -443,6 +465,9 @@ if ( !class_exists('Dicentis_Settings') ) {
 			if( 'settings_page_dicentis_settings' != $hook )
 				return;
 
+			wp_enqueue_script( 'dipo_settings_script',
+				DIPO_ASSETS_URL . '/js/dipo_settings.js',
+				array( 'jquery' ) );
 			wp_register_style( 'dipo_import_feed_style',
 				DIPO_ASSETS_URL . '/css/dipo_import_feed.css' );
 			wp_enqueue_style( 'dipo_import_feed_style' );
