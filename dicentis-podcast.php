@@ -44,8 +44,8 @@ if( !class_exists('Dicentis') ) {
 			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
 
 			add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
-			add_filter( 'single_template', array( $this, 'single_template' ) );
-			add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
+			// add_filter( 'single_template', array( $this, 'single_template' ) );
+			// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 
 			add_action( 'init', 'RSS::add_podcast_feed' );
 		} // END public function __construct()

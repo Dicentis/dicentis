@@ -152,11 +152,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'query_var' => 'podcast_show',
 				'show_ui' => true,
 				'show_tagcloud' => false,
-				// 'show_admin_column' => true,
 				'rewrite' => array(
 					'slug' => self::POST_TYPE_NAME . '/show',
 				),
-				// 'rewrite' => false,
 				'labels' => array(
 					'name' => __( 'Podcast Shows', 'dicentis' ),
 					'singular_name' => __( 'Podcast Show', 'dicentis' ),
