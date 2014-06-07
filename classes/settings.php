@@ -324,11 +324,14 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$options = get_option( 'dipo_itunes_options' );
 			$author = isset( $options['itunes_copyright'] ) ? $options['itunes_copyright'] : "";
 			// echo the field ?>
-			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#xA9;">&#xA9;</span>
-			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2117;">&#x2117;</span>
-			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2122;">&#x2122;</span>
-			<input id='dipo_itunes_copyright' name='dipo_itunes_options[itunes_copyright]' size='40' type='text' value='<?php echo $author; ?>' />
-			<p class="description"><?php _e('State your copyright for the podcasts', DIPO_TEXTDOMAIN ); ?></p>
+			
+			<input id='dipo_itunes_copyright' name='dipo_itunes_options[itunes_copyright]' size='40' type='text' value='<?php echo sanitize_text_field( $author ); ?>' />
+			<p class="description">
+				<span class="button hide-if-no-js dipo_copyright" data-copyright="&#xA9;">&#xA9;</span>
+				<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2122;">&#x2122;</span>
+				<?php _e('State your copyright for the podcasts', DIPO_TEXTDOMAIN ); ?>
+			</p>
+
 		<?php }
 
 		public function validate_general_options( $input ) {
@@ -365,7 +368,7 @@ if ( !class_exists('Dicentis_Settings') ) {
 			$valid['itunes_category2'] = $input['itunes_category2'];
 			$valid['itunes_category3'] = $input['itunes_category3'];
 
-			$valid['itunes_copyright'] = esc_html( $input['itunes_copyright'] );
+			$valid['itunes_copyright'] = sanitize_text_field( htmlentities( $input['itunes_copyright'] ) );
 
 			return $valid;
 		}
