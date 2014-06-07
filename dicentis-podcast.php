@@ -156,6 +156,8 @@ if( !class_exists('Dicentis') ) {
 				die( __( 'This Plugin requires WordPress version 3.6 or higher.', DIPO_TEXTDOMAIN ) );
 			}
 
+			require_once DIPO_LIB_DIR . '/dipo-version.php';
+
 			// register deactivation hook only then plugin is activated
 			// and not on every plugin load.
 			register_deactivation_hook( __FILE__, array('Dicentis', 'deactivate') );

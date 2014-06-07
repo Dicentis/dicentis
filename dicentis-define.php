@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('DIPO_DB_Version')) {
+	define('DIPO_DB_Version', 1);
+}
+
 if (!defined('DIPO_PLUGIN_NAME'))
 	define('DIPO_PLUGIN_NAME',
 		trim(dirname(plugin_basename(__FILE__)), '/'));
