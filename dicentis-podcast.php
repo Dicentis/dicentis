@@ -22,6 +22,7 @@ include_once DIPO_CLASSES_DIR . '/rss.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/series.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/speaker.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/show.php';
+require_once DIPO_LIB_DIR . '/dipo-version.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -155,8 +156,6 @@ if( !class_exists('Dicentis') ) {
 				// deactivate plugin
 				die( __( 'This Plugin requires WordPress version 3.6 or higher.', DIPO_TEXTDOMAIN ) );
 			}
-
-			require_once DIPO_LIB_DIR . '/dipo-version.php';
 
 			// register deactivation hook only then plugin is activated
 			// and not on every plugin load.

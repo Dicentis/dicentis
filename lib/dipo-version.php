@@ -20,8 +20,7 @@ function dipo_update_database( $version ) {
 	global $wpdb;
 
 	switch ( $version ) {
-		// case 2:
-			
-		// 	break;
+		case 2:
+			break;
 	}
 }
