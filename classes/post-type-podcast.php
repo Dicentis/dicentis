@@ -590,11 +590,15 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 
 			// Load assets for metabox tabs
 			// @source https://github.com/PeteMall/Metabox-Tabs
-			$color = get_user_meta( get_current_user_id(), 'admin_color', true );
+			/* use $color to get users color scheme and enqueue custom style */
+			// $color = get_user_meta( get_current_user_id(), 'admin_color', true );
+			// wp_enqueue_style(  "jf-$color",
+			// 	DIPO_ASSETS_URL . "/css/metabox-$color.css" );
+
 			wp_enqueue_style(  'jf-metabox-tabs',
 				DIPO_ASSETS_URL . '/css/metabox-tabs.css' );
-			wp_enqueue_style(  "jf-$color",
-				DIPO_ASSETS_URL . "/css/metabox-$color.css" );
+			wp_enqueue_style(  "jf-classic",
+				DIPO_ASSETS_URL . "/css/metabox-classic.css" );
 			wp_enqueue_script( 'jf-metabox-tabs',
 				DIPO_ASSETS_URL . '/js/metabox-tabs.js',
 				array( 'jquery' ) );
