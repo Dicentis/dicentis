@@ -154,8 +154,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'show_tagcloud' => false,
 				// 'show_admin_column' => true,
 				'rewrite' => array(
-					// 'slug' => self::POST_TYPE . '/show',
-					'slug' => self::POST_TYPE . '/show',
+					'slug' => self::POST_TYPE_NAME . '/show',
 				),
 				// 'rewrite' => false,
 				'labels' => array(
@@ -177,7 +176,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'hierarchical' => true,
 				'query_var' => 'podcast_series',
 				'rewrite' => array(
-					'slug' => self::POST_TYPE . '/series',
+					'slug' => self::POST_TYPE_NAME . '/series',
 				),
 				'labels' => array(
 					'name' => __( 'Series', 'dicentis' ),
@@ -198,7 +197,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'hierarchical' => true,
 				'query_var' => 'podcast_speaker',
 				'rewrite' => array(
-					'slug' => self::POST_TYPE . '/speaker',
+					'slug' => self::POST_TYPE_NAME . '/speaker',
 				),
 				'labels' => array(
 					'name' => __( 'Speakers', 'dicentis' ),
