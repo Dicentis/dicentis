@@ -236,20 +236,20 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 
 		public function podcast_show_metabox_add( $tag ) { ?>
 			<div class="form-field">
-				<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
+				<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
 				<input name="asset-url" id="asset-url" type="text" value="" size="40" aria-required="true" />
-				<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
+				<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
 			</div>
 		<?php }
 
 		public function podcast_show_metabox_edit( $tag ) { ?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
-					<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
+					<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
 				</th>
 				<td>
 					<input name="asset-url" id="asset-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'asset-url', true  ); ?>" size="40" aria-require="true" />
-					<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
+					<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
 				</td>
 			</tr>
 		<?php }
