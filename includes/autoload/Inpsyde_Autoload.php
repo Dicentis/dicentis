@@ -12,7 +12,8 @@ namespace Dicentis\Autoload;
  * @since      2013.08.18
  * @version    2014.03.26
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
- * @package    Inpsyde
+ * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FInpsyde_Autoload.php
+ * @package    Dicentis
  * @subpackage Autoload
  */
 class Inpsyde_Autoload {

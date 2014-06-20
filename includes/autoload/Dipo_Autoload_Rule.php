@@ -5,10 +5,12 @@ namespace Dicentis\Autoload;
 /**
  * Specialized auto-load rule for Dipo_Autoload.
  *
+ * @author     toscho
  * @author     obstschale
  * @since      0.1.1
  * @version    0.1.1
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FMlp_Autoload_Rule.php
  * @package    Dicentis
  * @subpackage Autoload
  */

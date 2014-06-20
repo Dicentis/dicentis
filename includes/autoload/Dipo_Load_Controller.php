@@ -5,10 +5,12 @@ namespace Dicentis\Autoload;
 /**
  * Set up auto-loader or load all available files immediately for PHP < 5.3.
  *
+ * @author     toscho
  * @author     obstschale
  * @since      0.1.1
  * @version    0.1.1
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FMlp_Load_Controller.php
  * @package    Dicentis
  * @subpackage Autoload
  */
