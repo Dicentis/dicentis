@@ -2,8 +2,7 @@
 
 namespace Dicentis\Settings;
 
-include_once __DIR__ . '/../../dicentis-define.php';
-include_once DIPO_INC_DIR . '/feed/Dipo_Feed_Import.php';
+use Dicentis\Feed\Dipo_Feed_Import;
 
 /**
 * Settings page for dicentis plugin
@@ -443,7 +442,7 @@ class Dipo_Settings {
 
 				case 'import':
 					if ( isset( $_POST['dipo_feed_url'] ) and !empty( $_POST['dipo_feed_url'] ) ) {
-						$feed_importer = new FeedImport( $_POST['dipo_feed_url'] );
+						$feed_importer = new Dipo_Feed_Import( $_POST['dipo_feed_url'] );
 						if ( isset( $_POST['dipo_feed_match'] ) )
 							$feed_importer->set_try_match( $_POST['dipo_feed_match'] );
 

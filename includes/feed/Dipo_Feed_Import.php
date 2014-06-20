@@ -2,9 +2,10 @@
 
 namespace Dicentis\Feed;
 
-require_once __DIR__ . '/../../dicentis-define.php';
+use Dicentis\Feed\Dipo_RSS;
+use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
+
 require_once ( ABSPATH . WPINC . '/feed.php' );
-require_once 'Dipo_RSS.php';
 
 /**
 * Feed Importer Class
@@ -70,7 +71,7 @@ class Dipo_Feed_Import extends Dipo_RSS {
 			'post_date'    => $item_date,
 			'post_content' => $item->get_description(),
 			'post_status'  => 'publish',
-			'post_type'    => Dicentis_Podcast_CPT::POST_TYPE,
+			'post_type'    => Dipo_Podcast_Post_Type::POST_TYPE,
 			'tags_input'   => $enclosure->get_keywords(),
 		);
 

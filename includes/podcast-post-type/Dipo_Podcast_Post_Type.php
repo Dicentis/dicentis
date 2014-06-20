@@ -2,7 +2,6 @@
 namespace Dicentis\Podcast_Post_Type;
 
 require_once __DIR__ . '/../libraries/simple-term-meta.php';
-require_once __DIR__ . '/../../dicentis-define.php';
 
 if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 	/**

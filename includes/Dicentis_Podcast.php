@@ -2,9 +2,9 @@
 
 namespace Dicentis;
 
-require_once __DIR__ . '/settings/Dipo_Settings.php';
-require_once __DIR__ . '/podcast-post-type/Dipo_Podcast_Post_Type.php';
-require_once __DIR__ . '/feed/Dipo_RSS.php';
+use Dicentis\Settings\Dipo_Settings;
+use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
+use Dicentis\Feed\Dipo_RSS;
 
 class Dicentis_Podcast {
 
@@ -16,10 +16,10 @@ class Dicentis_Podcast {
 		add_action( 'admin_menu', array( $this, 'add_menu') );
 
 		// Initilize Settings
-		$Dicentis_Settings = new Settings\Dipo_Settings();
+		$Dicentis_Settings = new Dipo_Settings();
 
 		// Create CPT Podcast
-		$Dipo_Podcast_Post_Type = new Podcast_Post_Type\Dipo_Podcast_Post_Type();
+		$Dipo_Podcast_Post_Type = new Dipo_Podcast_Post_Type();
 
 		add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
 		// add_filter( 'single_template', array( $this, 'single_template' ) );
@@ -40,7 +40,7 @@ class Dicentis_Podcast {
 	 */
 	public function add_menu() {
 		add_submenu_page(
-			'edit.php?post_type=' . \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
+			'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
 			__( 'Dashboard' ),
 			__( 'Dashboard' ),
 			'edit_posts',
@@ -59,7 +59,7 @@ class Dicentis_Podcast {
 		foreach ( $show_terms as $show_index => $show ) {
 
 			$show_feed = trailingslashit( get_home_url() )
-				. "?post_type=" . \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::POST_TYPE
+				. "?post_type=" . Dipo_Podcast_Post_Type::POST_TYPE
 				. "&podcast_show=" . $show->slug
 				. "&feed=pod";
 
@@ -91,7 +91,7 @@ class Dicentis_Podcast {
 		global $submenu;
 
 		// Look for $find_page and the submenu $find_sub
-		$find_page = 'edit.php?post_type=' . \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::POST_TYPE;
+		$find_page = 'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE;
 		$find_sub  = 'Dashboard';
 		// pre_print($submenu);
 		// Loop thru $submenu until $find_page is found
@@ -136,7 +136,7 @@ class Dicentis_Podcast {
 		// and not on every plugin load.
 		register_deactivation_hook( __FILE__, array('Dicentis_Podcast', 'deactivate') );
 
-		\Dicentis\Feed\Dipo_RSS::add_podcast_feed();
+		Dipo_RSS::add_podcast_feed();
 		flush_rewrite_rules();
 	} // END public static function activate()
 
@@ -149,14 +149,14 @@ class Dicentis_Podcast {
 	} // END public static function deactivate()
 
 	public function create_rss_feed() {
-		$feed = new \Dicentis\Feed\Dipo_RSS();
+		$feed = new Dipo_RSS();
 		$feed->generate_podcast_feed();
 	}
 
 	public function single_template( $single_template ) {
 		global $post;
 
-		if ( $post->post_type == \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::POST_TYPE ) {
+		if ( $post->post_type == Dipo_Podcast_Post_Type::POST_TYPE ) {
 			$single_template = DIPO_TEMPLATES_DIR . '/episode-single.php';
 		}
 

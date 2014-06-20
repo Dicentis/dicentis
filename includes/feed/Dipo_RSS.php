@@ -1,8 +1,6 @@
 <?php
 namespace Dicentis\Feed;
 
-include_once __DIR__ . '/../../dicentis-define.php';
-
 if( !class_exists( 'Dipo_RSS' ) ) {
 	/**
 	 * RSS Class

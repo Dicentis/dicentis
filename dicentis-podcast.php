@@ -25,20 +25,29 @@ require_once DIPO_INC_DIR . '/taxonomies/show.php';
 require_once DIPO_LIB_DIR . '/tgm-plugin.php';
 require_once DIPO_LIB_DIR . '/dipo-version.php';
 
-
-require_once __DIR__ . '/includes/Dicentis_Podcast.php';
+if ( ! class_exists( 'Dicentis_Podcast' ) )
+	require_once plugin_dir_path( __FILE__ ) . 'includes/Dicentis_Podcast.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+// Kick-Off
+// add_action( 'plugins_loaded', 'dipo_init', 0 );
 
-function dipo_run_dicentis_podcast() {
+function dipo_init() {
+
+	$path = plugin_dir_path( __FILE__ );
+
+	if ( ! class_exists( 'Dipo_Load_Controller' ) )
+		require $path . 'includes/autoload/Dipo_Load_Controller.php';
+
+	$loader = new Autoload\Dipo_Load_Controller( $path . 'includes' );
 
 	$dipo = new Dicentis_Podcast();
 	// $dipo->run();
 
 }
 
-dipo_run_dicentis_podcast();
+dipo_init();
 
 // Installation and uninstallation hooks
 // register_activation_hook( __FILE__, array('Dicentis', 'activate') );
