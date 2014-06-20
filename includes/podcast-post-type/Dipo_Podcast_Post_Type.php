@@ -1,13 +1,14 @@
 <?php
+namespace Dicentis\Podcast_Post_Type;
 
-include plugin_dir_path( __FILE__ ) . '../lib/simple-term-meta.php';
-include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
+require_once __DIR__ . '/../libraries/simple-term-meta.php';
+require_once __DIR__ . '/../../dicentis-define.php';
 
-if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
+if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 	/**
 	 * The Podcast Post Type
 	 */
-	class Dicentis_Podcast_CPT {
+	class Dipo_Podcast_Post_Type {
 		const POST_TYPE = 'dipo_podcast';
 		const POST_TYPE_NAME = 'podcast';
 
@@ -532,7 +533,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 		}
 
 		public static function get_select_mediatypes( $mediafile_num = '1', $selected = 'mp3' ) {
-			$mediatypes = Dicentis_Podcast_CPT::get_mediatypes();
+			$mediatypes = Dipo_Podcast_Post_Type::get_mediatypes();
 			// prepare <select> mediatypes
 			$select_mediatypes = "<select id='dipo_mediafile" . $mediafile_num . "_type' name='dipo_mediafile" . $mediafile_num . "_type'>";
 			foreach ( $mediatypes as $file_type ) {
@@ -697,5 +698,5 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 			}
 			return $shows;
 		}
-	} // END class Dicentis_Podcast_CPT
-} // END if( !class_exists( 'Dicentis_Podcast_CPT' ) )
+	} // END class Dipo_Podcast_Post_Type
+} // END if( !class_exists( 'Dipo_Podcast_Post_Type' ) )

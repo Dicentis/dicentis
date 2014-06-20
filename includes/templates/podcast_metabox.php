@@ -105,7 +105,7 @@
 							<label class="dipo_media_size_label" name="dipo_mediafile1_size"><?php _e( 'Filesize', DIPO_TEXTDOMAIN ); ?></label>
 						</div>
 
-						<?php echo Dicentis_Podcast_CPT::get_select_mediatypes(); ?>
+						<?php echo \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::get_select_mediatypes(); ?>
 						<input id="dipo_mediafile1_duration" type="text" name="dipo_mediafile1_duration" value="" />
 						<input id="dipo_mediafile1_size" type="text" name="dipo_mediafile1_size" value="" />
 
@@ -135,7 +135,7 @@
 							<label class="dipo_media_size_label" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size"><?php _e( 'Filesize', DIPO_TEXTDOMAIN ); ?></label>
 						</div>
 
-						<?php echo Dicentis_Podcast_CPT::get_select_mediatypes( $mediafile['id'], $mediafile['mediatype'] ); ?>
+						<?php echo \Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::get_select_mediatypes( $mediafile['id'], $mediafile['mediatype'] ); ?>
 						<input id="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_duration" value="<?php echo $mediafile['duration']; ?>" />
 						<input id="dipo_mediafile<?php echo $mediafile['id']; ?>_size" type="text" name="dipo_mediafile<?php echo $mediafile['id']; ?>_size" value="<?php echo $mediafile['filesize']; ?>" /> (<?php echo $this->human_readable_filesize($mediafile['filesize']); ?>)
 

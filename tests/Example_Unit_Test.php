@@ -3,7 +3,7 @@
 /**
  * An example test case
  */
-class Dipo_WP_Tests_Example extends WP_UnitTestCase {
+class Example_Test extends WP_UnitTestCase {
 	/**
 	 * An example test.
 	 *

@@ -21,3 +21,7 @@ if( false !== getenv( 'WP_TESTS_DIR' ) ) {
 } else {
 	require '/Users/RetinaObst/Documents/Code/PHP/WordPress/plugins/vagrant-local/www/wordpress-develop/tests/phpunit/includes/bootstrap.php';
 }
+
+if (!defined('DIPO_ROOT')) {
+	define('DIPO_ROOT', dirname(__FILE__) . "/..");
+}

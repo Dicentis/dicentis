@@ -1,12 +1,15 @@
 <?php
 
-include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
-include_once( ABSPATH . WPINC . '/feed.php' );
+namespace Dicentis\Feed;
+
+require_once __DIR__ . '/../../dicentis-define.php';
+require_once ( ABSPATH . WPINC . '/feed.php' );
+require_once 'Dipo_RSS.php';
 
 /**
 * Feed Importer Class
 */
-class FeedImport extends RSS {
+class Dipo_Feed_Import extends Dipo_RSS {
 	private $feed_url;
 	private $try_match = false;
 	private $updated_episodes;

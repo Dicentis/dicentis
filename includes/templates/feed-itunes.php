@@ -5,13 +5,13 @@
  * @package WordPress
  */
 
-include_once dirname( __FILE__ ) . '/../classes/rss.php';
+include_once dirname( __FILE__ ) . '/../feed/Dipo_RSS.php';
 
-$feed = new RSS();
+$feed = new \Dicentis\Feed\Dipo_RSS();
 $feed->get_itunes_options();
 
 
-header( 'Content-Type: application/xml; charset=' . get_option( 'blog_charset' ), true );
+header( 'Content-Type: application/rss+xml; charset=' . get_option( 'blog_charset' ), true );
 $more = 1;
 
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
@@ -25,7 +25,6 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 	<?php do_action('rss2_ns'); ?>
 >
-
 <channel>
 	<title><?php bloginfo_rss('name'); $feed->get_show_details(); ?></title>
 	<link><?php bloginfo_rss( 'url' ) ?></link>
@@ -56,7 +55,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<title><?php the_title_rss() ?></title>
 			<link><?php the_permalink() ?></link>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
-			<itunes:subtile><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtile>
+			<itunes:subtitle><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtitle>
 			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
 			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
@@ -73,4 +72,5 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<?php endif; ?>
 	<?php endwhile; ?>
 </channel>
+
 </rss>

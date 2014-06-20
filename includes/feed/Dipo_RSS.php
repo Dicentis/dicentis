@@ -1,12 +1,13 @@
 <?php
+namespace Dicentis\Feed;
 
-include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
+include_once __DIR__ . '/../../dicentis-define.php';
 
-if( !class_exists( 'RSS' ) ) {
+if( !class_exists( 'Dipo_RSS' ) ) {
 	/**
 	 * RSS Class
 	 */
-	class RSS {
+	class Dipo_RSS {
 
 		private $feed_template;
 		public  $itunes_opt;
@@ -67,6 +68,22 @@ if( !class_exists( 'RSS' ) ) {
 					default:
 						echo "";
 				endswitch;
+			else:
+				$path = explode('/', $_SERVER['REQUEST_URI'] );
+				if ( $path[sizeof($path)-1] !== '' )
+					$ext = $path[sizeof($path)-1];
+				else
+					$ext = $path[sizeof($path)-2];
+
+				$index_show = array_search('show', $path);
+
+				if ( false == $index_show ) {
+					echo "";
+				}
+
+				$value = get_term_by( 'slug', $path[$index_show+1], 'podcast_show')->name;
+
+				echo " > " . $value;
 			endif;
 		}
 
@@ -201,7 +218,7 @@ if( !class_exists( 'RSS' ) ) {
 				return $_GET['type'];
 			} else {
 
-				$extensions = RSS::get_file_extensions();
+				$extensions = \Dicentis\Feed\Dipo_RSS::get_file_extensions();
 				$path = explode('/', $_SERVER['REQUEST_URI'] );
 				if ( $path[sizeof($path)-1] !== '' )
 					$ext = $path[sizeof($path)-1];
@@ -217,11 +234,11 @@ if( !class_exists( 'RSS' ) ) {
 		}
 
 		public static function add_podcast_feed() {
-			add_feed( 'pod', 'RSS::do_podcast_feed' );
+			add_feed( 'pod', '\Dicentis\Feed\Dipo_RSS::do_podcast_feed' );
 
-			$extensions = RSS::get_file_extensions();
+			$extensions = \Dicentis\Feed\Dipo_RSS::get_file_extensions();
 			foreach ( $extensions as $mime => $ext ) {
-				add_feed( $ext, 'RSS::do_podcast_feed' );
+				add_feed( $ext, '\Dicentis\Feed\Dipo_RSS::do_podcast_feed' );
 			}
 		}
 

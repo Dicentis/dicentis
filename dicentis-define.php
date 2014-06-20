@@ -19,14 +19,14 @@ if (!defined('DIPO_PLUGIN_DIR'))
 if (!defined('DIPO_ASSETS_DIR'))
 	define( 'DIPO_ASSETS_DIR', DIPO_PLUGIN_DIR . '/assets' );
 
-if (!defined('DIPO_CLASSES_DIR'))
-	define( 'DIPO_CLASSES_DIR', DIPO_PLUGIN_DIR . '/classes' );
+if (!defined('DIPO_INC_DIR'))
+	define( 'DIPO_INC_DIR', DIPO_PLUGIN_DIR . '/includes' );
 
 if (!defined('DIPO_LIB_DIR'))
-	define( 'DIPO_LIB_DIR', DIPO_PLUGIN_DIR . '/lib' );
+	define( 'DIPO_LIB_DIR', DIPO_INC_DIR . '/libraries' );
 
 if (!defined('DIPO_TEMPLATES_DIR'))
-	define( 'DIPO_TEMPLATES_DIR', DIPO_PLUGIN_DIR . '/templates' );
+	define( 'DIPO_TEMPLATES_DIR', DIPO_INC_DIR . '/templates' );
 
 // URLs
 if (!defined('DIPO_PLUGIN_URL'))
