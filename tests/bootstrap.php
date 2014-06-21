@@ -23,5 +23,5 @@ if( false !== getenv( 'WP_TESTS_DIR' ) ) {
 }
 
 if (!defined('DIPO_ROOT')) {
-	define('DIPO_ROOT', dirname(__FILE__) . "/..");
+	define('DIPO_ROOT', dirname( dirname(__FILE__) ) );
 }
