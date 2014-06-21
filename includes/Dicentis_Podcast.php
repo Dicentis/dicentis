@@ -8,6 +8,23 @@ use Dicentis\Feed\Dipo_RSS;
 
 class Dicentis_Podcast {
 
+	/**
+	 * Dicentis Settings Object which is responsible for all settings
+	 * regarding dicentis.
+	 *
+	 * @var Dipo_Settings $settings Dipo_Settings object
+	 */
+	private $settings;
+
+	/**
+	 * The core of this plugin is its Custom Post Type "Podcast"
+	 * representing through this variable.
+	 * 
+	 * @var Dipo_Podcast_Post_Type $podcast_cpt Custom Post Tye object which
+	 *      registeres the custom post type for this plugin
+	 */
+	private $podcast_cpt;
+
 	public function __construct() {
 
 		$this->settings    = new Dipo_Settings();
@@ -137,8 +154,8 @@ class Dicentis_Podcast {
 		// and not on every plugin load.
 		register_deactivation_hook( __FILE__, array('Dicentis_Podcast', 'deactivate') );
 
-		Dipo_RSS::add_podcast_feed();
-		flush_rewrite_rules();
+		// Dipo_RSS::add_podcast_feed();
+		// flush_rewrite_rules();
 	} // END public static function activate()
 
 	/**
