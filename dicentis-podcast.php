@@ -30,10 +30,7 @@ if ( ! class_exists( 'Dicentis_Podcast' ) )
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-// Kick-Off
-// add_action( 'plugins_loaded', 'dipo_init', 0 );
-
-function dipo_init() {
+function dipo_load_plugin() {
 
 	$path = plugin_dir_path( __FILE__ );
 
@@ -46,23 +43,4 @@ function dipo_init() {
 	// $dipo->run();
 
 }
-
-dipo_init();
-
-// Installation and uninstallation hooks
-// register_activation_hook( __FILE__, array('Dicentis', 'activate') );
-
-// $dicentis = new Dicentis();
-
-// // Add a link to the settings page onto the plugin page
-// if( isset( $dicentis ) ) {
-// 	// Add the settings link to the plugin page
-// 	function dicentis_settings_link( $links ) {
-// 		$settings_link = '<a href="options-general.php?page=dicentis">' . __( 'Settings', DIPO_TEXTDOMAIN ) . '</a>';
-// 		array_unshift( $links, $settings_link );
-// 		return $links;
-// 	}
-
-// 	$plugin = plugin_basename( __FILE__ );
-// 	add_filter( "plugin_action_links_$plugin", 'dicentis_settings_link' );
-// }
+dipo_load_plugin();

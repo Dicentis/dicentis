@@ -9,22 +9,23 @@ use Dicentis\Feed\Dipo_RSS;
 class Dicentis_Podcast {
 
 	public function __construct() {
+
+		$this->settings    = new Dipo_Settings();
+		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
+
 		// Load the plugin's translated strings
 		add_action( 'init', array( $this, 'load_localisation' ) );
 		add_action( 'init', '\Dicentis\Feed\Dipo_RSS::add_podcast_feed' );
 		add_filter( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_menu') );
 
-		// Initilize Settings
-		$Dicentis_Settings = new Dipo_Settings();
-
 		// Create CPT Podcast
-		$Dipo_Podcast_Post_Type = new Dipo_Podcast_Post_Type();
 
 		add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
 		// add_filter( 'single_template', array( $this, 'single_template' ) );
 		// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 
+		add_filter( "plugin_action_links_dicentis-podcast/dicentis-podcast.php", array( $this->settings, 'plugin_action_settings_link' ) );
 	} // END public function __construct()
 
 	/**

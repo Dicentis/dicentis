@@ -474,4 +474,11 @@ class Dipo_Settings {
 			DIPO_ASSETS_URL . '/css/dipo_import_feed.css' );
 		wp_enqueue_style( 'dipo_import_feed_style' );
 	}
+
+	// Add the settings link to the plugin page
+	public function plugin_action_settings_link( $links ) {
+		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', DIPO_TEXTDOMAIN ) . '</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
+	}
 } // END class Dicentis_Settings
