@@ -156,16 +156,16 @@ if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 					'slug' => self::POST_TYPE_NAME . '/show',
 				),
 				'labels' => array(
-					'name' => __( 'Podcast Shows', 'dicentis' ),
-					'singular_name' => __( 'Podcast Show', 'dicentis' ),
-					'edit_item' => __( 'Edit Podcast Show', 'dicentis' ),
-					'update_item' => __( 'Update Podcast Show', 'dicentis' ),
-					'add_new_item' => __( 'Add New Podcast Show', 'dicentis' ),
-					'new_item_name' => __( 'New Podcast Show Name', 'dicentis' ),
-					'all_items' => __( 'All Podcast Show', 'dicentis' ),
-					'search_items' => __( 'Search Podcast Show', 'dicentis' ),
-					'parent_item' => __( 'Parent Podcast Show', 'dicentis' ),
-					'parent_item_colon' => __( 'Parent Podcast Show:', 'dicentis' ),
+					'name' => __( 'Podcast Shows', DIPO_TEXTDOMAIN ),
+					'singular_name' => __( 'Podcast Show', DIPO_TEXTDOMAIN ),
+					'edit_item' => __( 'Edit Podcast Show', DIPO_TEXTDOMAIN ),
+					'update_item' => __( 'Update Podcast Show', DIPO_TEXTDOMAIN ),
+					'add_new_item' => __( 'Add New Podcast Show', DIPO_TEXTDOMAIN ),
+					'new_item_name' => __( 'New Podcast Show Name', DIPO_TEXTDOMAIN ),
+					'all_items' => __( 'All Podcast Shows', DIPO_TEXTDOMAIN ),
+					'search_items' => __( 'Search Podcast Show', DIPO_TEXTDOMAIN ),
+					'parent_item' => __( 'Parent Podcast Show', DIPO_TEXTDOMAIN ),
+					'parent_item_colon' => __( 'Parent Podcast Show:', DIPO_TEXTDOMAIN ),
 				),
 			);
 
@@ -177,16 +177,16 @@ if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 					'slug' => self::POST_TYPE_NAME . '/series',
 				),
 				'labels' => array(
-					'name' => __( 'Series', 'dicentis' ),
-					'singular_name' => __( 'Series', 'dicentis' ),
-					'edit_item' => __( 'Edit Series', 'dicentis' ),
-					'update_item' => __( 'Update Series', 'dicentis' ),
-					'add_new_item' => __( 'Add New Series', 'dicentis' ),
-					'new_item_name' => __( 'New Series Name', 'dicentis' ),
-					'all_items' => __( 'All Series', 'dicentis' ),
-					'search_items' => __( 'Search Series', 'dicentis' ),
-					'parent_item' => __( 'Parent Series', 'dicentis' ),
-					'parent_item_colon' => __( 'Parent Series:', 'dicentis' ),
+					'name' => __( 'Series', DIPO_TEXTDOMAIN ),
+					'singular_name' => __( 'Series', DIPO_TEXTDOMAIN ),
+					'edit_item' => __( 'Edit Series', DIPO_TEXTDOMAIN ),
+					'update_item' => __( 'Update Series', DIPO_TEXTDOMAIN ),
+					'add_new_item' => __( 'Add New Series', DIPO_TEXTDOMAIN ),
+					'new_item_name' => __( 'New Series Name', DIPO_TEXTDOMAIN ),
+					'all_items' => __( 'All Series', DIPO_TEXTDOMAIN ),
+					'search_items' => __( 'Search Series', DIPO_TEXTDOMAIN ),
+					'parent_item' => __( 'Parent Series', DIPO_TEXTDOMAIN ),
+					'parent_item_colon' => __( 'Parent Series:', DIPO_TEXTDOMAIN ),
 				),
 			);
 
@@ -198,16 +198,16 @@ if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 					'slug' => self::POST_TYPE_NAME . '/speaker',
 				),
 				'labels' => array(
-					'name' => __( 'Speakers', 'dicentis' ),
-					'singular_name' => __( 'Speaker', 'dicentis' ),
-					'edit_item' => __( 'Edit Speaker', 'dicentis' ),
-					'update_item' => __( 'Update Speaker', 'dicentis' ),
-					'add_new_item' => __( 'Add New Speaker', 'dicentis' ),
-					'new_item_name' => __( 'New Speaker Name', 'dicentis' ),
-					'all_items' => __( 'All Speaker', 'dicentis' ),
-					'search_items' => __( 'Search Speaker', 'dicentis' ),
-					'parent_item' => __( 'Parent Speaker', 'dicentis' ),
-					'parent_item_colon' => __( 'Parent Speaker:', 'dicentis' ),
+					'name' => __( 'Speakers', DIPO_TEXTDOMAIN ),
+					'singular_name' => __( 'Speaker', DIPO_TEXTDOMAIN ),
+					'edit_item' => __( 'Edit Speaker', DIPO_TEXTDOMAIN ),
+					'update_item' => __( 'Update Speaker', DIPO_TEXTDOMAIN ),
+					'add_new_item' => __( 'Add New Speaker', DIPO_TEXTDOMAIN ),
+					'new_item_name' => __( 'New Speaker Name', DIPO_TEXTDOMAIN ),
+					'all_items' => __( 'All Speaker', DIPO_TEXTDOMAIN ),
+					'search_items' => __( 'Search Speaker', DIPO_TEXTDOMAIN ),
+					'parent_item' => __( 'Parent Speaker', DIPO_TEXTDOMAIN ),
+					'parent_item_colon' => __( 'Parent Speaker:', DIPO_TEXTDOMAIN ),
 				),
 			);
 
@@ -236,20 +236,20 @@ if( !class_exists( 'Dipo_Podcast_Post_Type' ) ) {
 
 		public function podcast_show_metabox_add( $tag ) { ?>
 			<div class="form-field">
-				<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
+				<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
 				<input name="asset-url" id="asset-url" type="text" value="" size="40" aria-required="true" />
-				<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
+				<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
 			</div>
 		<?php }
 
 		public function podcast_show_metabox_edit( $tag ) { ?>
 			<tr class="form-field">
 				<th scope="row" valign="top">
-					<label for="asset-url"><?php _e( 'Asset URL', 'dicentis' ); ?></label>
+					<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
 				</th>
 				<td>
 					<input name="asset-url" id="asset-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'asset-url', true  ); ?>" size="40" aria-require="true" />
-					<p class="description"><?php _e( 'This is the path / URL to the asset folder.', 'dicentis' ); ?></p>
+					<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
 				</td>
 			</tr>
 		<?php }
