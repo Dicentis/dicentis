@@ -5,6 +5,7 @@ namespace Dicentis;
 use Dicentis\Settings\Dipo_Settings;
 use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 use Dicentis\Feed\Dipo_RSS;
+use Dicentis\Core;
 
 class Dicentis_Podcast {
 
@@ -25,14 +26,23 @@ class Dicentis_Podcast {
 	 */
 	private $podcast_cpt;
 
+	/**
+	 * Localization class responsible for everything regarding l10n and i18n 
+	 * @var Dipo_Localization $localization loads textdomain
+	 */
+	private $localization;
+
 	public function __construct() {
 
 		$this->settings    = new Dipo_Settings();
 		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
+		$this->localization = new Core\Dipo_Localization();
 
 		// Load the plugin's translated strings
 		add_action( 'init', array( $this, 'load_localisation' ) );
 		add_action( 'init', '\Dicentis\Feed\Dipo_RSS::add_podcast_feed' );
+		$this->register_hooks();
+
 		add_filter( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_menu') );
 
@@ -45,6 +55,12 @@ class Dicentis_Podcast {
 		add_filter( "plugin_action_links_dicentis-podcast/dicentis-podcast.php", array( $this->settings, 'plugin_action_settings_link' ) );
 	} // END public function __construct()
 
+	public function register_hooks() {
+		// Load the plugin's translated strings
+		$this->hook_loader->add_action( 'init',
+			$this->localization,
+			'load_localisation' );
+	}
 	/**
 	 * Hook into WP's admin_init hook and do some admin stuff
 	 * 		1. reorder Podcast's submenu
@@ -135,10 +151,6 @@ class Dicentis_Podcast {
 		// }
 	} // END public function menu_order() 
 
-	public function load_localisation() {
-		load_plugin_textdomain( 'dicentis', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	} // END public function load_localisation()
-
 	/**
 	 * Activate the plugin
 	 * this plugin needs at least WP v3.6
@@ -189,5 +201,9 @@ class Dicentis_Podcast {
 		// }
 
 		return $archive_template;
+	}
+
+	public function run() {
+		$this->hook_loader->run();
 	}
 }

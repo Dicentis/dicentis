@@ -40,7 +40,7 @@ function dipo_load_plugin() {
 	$loader = new Autoload\Dipo_Load_Controller( $path . 'includes' );
 
 	$dipo = new Dicentis_Podcast();
-	// $dipo->run();
+	$dipo->run();
 
 }
 dipo_load_plugin();
