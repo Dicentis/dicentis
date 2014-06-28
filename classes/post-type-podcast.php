@@ -152,12 +152,9 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'query_var' => 'podcast_show',
 				'show_ui' => true,
 				'show_tagcloud' => false,
-				// 'show_admin_column' => true,
 				'rewrite' => array(
-					// 'slug' => self::POST_TYPE . '/show',
-					'slug' => self::POST_TYPE . '/show',
+					'slug' => self::POST_TYPE_NAME . '/show',
 				),
-				// 'rewrite' => false,
 				'labels' => array(
 					'name' => __( 'Podcast Shows', 'dicentis' ),
 					'singular_name' => __( 'Podcast Show', 'dicentis' ),
@@ -177,7 +174,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'hierarchical' => true,
 				'query_var' => 'podcast_series',
 				'rewrite' => array(
-					'slug' => self::POST_TYPE . '/series',
+					'slug' => self::POST_TYPE_NAME . '/series',
 				),
 				'labels' => array(
 					'name' => __( 'Series', 'dicentis' ),
@@ -198,7 +195,7 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				'hierarchical' => true,
 				'query_var' => 'podcast_speaker',
 				'rewrite' => array(
-					'slug' => self::POST_TYPE . '/speaker',
+					'slug' => self::POST_TYPE_NAME . '/speaker',
 				),
 				'labels' => array(
 					'name' => __( 'Speakers', 'dicentis' ),
@@ -593,11 +590,15 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 
 			// Load assets for metabox tabs
 			// @source https://github.com/PeteMall/Metabox-Tabs
-			$color = get_user_meta( get_current_user_id(), 'admin_color', true );
+			/* use $color to get users color scheme and enqueue custom style */
+			// $color = get_user_meta( get_current_user_id(), 'admin_color', true );
+			// wp_enqueue_style(  "jf-$color",
+			// 	DIPO_ASSETS_URL . "/css/metabox-$color.css" );
+
 			wp_enqueue_style(  'jf-metabox-tabs',
 				DIPO_ASSETS_URL . '/css/metabox-tabs.css' );
-			wp_enqueue_style(  "jf-$color",
-				DIPO_ASSETS_URL . "/css/metabox-$color.css" );
+			wp_enqueue_style(  "jf-classic",
+				DIPO_ASSETS_URL . "/css/metabox-classic.css" );
 			wp_enqueue_script( 'jf-metabox-tabs',
 				DIPO_ASSETS_URL . '/js/metabox-tabs.js',
 				array( 'jquery' ) );

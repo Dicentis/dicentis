@@ -197,19 +197,62 @@ if( !class_exists( 'RSS' ) ) {
 		}
 
 		public function get_mediatype() {
-			if ( isset( $_GET['type'] ) )
+			if ( isset( $_GET['type'] ) ) {
 				return $_GET['type'];
-			else
-				return 'audio/mpeg';
+			} else {
+
+				$extensions = RSS::get_file_extensions();
+				$path = explode('/', $_SERVER['REQUEST_URI'] );
+				if ( $path[sizeof($path)-1] !== '' )
+					$ext = $path[sizeof($path)-1];
+				else
+					$ext = $path[sizeof($path)-2];
+
+				if ( 'pod' !== $ext ) {
+					$mime = array_search( $ext, $extensions );
+				}
+
+				return ( $mime ) ? $mime : 'audio/mpeg';
+			}
 		}
 
 		public static function add_podcast_feed() {
 			add_feed( 'pod', 'RSS::do_podcast_feed' );
+
+			$extensions = RSS::get_file_extensions();
+			foreach ( $extensions as $mime => $ext ) {
+				add_feed( $ext, 'RSS::do_podcast_feed' );
+			}
 		}
 
 		public static function do_podcast_feed( $in ) {
 			load_template( DIPO_TEMPLATES_DIR . '/feed-itunes.php' );
 			exit();
+		}
+
+		public static function get_file_extensions() {
+			return $ext = array(
+				'audio/mpeg' => 'mp3',
+				'application/x-bittorrent' => 'mp3.torrent',
+				'video/mpeg' => 'mpg',
+				'audio/mp4' => 'm4a',
+				'audio/mp4' => 'm4a',
+				'video/mp4' => 'mp4',
+				'video/x-m4v' => 'm4v',
+				'audio/ogg' => 'oga',
+				'audio/ogg' => 'ogg',
+				'video/ogg' => 'ogv',
+				'audio/webm' => 'webm',
+				'video/webm' => 'webm',
+				'audio/flac' => 'flac',
+				'audio/ogg;codecs=opus' => 'opus',
+				'audio/x-matroska' => 'mka',
+				'video/x-matroska' => 'mkv',
+				'application/pdf' => 'pdf',
+				'application/epub+zip' => 'epub',
+				'image/png' => 'png',
+				'image/jpeg' => 'jpg'
+			);
 		}
 	}
 }

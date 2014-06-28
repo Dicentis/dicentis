@@ -3,7 +3,7 @@ Contributors: obstschale
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,  
 Requires at least: 3.6  
 Tested up to: 3.9.1  
-Stable tag: 0.1.0  
+Stable tag: 0.1.1  
 License: GPLv2 or later  
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)  
 
@@ -19,7 +19,15 @@ You can download and install Dicentis using the built in WordPress plugin instal
 FAQ will surely come in the future.
 
 ## Changelog
-### 0.1.0 (Bloddy Mary) [2014-06-01]
+### 0.1.1 [2014-06-28]
+
+* [FEATURE] Feeds for file extentions are available
+	* Example: http://www.your-domain.com/podcasts/feed/mp3
+* [FEATURE] Copyright is added to feed and buttons for icons on settings page
+* [UPDATE] Dicentis DB-Version added to DB
+* [FIX] Fix CSS for metabox
+
+### 0.1.0 (Bloody Mary) [2014-06-01]
 
 * [FEATURE] Create multiple podcast shows
 * [FEATURE] Create multiple speaker

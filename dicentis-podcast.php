@@ -3,7 +3,7 @@
 Plugin Name: Dicentis Podcast
 Plugin URI: http://hanshelgebuerger.de
 Description: Manage multiple podcasts with ease in one plugin
-Version: 0.1.0
+Version: 0.1.1
 Author: Hans-Helge Buerger
 Author URI: http://hanshelgebuerger.de
 Text Domain: dicentis
@@ -12,7 +12,7 @@ GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
 GitHub Branch: master
 GitHub Access Token: 06f0508db3f02e704d0e1bbdce452be7d50aa308
 
-Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
+Copyright 2014 Hans-Helge Buerger (http://hanshelgebuerger.de)
 License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
@@ -22,6 +22,7 @@ include_once DIPO_CLASSES_DIR . '/rss.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/series.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/speaker.php';
 include_once DIPO_CLASSES_DIR . '/taxonomies/show.php';
+require_once DIPO_LIB_DIR . '/dipo-version.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -44,8 +45,8 @@ if( !class_exists('Dicentis') ) {
 			$Dicentis_Podcast_CPT = new Dicentis_Podcast_CPT();
 
 			add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
-			add_filter( 'single_template', array( $this, 'single_template' ) );
-			add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
+			// add_filter( 'single_template', array( $this, 'single_template' ) );
+			// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 
 			add_action( 'init', 'RSS::add_podcast_feed' );
 		} // END public function __construct()

@@ -34,8 +34,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		$iso_code = preg_replace('/[_]/', '-', $feed->itunes_opt['itunes_language']);
 		echo $iso_code;
 	?></language>
-	<!-- @TODO: Add Copyright Setting -->
-	<copyright>&#x2117; &amp; &#xA9; 2005 John Doe &amp; Family</copyright>
+	<copyright><?php echo ent2ncr($feed->itunes_opt['itunes_copyright']); ?></copyright>
 	<itunes:subtitle><?php echo $feed->itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
 	<itunes:author><?php echo $feed->itunes_opt['itunes_author']; ?></itunes:author>
 	<!-- @TODO: Take Summary from Show -->
