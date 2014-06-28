@@ -3,7 +3,7 @@
 Plugin Name: Dicentis Podcast
 Plugin URI: http://hanshelgebuerger.de
 Description: Manage multiple podcasts with ease in one plugin
-Version: 0.1.0
+Version: 0.1.1
 Author: Hans-Helge Buerger
 Author URI: http://hanshelgebuerger.de
 Text Domain: dicentis
@@ -12,7 +12,7 @@ GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
 GitHub Branch: master
 GitHub Access Token: 06f0508db3f02e704d0e1bbdce452be7d50aa308
 
-Copyright 2013 Hans-Helge Buerger (http://hanshelgebuerger.de)
+Copyright 2014 Hans-Helge Buerger (http://hanshelgebuerger.de)
 License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
  */
 
