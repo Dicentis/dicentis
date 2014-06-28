@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dicentis v0.1.0\n"
 "POT-Creation-Date: 2014-06-07 18:55+0100\n"
-"PO-Revision-Date: 2014-06-07 20:20+0100\n"
+"PO-Revision-Date: 2014-06-28 17:05+0100\n"
 "Last-Translator: Hans-Helge Buerger <mail@hig-podcast.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../classes/settings.php:83
 msgid "iTunes Subtitle"
-msgstr ""
+msgstr "iTunes Untertitel"
 
 #: ../classes/settings.php:91
 msgid "iTunes Author"
@@ -572,7 +572,7 @@ msgstr ""
 
 #: ../templates/podcast_metabox.php:16
 msgid "Subtitle"
-msgstr ""
+msgstr "Untertitel"
 
 #: ../templates/podcast_metabox.php:21 ../templates/podcast_metabox.php:34
 msgid "Characters left: "

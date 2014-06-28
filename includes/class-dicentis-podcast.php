@@ -64,7 +64,7 @@ class Dicentis_Podcast {
 
 	public function register_hooks() {
 		// Load the plugin's translated strings
-		$this->hook_loader->add_action( 'init',
+		$this->hook_loader->add_action( 'plugins_loaded',
 			new Core\Dipo_Localization(),
 			'load_localisation' );
 
