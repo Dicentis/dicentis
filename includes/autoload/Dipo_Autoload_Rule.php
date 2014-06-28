@@ -41,7 +41,7 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 		if ( ! $name = $this->prepare_name( $name ) )
 			return;
 
-		$directories = [ 'feed', 'libraries', 'podcast-post-type', 'settings', 'taxonomies', 'templates' ];
+		$directories = [ 'feed', 'libraries', 'podcast-post-type', 'settings', 'taxonomies', 'templates', 'core' ];
 		foreach ( $directories as $main_dir ) {
 
 			if ( ! is_dir( "$this->dir/$main_dir" ) )
