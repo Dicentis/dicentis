@@ -38,24 +38,27 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 	 * @return boolean
 	 */
 	public function load( $name ) {
-		if ( ! $name = $this->prepare_name( $name ) )
+		if ( ! $name = $this->prepare_name( $name ) ) {
 			return;
+		}
 
 		$directories = [ 'feed', 'libraries', 'podcast-post-type', 'settings', 'taxonomies', 'templates', 'core' ];
 		foreach ( $directories as $main_dir ) {
 
-			if ( ! is_dir( "$this->dir/$main_dir" ) )
+			if ( ! is_dir( "$this->dir/$main_dir" ) ) {
 				continue;
+			}
 
-				if ( ! is_dir( "$this->dir/$main_dir" ) )
-					continue;
+			if ( ! is_dir( "$this->dir/$main_dir" ) ) {
+				continue;
+			}
 
 				$file = "$this->dir/$main_dir/$name.php";
 
-				if ( file_exists( $file ) ) {
-					include_once $file;
-					return;
-				}
+			if ( file_exists( $file ) ) {
+				include_once $file;
+				return;
+			}
 		}
 	}
 
@@ -68,12 +71,13 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 	protected function prepare_name( $fully_qualified_name ) {
 
 		$trimed_fqname = trim( $fully_qualified_name, '\\' );
-		$exploded_namespace = explode('\\', $trimed_fqname);
-		$name = $exploded_namespace[count($exploded_namespace)-1];
+		$exploded_namespace = explode( '\\', $trimed_fqname );
+		$name = $exploded_namespace[count( $exploded_namespace ) - 1];
 
 		// Our classes start with "Dipo_" always.
-		if ( 0 !== strpos( $name, 'Dipo_' ) && 0 !== strpos( $name, 'Inpsyde_' ) )
-			return FALSE;
+		if ( 0 !== strpos( $name, 'Dipo_' ) && 0 !== strpos( $name, 'Inpsyde_' ) ) {
+			return false;
+		}
 
 		return $name;
 	}

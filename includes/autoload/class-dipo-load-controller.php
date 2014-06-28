@@ -62,14 +62,17 @@ class Dipo_Load_Controller {
 		$dir = dirname( __FILE__ );
 
 		// We need these classes in exactly this order
-		if ( ! interface_exists( 'Inpsyde_Autoload_Rule_Interface' ) )
+		if ( ! interface_exists( 'Inpsyde_Autoload_Rule_Interface' ) ) {
 			require "$dir/Inpsyde_Autoload_Rule_Interface.php";
+		}
 
-		if ( ! class_exists( 'Dipo_Autoload_Rule' ) )
-			require "$dir/Dipo_Autoload_Rule.php";
+		if ( ! class_exists( 'Dipo_Autoload_Rule' ) ) {
+			require "$dir/class-dipo-autoload-rule.php";
+		}
 
-		if ( ! class_exists( 'Inpsyde_Autoload' ) )
+		if ( ! class_exists( 'Inpsyde_Autoload' ) ) {
 			require "$dir/Inpsyde_Autoload.php";
+		}
 
 		$this->loader = new Inpsyde_Autoload;
 		$rule         = new Dipo_Autoload_Rule( $this->plugin_dir );
