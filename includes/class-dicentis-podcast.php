@@ -12,7 +12,9 @@ class Dicentis_Podcast {
 	/**
 	 * Dicentis Settings Object which is responsible for all settings
 	 * regarding dicentis.
-	 *
+	 * 
+	 * @since  0.2.0
+	 * @access private
 	 * @var Dipo_Settings $settings Dipo_Settings object
 	 */
 	private $settings;
@@ -21,6 +23,8 @@ class Dicentis_Podcast {
 	 * The core of this plugin is its Custom Post Type "Podcast"
 	 * representing through this variable.
 	 * 
+	 * @since  0.2.0
+	 * @access private
 	 * @var Dipo_Podcast_Post_Type $podcast_cpt Custom Post Tye object which
 	 *      registeres the custom post type for this plugin
 	 */
@@ -29,6 +33,8 @@ class Dicentis_Podcast {
 	/**
 	 * RSS Object for creating, instantiating a valid RSS Feed
 	 * 
+	 * @since  0.2.0
+	 * @access private
 	 * @var Dipo_RSS $feed adds new feeds to WordPress and is responsible
 	 *      for rendering the feeds
 	 */
@@ -37,10 +43,21 @@ class Dicentis_Podcast {
 	/**
 	 * Loader class for holding all action and filter hooks in arrays
 	 * 
+	 * @since  0.2.0
+	 * @access private
 	 * @var Dipo_Hook_Loader $hook_loader responsible for adding actions and
 	 *      filter hook into wordpress
 	 */
 	private $hook_loader;
+
+	/**
+	 * Admin object which is responsible for the backend pages
+	 * 
+	 * @since  0.2.0
+	 * @access private
+	 * @var [type]
+	 */
+	private $admin;
 
 	public function __construct() {
 
@@ -48,13 +65,9 @@ class Dicentis_Podcast {
 		$this->podcast_cpt  = new Dipo_Podcast_Post_Type();
 		$this->feed         = new Dipo_RSS();
 		$this->hook_loader  = new Core\Dipo_Hook_Loader();
+		$this->admin        = new Core\Dipo_Admin_Manager();
 
 		$this->register_hooks();
-
-		add_filter( 'admin_init', array( $this, 'admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'add_menu') );
-
-		// Create CPT Podcast
 
 		// add_filter( 'single_template', array( $this, 'single_template' ) );
 		// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
@@ -63,11 +76,27 @@ class Dicentis_Podcast {
 	} // END public function __construct()
 
 	public function register_hooks() {
-		// Load the plugin's translated strings
+		/**
+		 * Admin Hooks
+		 */
+		$this->hook_loader->add_filter( 'admin_init',
+			$this->admin,
+			'admin_init' );
+
+		$this->hook_loader->add_action( 'admin_menu',
+			$this->admin,
+			'add_menu' );
+
+		/**
+		 * Localization Hooks
+		 */
 		$this->hook_loader->add_action( 'plugins_loaded',
 			new Core\Dipo_Localization(),
 			'load_localisation' );
 
+		/**
+		 * RSS / Feed Hooks
+		 */
 		$this->hook_loader->add_action( 'init',
 			$this->feed,
 			'add_podcast_feeds');
@@ -77,89 +106,7 @@ class Dicentis_Podcast {
 			'generate_podcast_feed' );
 	}
 
-	/**
-	 * Hook into WP's admin_init hook and do some admin stuff
-	 * 		1. reorder Podcast's submenu
-	 */
-	public function admin_init() {
-		$this->menu_order();
-	} // END public function admin_init()
 
-	/**
-	 * Add admin menu pages to podcast post type
-	 */
-	public function add_menu() {
-		add_submenu_page(
-			'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
-			__( 'Dashboard' ),
-			__( 'Dashboard' ),
-			'edit_posts',
-			'dicentis_dashboard',
-			array( $this, 'render_dashboard_page' )
-		);
-	} // END public function add_menu()
-
-	public function render_dashboard_page() {
-		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-		}
-
-		$show_feeds = array();
-		$show_terms = get_terms( dipo_get_podcast_show_slug() );
-		foreach ( $show_terms as $show_index => $show ) {
-
-			$show_feed = trailingslashit( get_home_url() )
-				. '?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE
-				. '&podcast_show=' . $show->slug
-				. '&feed=pod';
-
-			$show_pretty_feed = trailingslashit( get_home_url() )
-				. 'podcast/show/' . $show->slug
-				. '/feed/pod';
-
-			$show_array = array(
-				'name' => $show->name,
-				'slug' => $show->slug,
-				'feed' => $show_feed,
-				'pretty_feed' => $show_pretty_feed,
-			);
-
-			array_push( $show_feeds, $show_array );
-		}
-
-		// Render the dashboard template
-		include( sprintf( '%s/dashboard.php', DIPO_TEMPLATES_DIR ) );
-	} // END public function render_dashboard_page()
-
-	/**
-	 * create a custom menu order to display the dashboard
-	 * menu always at the top of this post type
-	 */
-	public function menu_order() {
-		// $submenu contains the order of the complete menu
-		// i.e. top-level menus and submenus
-		global $submenu;
-
-		// Look for $find_page and the submenu $find_sub
-		$find_page = 'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE;
-		$find_sub  = 'Dashboard';
-
-		// Loop thru $submenu until $find_page is found
-		if ( isset( $submenu[$find_page] ) ) {
-			foreach ( $submenu[$find_page] as $id => $meta ) {
-				if ( $meta[0] == $find_sub ) {
-					// $find_sub is found so assing it to
-					// first place (0-based) in sub-array and unset
-					// its former entry.
-					// Last but not least sort it again.
-					// 'Dashboard' is now at the top of this submenu
-					$submenu[$find_page][0] = $meta;
-					unset( $submenu[$find_page][$id] );
-					ksort( $submenu[$find_page] );
-				}
-			}
-		}
-	} // END public function menu_order()
 
 	/**
 	 * Activate the plugin
