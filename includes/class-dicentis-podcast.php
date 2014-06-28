@@ -27,6 +27,22 @@ class Dicentis_Podcast {
 	private $podcast_cpt;
 
 	/**
+	 * RSS Object for creating, instantiating a valid RSS Feed
+	 * 
+	 * @var Dipo_RSS $feed adds new feeds to WordPress and is responsible
+	 *      for rendering the feeds
+	 */
+	private $feed;
+
+	/**
+	 * Loader class for holding all action and filter hooks in arrays
+	 * 
+	 * @var Dipo_Hook_Loader $hook_loader responsible for adding actions and
+	 *      filter hook into wordpress
+	 */
+	private $hook_loader;
+
+	/**
 	 * Localization class responsible for everything regarding l10n and i18n 
 	 * @var Dipo_Localization $localization loads textdomain
 	 */
@@ -34,13 +50,12 @@ class Dicentis_Podcast {
 
 	public function __construct() {
 
-		$this->settings    = new Dipo_Settings();
-		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
-		$this->localization = new Core\Dipo_Localization();
+		$this->settings     = new Dipo_Settings();
+		$this->podcast_cpt  = new Dipo_Podcast_Post_Type();
+		$this->feed         = new Dipo_RSS();
+		$this->hook_loader  = new Core\Dipo_Hook_Loader();
+		// $this->localization = new Core\Dipo_Localization();
 
-		// Load the plugin's translated strings
-		add_action( 'init', array( $this, 'load_localisation' ) );
-		add_action( 'init', '\Dicentis\Feed\Dipo_RSS::add_podcast_feed' );
 		$this->register_hooks();
 
 		add_filter( 'admin_init', array( $this, 'admin_init' ) );
@@ -48,19 +63,27 @@ class Dicentis_Podcast {
 
 		// Create CPT Podcast
 
-		add_action( 'template_redirect', array( $this, 'create_rss_feed' ) );
 		// add_filter( 'single_template', array( $this, 'single_template' ) );
 		// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 
-		add_filter( "plugin_action_links_dicentis-podcast/dicentis-podcast.php", array( $this->settings, 'plugin_action_settings_link' ) );
+		add_filter( 'plugin_action_links_dicentis-podcast/dicentis-podcast.php', array( $this->settings, 'plugin_action_settings_link' ) );
 	} // END public function __construct()
 
 	public function register_hooks() {
 		// Load the plugin's translated strings
 		$this->hook_loader->add_action( 'init',
-			$this->localization,
+			new Core\Dipo_Localization(),
 			'load_localisation' );
+
+		$this->hook_loader->add_action( 'init',
+			$this->feed,
+			'add_podcast_feeds');
+
+		$this->hook_loader->add_action( 'template_redirect',
+			$this->feed,
+			'generate_podcast_feed' );
 	}
+
 	/**
 	 * Hook into WP's admin_init hook and do some admin stuff
 	 * 		1. reorder Podcast's submenu
@@ -84,8 +107,8 @@ class Dicentis_Podcast {
 	} // END public function add_menu()
 
 	public function render_dashboard_page() {
-		if ( !current_user_can('edit_posts') ) {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
 		$show_feeds = array();
@@ -93,26 +116,26 @@ class Dicentis_Podcast {
 		foreach ( $show_terms as $show_index => $show ) {
 
 			$show_feed = trailingslashit( get_home_url() )
-				. "?post_type=" . Dipo_Podcast_Post_Type::POST_TYPE
-				. "&podcast_show=" . $show->slug
-				. "&feed=pod";
+				. '?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE
+				. '&podcast_show=' . $show->slug
+				. '&feed=pod';
 
 			$show_pretty_feed = trailingslashit( get_home_url() )
-				. "podcast/show/" . $show->slug
-				. "/feed/pod";
+				. 'podcast/show/' . $show->slug
+				. '/feed/pod';
 
 			$show_array = array(
 				'name' => $show->name,
 				'slug' => $show->slug,
 				'feed' => $show_feed,
-				'pretty_feed' => $show_pretty_feed
-			 );
+				'pretty_feed' => $show_pretty_feed,
+			);
 
 			array_push( $show_feeds, $show_array );
 		}
 
 		// Render the dashboard template
-		include( sprintf( "%s/dashboard.php", DIPO_TEMPLATES_DIR ) );
+		include( sprintf( '%s/dashboard.php', DIPO_TEMPLATES_DIR ) );
 	} // END public function render_dashboard_page()
 
 	/**
@@ -127,29 +150,23 @@ class Dicentis_Podcast {
 		// Look for $find_page and the submenu $find_sub
 		$find_page = 'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE;
 		$find_sub  = 'Dashboard';
-		// pre_print($submenu);
+
 		// Loop thru $submenu until $find_page is found
-		// foreach ( $submenu as $page => $items ) {
-			// if ( $page == $find_page ) {
-				// loop thru $find_page item and look for
-				// $find_sub b/c we want to reorder it
-				if ( isset( $submenu[$find_page] ) ) {
-					foreach ( $submenu[$find_page] as $id => $meta ) {
-						if ( $meta[0] == $find_sub ) {
-							// $find_sub is found so assing it to
-							// first place (0-based) in sub-array and unset
-							// its former entry.
-							// Last but not least sort it again.
-							// 'Dashboard' is now at the top of this submenu
-							$submenu[$find_page][0] = $meta;
-							unset( $submenu[$find_page][$id] );
-							ksort( $submenu[$find_page] );
-						}
-					}
+		if ( isset( $submenu[$find_page] ) ) {
+			foreach ( $submenu[$find_page] as $id => $meta ) {
+				if ( $meta[0] == $find_sub ) {
+					// $find_sub is found so assing it to
+					// first place (0-based) in sub-array and unset
+					// its former entry.
+					// Last but not least sort it again.
+					// 'Dashboard' is now at the top of this submenu
+					$submenu[$find_page][0] = $meta;
+					unset( $submenu[$find_page][$id] );
+					ksort( $submenu[$find_page] );
 				}
-			// }
-		// }
-	} // END public function menu_order() 
+			}
+		}
+	} // END public function menu_order()
 
 	/**
 	 * Activate the plugin
@@ -177,11 +194,6 @@ class Dicentis_Podcast {
 	public static function deactivate() {
 		flush_rewrite_rules();
 	} // END public static function deactivate()
-
-	public function create_rss_feed() {
-		$feed = new Dipo_RSS();
-		$feed->generate_podcast_feed();
-	}
 
 	public function single_template( $single_template ) {
 		global $post;
