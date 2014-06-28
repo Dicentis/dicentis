@@ -42,19 +42,12 @@ class Dicentis_Podcast {
 	 */
 	private $hook_loader;
 
-	/**
-	 * Localization class responsible for everything regarding l10n and i18n 
-	 * @var Dipo_Localization $localization loads textdomain
-	 */
-	private $localization;
-
 	public function __construct() {
 
 		$this->settings     = new Dipo_Settings();
 		$this->podcast_cpt  = new Dipo_Podcast_Post_Type();
 		$this->feed         = new Dipo_RSS();
 		$this->hook_loader  = new Core\Dipo_Hook_Loader();
-		// $this->localization = new Core\Dipo_Localization();
 
 		$this->register_hooks();
 
