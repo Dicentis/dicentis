@@ -73,9 +73,14 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 		$trimed_fqname = trim( $fully_qualified_name, '\\' );
 		$exploded_namespace = explode( '\\', $trimed_fqname );
 		$name = $exploded_namespace[count( $exploded_namespace ) - 1];
+		// Change class name to file name
+		// Example: Dipo_Settings -> class-dipo-settings
+		$name = strtolower( $name );
+		$name = preg_filter( '/_/', '-', $name );
+		$name = 'class-' . $name;
 
-		// Our classes start with "Dipo_" always.
-		if ( 0 !== strpos( $name, 'Dipo_' ) && 0 !== strpos( $name, 'Inpsyde_' ) ) {
+		// Our classes start with "class-" always.
+		if ( 0 !== strpos( $name, 'class-' ) && 0 !== strpos( $name, 'Inpsyde_' ) ) {
 			return false;
 		}
 

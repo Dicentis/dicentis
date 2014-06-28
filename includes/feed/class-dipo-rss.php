@@ -216,7 +216,7 @@ if( !class_exists( 'Dipo_RSS' ) ) {
 				return $_GET['type'];
 			} else {
 
-				$extensions = \Dicentis\Feed\Dipo_RSS::get_file_extensions();
+				$extensions = $this->get_file_extensions();
 				$path = explode('/', $_SERVER['REQUEST_URI'] );
 				if ( $path[sizeof($path)-1] !== '' )
 					$ext = $path[sizeof($path)-1];
@@ -231,21 +231,21 @@ if( !class_exists( 'Dipo_RSS' ) ) {
 			}
 		}
 
-		public static function add_podcast_feed() {
-			add_feed( 'pod', '\Dicentis\Feed\Dipo_RSS::do_podcast_feed' );
+		public function add_podcast_feeds() {
+			add_feed( 'pod', array( $this, 'do_podcast_feed' ) );
 
-			$extensions = \Dicentis\Feed\Dipo_RSS::get_file_extensions();
+			$extensions = $this->get_file_extensions();
 			foreach ( $extensions as $mime => $ext ) {
-				add_feed( $ext, '\Dicentis\Feed\Dipo_RSS::do_podcast_feed' );
+				add_feed( $ext, array( $this, 'do_podcast_feed' ) );
 			}
 		}
 
-		public static function do_podcast_feed( $in ) {
+		public function do_podcast_feed( $in ) {
 			load_template( DIPO_TEMPLATES_DIR . '/feed-itunes.php' );
 			exit();
 		}
 
-		public static function get_file_extensions() {
+		public function get_file_extensions() {
 			return $ext = array(
 				'audio/mpeg' => 'mp3',
 				'application/x-bittorrent' => 'mp3.torrent',
