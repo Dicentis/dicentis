@@ -3,7 +3,7 @@ Contributors: obstschale
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,9 @@ You can download and install Dicentis using the built in WordPress plugin instal
 FAQ will surely come in the future.
 
 == Changelog ==
+= 0.1.2 =
+* [FIX] Redirect `/podcasts/` to a page and not to archive if a page with that slug exists
+
 = 0.1.1 =
 
 * [FEATURE] Feeds for file extentions are available
