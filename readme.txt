@@ -19,6 +19,9 @@ You can download and install Dicentis using the built in WordPress plugin instal
 FAQ will surely come in the future.
 
 == Changelog ==
+= 0.1.3 =
+* [FIX] Revert changes. Fix from 0.1.2 cause more trouble than it solve -.-
+
 = 0.1.2 =
 * [FIX] Redirect `/podcasts/` to a page and not to archive if a page with that slug exists
 

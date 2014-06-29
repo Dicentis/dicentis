@@ -124,55 +124,8 @@ if( !class_exists( 'Dicentis_Podcast_CPT' ) ) {
 				// with the same name.
 			} else {
 				register_post_type( self::POST_TYPE, $podcast_args );
-				if ( $this->podcasts_page_exists() ) {
-					$this->rewrite_podcasts_permalink_rule();
-				}
 			}
 		} // END public function register_podcast_post_type()
-
-		public function podcasts_page_exists() {
-			$args = array(
-				'sort_order' => 'ASC',
-				'sort_column' => 'post_name',
-				'post_status' => 'publish',
-			);
-			$pages = get_pages($args);
-
-			foreach ($pages as $page) {
-				if ('podcasts' == $page->post_name) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public function rewrite_podcasts_permalink_rule() {
-			global $wp_rewrite;
-
-			$args = array(
-				'sort_order' => 'ASC',
-				'sort_column' => 'post_name',
-				'post_status' => 'publish',
-			);
-			$pages = get_pages($args);
-
-			$podcasts_guid = "";
-			foreach ($pages as $page) {
-				if ('podcasts' == $page->post_name) {
-					$podcasts_guid = $page->guid;
-				}
-			}
-
-			$podcasts_guid = substr($podcasts_guid,
-				strrpos($podcasts_guid, "page_id")-1);
-
-			add_rewrite_rule( 'podcasts/?$',
-				'index.php'. $podcasts_guid,
-				'top' );
-
-			flush_rewrite_rules();
-		}
 
 /**
 /$$$$$$$$
