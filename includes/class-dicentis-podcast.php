@@ -75,7 +75,7 @@ class Dicentis_Podcast {
 			->set( 'hook_loader', $this->hook_loader )
 			->set( 'textdomain', 'DIPO_TEXTDOMAIN' );
 
-		$this->podcast_cpt  = new Dipo_Podcast_Post_Type();
+		$this->podcast_cpt = new Dipo_Podcast_Post_Type( $this->dipo_properties );
 		$this->settings = new Dipo_Settings( $this->dipo_properties );
 
 	}
