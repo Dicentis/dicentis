@@ -3,24 +3,39 @@
 namespace Dicentis\Settings;
 
 use Dicentis\Feed\Dipo_Feed_Import;
+use Dicentis\Core;
 
 /**
 * Settings page for dicentis plugin
 */
 class Dipo_Settings {
 
-	public function __construct() {
-		// register actions
-		add_action( 'admin_init', array( $this, 'admin_init') );
-		add_action( 'admin_menu', array( $this, 'add_menu' ) );
-	} // END function __construct() 
+	private $properties;
+	private $textdomain;
+
+	public function __construct( Core\Dipo_Property_Interface $properties ) {
+
+		$this->properties = $properties;
+		$this->textdomain = $this->properties->get( 'textdomain' );
+		$this->register_settings_hooks();
+
+	} // END function __construct()
+
+	private function register_settings_hooks() {
+		$loader = $this->properties->get( 'hook_loader' );
+
+		// script & style action with page detection
+		$loader->add_action(
+			'admin_enqueue_scripts',
+			$this,
+			'load_dipo_import_feed_style' );
+
+	}
 
 	/**
 	 * hook into WP's admin_init action hok
 	 */
 	public function admin_init() {
-		// script & style action with page detection
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_dipo_import_feed_style' ) );
 
 		// register the settings for this plugin
 		register_setting( 'dipo_general_options', 'dipo_general_options', array( $this, 'validate_general_options' ) );
@@ -30,7 +45,7 @@ class Dipo_Settings {
 		// General section settings
 		add_settings_section(
 			'dipo_general_main', // id
-			__( 'general Settings', DIPO_TEXTDOMAIN ), // title
+			__( 'general Settings', $this->textdomain ), // title
 			array( $this, 'general_settings_description' ),
 			'dipo_general'
 		);
@@ -38,7 +53,7 @@ class Dipo_Settings {
 		// iTunes section settings
 		add_settings_section(
 			'dipo_itunes_main', // id
-			__( 'iTunes Settings', DIPO_TEXTDOMAIN ), // title
+			__( 'iTunes Settings', $this->textdomain ), // title
 			array( $this, 'itunes_settings_description' ),
 			'dipo_itunes'
 		);
@@ -46,7 +61,7 @@ class Dipo_Settings {
 		// General Fields
 		add_settings_field(
 			'dipo_general_assets_url',
-			__( 'Asstets URL', DIPO_TEXTDOMAIN ),
+			__( 'Asstets URL', $this->textdomain ),
 			array( $this, 'general_assets_url' ),
 			'dipo_general',
 			'dipo_general_main'
@@ -55,7 +70,7 @@ class Dipo_Settings {
 		// iTunes Fields
 		add_settings_field(
 			'dipo_itunes_owner',
-			__( 'iTunes Owner', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Owner', $this->textdomain ),
 			array( $this, 'itunes_owner_string' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -63,7 +78,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_owner_mail',
-			__( 'iTunes Owner E-Mail', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Owner E-Mail', $this->textdomain ),
 			array( $this, 'itunes_owner_mail' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -71,7 +86,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_title',
-			__( 'iTunes Title', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Title', $this->textdomain ),
 			array( $this, 'itunes_title_string' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -79,7 +94,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_subtitle',
-			__( 'iTunes Subtitle', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Subtitle', $this->textdomain ),
 			array( $this, 'itunes_subtitle_string' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -87,7 +102,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_author',
-			__( 'iTunes Author', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Author', $this->textdomain ),
 			array( $this, 'itunes_author_string' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -95,7 +110,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_language',
-			__( 'iTunes Language', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Language', $this->textdomain ),
 			array( $this, 'itunes_language_dropdown' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -104,7 +119,7 @@ class Dipo_Settings {
 		/* @TODO: use args argument for callback function and use only one function for itunes_category */
 		add_settings_field(
 			'dipo_itunes_cat1',
-			__( 'iTunes Category 1', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Category 1', $this->textdomain ),
 			array( $this, 'itunes_category1' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -112,7 +127,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_cat2',
-			__( 'iTunes Category 2', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Category 2', $this->textdomain ),
 			array( $this, 'itunes_category2' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -120,7 +135,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_cat3',
-			__( 'iTunes Category 3', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Category 3', $this->textdomain ),
 			array( $this, 'itunes_category3' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -128,7 +143,7 @@ class Dipo_Settings {
 
 		add_settings_field(
 			'dipo_itunes_copyright',
-			__( 'iTunes Copyright', DIPO_TEXTDOMAIN ),
+			__( 'iTunes Copyright', $this->textdomain ),
 			array( $this, 'itunes_copyright' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
@@ -138,13 +153,13 @@ class Dipo_Settings {
 
 	public function general_settings_description() { ?>
 		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', DIPO_TEXTDOMAIN ); ?>
+		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
 		</p>
 	<?php }
 
 	public function itunes_settings_description() { ?>
 		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', DIPO_TEXTDOMAIN ); ?>
+		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
 		</p>
 	<?php }
 
@@ -155,7 +170,7 @@ class Dipo_Settings {
 
 		// echo the field ?>
 		<input id='dipo_general_assets_url' name='dipo_general_options[general_assets_url]' size='40' type='text' value='<?php echo $assets; ?>' />
-		<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_owner_string() {
@@ -164,7 +179,7 @@ class Dipo_Settings {
 		$owner = $options['itunes_owner'];
 		// echo the field ?>
 		<input id='dipo_itunes_owner' name='dipo_itunes_options[itunes_owner]' size='40' type='text' value='<?php echo $owner; ?>' />
-		<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_owner_mail() {
@@ -173,7 +188,7 @@ class Dipo_Settings {
 		$owner_mail = $options['itunes_owner_mail'];
 		// echo the field ?>
 		<input id='dipo_itunes_owner_mail' name='dipo_itunes_options[itunes_owner_mail]' size='40' type='mail' value='<?php echo $owner_mail; ?>' />
-		<p class="description"><?php _e('Email address of owner for contact options', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('Email address of owner for contact options', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_title_string() {
@@ -182,7 +197,7 @@ class Dipo_Settings {
 		$text_string = $options['itunes_title'];
 		// echo the field ?>
 		<input id='dipo_itunes_title' name='dipo_itunes_options[itunes_title]' size='40' type='text' value='<?php echo $text_string; ?>' />
-		<p class="description"><?php _e('Title of podcast show. If multitple shows are defined please use local settings for shows.', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('Title of podcast show. If multitple shows are defined please use local settings for shows.', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_subtitle_string() {
@@ -191,7 +206,7 @@ class Dipo_Settings {
 		$text_string = $options['itunes_subtitle'];
 		// echo the field ?>
 		<input id='dipo_itunes_subtitle' name='dipo_itunes_options[itunes_subtitle]' size='40' type='text' value='<?php echo $text_string; ?>' />
-		<p class="description"><?php _e('Subtitle of podcast show. If multitple shows are defined please use local settings for shows.', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('Subtitle of podcast show. If multitple shows are defined please use local settings for shows.', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_author_string() {
@@ -200,7 +215,7 @@ class Dipo_Settings {
 		$author = $options['itunes_author'];
 		// echo the field ?>
 		<input id='dipo_itunes_author' name='dipo_itunes_options[itunes_author]' size='40' type='text' value='<?php echo $author; ?>' />
-		<p class="description"><?php _e('The content of this tag is shown in the Artist column in iTunes', DIPO_TEXTDOMAIN ); ?></p>
+		<p class="description"><?php _e('The content of this tag is shown in the Artist column in iTunes', $this->textdomain ); ?></p>
 	<?php }
 
 	public function itunes_language_dropdown() {
@@ -232,7 +247,7 @@ class Dipo_Settings {
 
 		<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>
 			<option value=''>
-			<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
+			<?php _e( 'None', $this->textdomain ); ?>
 			</option>
 
 		<?php foreach ($cats as $catname => $subcats) {
@@ -264,7 +279,7 @@ class Dipo_Settings {
 
 		<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>
 			<option value=''>
-			<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
+			<?php _e( 'None', $this->textdomain ); ?>
 			</option>
 
 		<?php foreach ($cats as $catname => $subcats) {
@@ -296,7 +311,7 @@ class Dipo_Settings {
 
 		<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>
 			<option value=''>
-			<?php _e( 'None', DIPO_TEXTDOMAIN ); ?>
+			<?php _e( 'None', $this->textdomain ); ?>
 			</option>
 
 		<?php foreach ($cats as $catname => $subcats) {
@@ -328,7 +343,7 @@ class Dipo_Settings {
 		<p class="description">
 			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#xA9;">&#xA9;</span>
 			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2122;">&#x2122;</span>
-			<?php _e('State your copyright for the podcasts', DIPO_TEXTDOMAIN ); ?>
+			<?php _e('State your copyright for the podcasts', $this->textdomain ); ?>
 		</p>
 
 	<?php }
@@ -378,8 +393,8 @@ class Dipo_Settings {
 	 */
 	public function add_menu() {
 		add_options_page(
-			__( 'dicentis Podcast Settings', DIPO_TEXTDOMAIN ),
-			__( 'dicentis Podcast', DIPO_TEXTDOMAIN ),
+			__( 'dicentis Podcast Settings', $this->textdomain ),
+			__( 'dicentis Podcast', $this->textdomain ),
 			'manage_options', // capabilities
 			'dicentis_settings', // slug
 			array( $this, 'dicentis_settings_page' )
@@ -391,7 +406,7 @@ class Dipo_Settings {
 	 */
 	public function dicentis_settings_page() {
 		if( !current_user_can('manage_options') ) {
-			wp_die( __('You do not have sufficient permissions to access this page.', DIPO_TEXTDOMAIN ) );
+			wp_die( __('You do not have sufficient permissions to access this page.', $this->textdomain ) );
 		}
 
 		// Render the settings template
@@ -433,11 +448,11 @@ class Dipo_Settings {
 			switch ( $tab ) {
 				default:
 				case 'general':
-					include( sprintf( "%s/settings-general.php", DIPO_TEMPLATES_DIR ) );
+					include( DIPO_TEMPLATES_DIR . "/settings-general-template.php" );
 					break;
 
 				case 'itunes':
-					include( sprintf( "%s/settings-itunes.php", DIPO_TEMPLATES_DIR ) );
+					include( DIPO_TEMPLATES_DIR . "/settings-itunes-template.php" );
 					break;
 
 				case 'import':
@@ -456,7 +471,7 @@ class Dipo_Settings {
 						'hide_empty' => false,
 					);
 					$shows = get_terms( 'podcast_show', $args );
-					include( sprintf( "%s/settings-import.php", DIPO_TEMPLATES_DIR ) );
+					include( DIPO_TEMPLATES_DIR . "/settings-import-template.php" );
 					break;
 			}
 		}
@@ -477,7 +492,7 @@ class Dipo_Settings {
 
 	// Add the settings link to the plugin page
 	public function plugin_action_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', DIPO_TEXTDOMAIN ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', $this->textdomain ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}
