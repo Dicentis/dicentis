@@ -5,7 +5,7 @@
  * @package WordPress
  */
 
-include_once dirname( __FILE__ ) . '/../feed/Dipo_RSS.php';
+include_once dirname( __FILE__ ) . '/../feed/class-dipo-rss.php';
 
 $feed = new \Dicentis\Feed\Dipo_RSS();
 $feed->get_itunes_options();
