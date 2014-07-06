@@ -16,11 +16,13 @@ class Dipo_Hook_Loader {
 	}
 
 	public function add_action( $hook, $component, $callback ) {
-		$this->actions = $this->add( $this->actions, $hook, $component, $callback );
+		$this->actions = $this->add( $this->actions,
+			$hook, $component, $callback );
 	}
 
 	public function add_filter( $hook, $component, $callback ) {
-		$this->filters = $this->add( $this->filters, $hook, $component, $callback );
+		$this->filters = $this->add( $this->filters,
+			$hook, $component, $callback );
 	}
 
 	private function add( $hooks, $hook, $component, $callback ) {
@@ -28,7 +30,7 @@ class Dipo_Hook_Loader {
 		$hooks[] = array(
 			'hook'      => $hook,
 			'component' => $component,
-			'callback'  => $callback
+			'callback'  => $callback,
 		);
 
 		return $hooks;
@@ -38,11 +40,13 @@ class Dipo_Hook_Loader {
 	public function run() {
 
 		foreach ( $this->filters as $hook ) {
-			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+			add_filter( $hook['hook'],
+				array( $hook['component'], $hook['callback'] ) );
 		}
 
 		foreach ( $this->actions as $hook ) {
-			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+			add_action( $hook['hook'],
+				array( $hook['component'], $hook['callback'] ) );
 		}
 
 	}
