@@ -17,7 +17,7 @@ use Dicentis\Core;
  * @author Hans-Helge Buerger <mail@hanshelgebuerger.de>
  * @since 0.2.0
  * @package Dicentis
- * @subpackage Core
+ * @subpackage Controller
  */
 class Dicentis_Podcast {
 
@@ -42,6 +42,10 @@ class Dicentis_Podcast {
 	 */
 	private $hook_loader;
 
+	private $dipo_properties;
+
+	private $settings;
+
 	/**
 	 * Constructor loads dependencies and registers hooks.
 	 *
@@ -51,6 +55,7 @@ class Dicentis_Podcast {
 	 */
 	public function __construct() {
 
+		$this->dipo_properties = new Core\Dipo_Property_List();
 		$this->load_dependencies();
 		$this->register_hooks();
 
@@ -66,7 +71,12 @@ class Dicentis_Podcast {
 	public function load_dependencies() {
 
 		$this->hook_loader = new Core\Dipo_Hook_Loader();
+		$this->dipo_properties
+			->set( 'hook_loader', $this->hook_loader )
+			->set( 'textdomain', 'DIPO_TEXTDOMAIN' );
+
 		$this->podcast_cpt  = new Dipo_Podcast_Post_Type();
+		$this->settings = new Dipo_Settings( $this->dipo_properties );
 
 	}
 
@@ -103,18 +113,17 @@ class Dicentis_Podcast {
 		/**
 		 * Settings Hooks
 		 */
-		$settings = new Dipo_Settings();
 		$this->hook_loader->add_filter(
 			'plugin_action_links_dicentis-podcast/dicentis-podcast.php',
-			$settings,
+			$this->settings,
 			'plugin_action_settings_link' );
 
 		$this->hook_loader->add_action( 'admin_init',
-			$settings,
+			$this->settings,
 			'admin_init' );
 
 		$this->hook_loader->add_action( 'admin_menu',
-			$settings,
+			$this->settings,
 			'add_menu' );
 
 		/**
