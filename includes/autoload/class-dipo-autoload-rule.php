@@ -79,7 +79,6 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 		$name = preg_filter( '/_/', '-', $name );
 		$name = 'class-' . $name;
 
-		// Our classes start with "class-" always.
 		if ( 0 !== strpos( $name, 'class-' ) && 0 !== strpos( $name, 'Inpsyde_' ) ) {
 			return false;
 		}
