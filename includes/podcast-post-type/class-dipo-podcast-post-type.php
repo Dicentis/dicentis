@@ -542,7 +542,7 @@ class Dipo_Podcast_Post_Type {
 		// 	endif;
 		// endif;
 
-		include( sprintf( '%s/%s_metabox-template.php', DIPO_TEMPLATES_DIR, self::POST_TYPE_NAME ) );
+		include( dirname( dirname( __FILE__ ) ) . '/metaboxes/templates/podcast_metabox-template.php' );
 	} // END public function add_inner_meta_boxes( $post )
 
 	public function get_mediafile_info( $post_id ) {
@@ -714,7 +714,7 @@ class Dipo_Podcast_Post_Type {
 			$episodes[$i-1]->metadata = get_metadata( 'post', $postID );
 		endwhile;
 
-		include( DIPO_TEMPLATES_DIR . '/shortcode_podcast_show-template.php' );
+		include( dirname( dirname( __FILE__ ) ) . 'shortcodes/templates/shortcode_podcast_show-template.php' );
 	}
 
 	public function get_all_shows( $all_shows ) {

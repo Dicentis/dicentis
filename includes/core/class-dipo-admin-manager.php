@@ -86,6 +86,6 @@ class Dipo_Admin_Manager {
 		}
 
 		// Render the dashboard template
-		include( sprintf( '%s/dashboard.php', DIPO_TEMPLATES_DIR ) );
+		include( dirname( __FILE__ ) . '/templates/dashboard-template.php' );
 	} // END public function render_dashboard_page()
 }

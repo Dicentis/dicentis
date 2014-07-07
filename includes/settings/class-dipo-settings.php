@@ -448,18 +448,22 @@ class Dipo_Settings {
 			switch ( $tab ) {
 				default:
 				case 'general':
-					include( DIPO_TEMPLATES_DIR . "/settings-general-template.php" );
+					include( dirname( __FILE__ ) . '/templates/settings-general-template.php' );
 					break;
 
 				case 'itunes':
-					include( DIPO_TEMPLATES_DIR . "/settings-itunes-template.php" );
+					include( dirname( __FILE__ ) . '/templates/settings-itunes-template.php' );
 					break;
 
 				case 'import':
-					if ( isset( $_POST['dipo_feed_url'] ) and !empty( $_POST['dipo_feed_url'] ) ) {
-						$feed_importer = new Dipo_Feed_Import( $_POST['dipo_feed_url'] );
-						if ( isset( $_POST['dipo_feed_match'] ) )
-							$feed_importer->set_try_match( $_POST['dipo_feed_match'] );
+					if ( isset( $_POST['dipo_feed_url'] ) and ! empty( $_POST['dipo_feed_url'] ) ) {
+						$url = esc_attr( $_POST['dipo_feed_url'] );
+						$feed_importer = new Dipo_Feed_Import( $this->properties, $url );
+
+						if ( isset( $_POST['dipo_feed_match'] ) ) {
+							$feed_match = esc_attr( $_POST['dipo_feed_match'] );
+							$feed_importer->set_try_match( $feed_match );
+						}
 
 						$feed_array = $feed_importer->get_feed_items();
 						$show_slug = ( isset( $_POST['dipo_show_select'] ) ) ? $_POST['dipo_show_select'] : "";
@@ -471,7 +475,7 @@ class Dipo_Settings {
 						'hide_empty' => false,
 					);
 					$shows = get_terms( 'podcast_show', $args );
-					include( DIPO_TEMPLATES_DIR . "/settings-import-template.php" );
+					include( dirname( __FILE__ ) . '/templates/settings-import-template.php' );
 					break;
 			}
 		}

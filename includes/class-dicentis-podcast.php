@@ -46,6 +46,8 @@ class Dicentis_Podcast {
 
 	private $settings;
 
+	private $feed;
+
 	/**
 	 * Constructor loads dependencies and registers hooks.
 	 *
@@ -73,10 +75,11 @@ class Dicentis_Podcast {
 		$this->hook_loader = new Core\Dipo_Hook_Loader();
 		$this->dipo_properties
 			->set( 'hook_loader', $this->hook_loader )
-			->set( 'textdomain', 'DIPO_TEXTDOMAIN' );
+			->set( 'textdomain', 'dicentis-podcast' );
 
 		$this->podcast_cpt = new Dipo_Podcast_Post_Type( $this->dipo_properties );
 		$this->settings = new Dipo_Settings( $this->dipo_properties );
+		$this->feed = new Dipo_RSS( $this->dipo_properties );
 
 	}
 
@@ -137,13 +140,12 @@ class Dicentis_Podcast {
 		/**
 		 * RSS / Feed Hooks
 		 */
-		$feed = new Dipo_RSS();
 		$this->hook_loader->add_action( 'init',
-			$feed,
+			$this->feed,
 			'add_podcast_feeds');
 
 		$this->hook_loader->add_action( 'template_redirect',
-			$feed,
+			$this->feed,
 			'generate_podcast_feed' );
 
 	}

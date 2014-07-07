@@ -8,8 +8,6 @@ if (!defined('DIPO_PLUGIN_NAME'))
 	define('DIPO_PLUGIN_NAME',
 		trim(dirname(plugin_basename(__FILE__)), '/'));
 
-if (!defined('DIPO_TEXTDOMAIN'))
-	define( 'DIPO_TEXTDOMAIN', DIPO_PLUGIN_NAME );
 
 // Directories
 if (!defined('DIPO_PLUGIN_DIR'))
@@ -24,9 +22,6 @@ if (!defined('DIPO_INC_DIR'))
 
 if (!defined('DIPO_LIB_DIR'))
 	define( 'DIPO_LIB_DIR', DIPO_INC_DIR . '/libraries' );
-
-if (!defined('DIPO_TEMPLATES_DIR'))
-	define( 'DIPO_TEMPLATES_DIR', DIPO_INC_DIR . '/templates' );
 
 // URLs
 if (!defined('DIPO_PLUGIN_URL'))
