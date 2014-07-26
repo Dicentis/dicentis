@@ -1,10 +1,11 @@
 # Dicentis Podcast
 Contributors: obstschale  
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,  
+Donate link: https://www.gittip.com/obstschale/  
 Requires at least: 3.6  
 Tested up to: 3.9.1  
-Stable tag: 0.1.3  
-License: GPLv2 or later  
+Stable tag: 0.2.0  
+License: GPLv3.0  
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)  
 
 Dicentis is a new podcast plugin which has its main focus on CMS based Websites. With Dicentis it is possible to offer multiple podcasts with one WordPress installation.
@@ -19,25 +20,4 @@ You can download and install Dicentis using the built in WordPress plugin instal
 FAQ will surely come in the future.
 
 ## Changelog
-### 0.1.3 [2014-06-29]
-* [FIX] Revert changes. Fix from 0.1.2 cause more trouble than it solve -.-
-
-### 0.1.2 [2014-06-29]
-* [FIX] Redirect `/podcasts/` to a page and not to archive if a page with that slug exists
-
-### 0.1.1 [2014-06-28]
-
-* [FEATURE] Feeds for file extentions are available
-	* Example: http://www.your-domain.com/podcasts/feed/mp3
-* [FEATURE] Copyright is added to feed and buttons for icons on settings page
-* [UPDATE] Dicentis DB-Version added to DB
-* [FIX] Fix CSS for metabox
-
-### 0.1.0 (Bloody Mary) [2014-06-01]
-
-* [FEATURE] Create multiple podcast shows
-* [FEATURE] Create multiple speaker
-* [FEATURE] Create multiple series
-* [FEATURE] Add global iTunes information to your feed
-* [FEATURE] Add multiple media files to one episode
-* [FEATURE] Import existing Podcast Feeds
+See `CHANGELOG.md`.
