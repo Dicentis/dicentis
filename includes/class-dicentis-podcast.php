@@ -18,7 +18,6 @@ use Dicentis\Admin;
  * @author Hans-Helge Buerger <mail@hanshelgebuerger.de>
  * @since 0.2.0
  * @package Dicentis
- * @subpackage Controller
  */
 class Dicentis_Podcast {
 
