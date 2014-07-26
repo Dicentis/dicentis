@@ -3,6 +3,7 @@
 namespace Dicentis\Settings;
 
 use Dicentis\Core;
+use Dicentis\Feed;
 
 /**
 * Settings page for dicentis plugin
@@ -74,7 +75,7 @@ class Dipo_Settings_View {
 				case 'import':
 					if ( isset( $_POST['dipo_feed_url'] ) and ! empty( $_POST['dipo_feed_url'] ) ) {
 						$url = esc_attr( $_POST['dipo_feed_url'] );
-						$feed_importer = new Dipo_Feed_Import( $this->properties, $url );
+						$feed_importer = new Feed\Dipo_Feed_Import( $url );
 
 						if ( isset( $_POST['dipo_feed_match'] ) ) {
 							$feed_match = esc_attr( $_POST['dipo_feed_match'] );

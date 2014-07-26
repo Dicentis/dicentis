@@ -10,14 +10,13 @@ require_once ( ABSPATH . WPINC . '/feed.php' );
 /**
 * Feed Importer Class
 */
-class Dipo_Feed_Import extends Dipo_RSS {
+class Dipo_Feed_Import {
 	private $feed_url;
 	private $try_match = false;
 	private $updated_episodes;
 	private $created_episodes;
 
-	function __construct( Core\Dipo_Property_List $properties, $url ) {
-		parent::__construct( $properties );
+	function __construct( $url ) {
 		$this->feed_url = $url;
 		$this->updated_episodes = 0;
 		$this->created_episodes = 0;

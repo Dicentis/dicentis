@@ -6,7 +6,7 @@
 
 	<div class="error settings-error">
 		<h3><?php _e( 'Import Error', $this->textdomain ); ?></h3>
-		<p><strong><?php echo $result[1]; ?></strong></p>
+		<p><strong><?php echo $result[0]; ?></strong></p>
 	</div>
 
 <?php elseif ( isset( $result ) && 1 === $result['imported'] ) : ?>
