@@ -2,7 +2,7 @@
 
 namespace Dicentis;
 
-use Dicentis\Settings\Dipo_Settings;
+use Dicentis\Settings\Dipo_Settings_Controller;
 use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 use Dicentis\Feed\Dipo_RSS;
 use Dicentis\Core;
@@ -80,7 +80,7 @@ class Dicentis_Podcast {
 			->set( 'dipo_templates', dirname( __FILE__ ) . '/view/templates' );
 
 		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
-		$this->settings = new Dipo_Settings();
+		$this->settings = new Dipo_Settings_Controller();
 		$this->feed = new Dipo_RSS();
 
 	}
