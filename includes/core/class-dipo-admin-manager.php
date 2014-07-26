@@ -5,6 +5,13 @@ namespace Dicentis\Core;
 use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 
 class Dipo_Admin_Manager {
+
+	private $properties;
+
+	public function __construct() {
+		$this->properties = Dipo_Property_List::get_instance();
+	}
+
 	/**
 	 * Hook into WP's admin_init hook and do some admin stuff
 	 * 		1. reorder Podcast's submenu
@@ -86,6 +93,6 @@ class Dipo_Admin_Manager {
 		}
 
 		// Render the dashboard template
-		include( dirname( __FILE__ ) . '/templates/dashboard-template.php' );
+		include( $this->properties->get( 'dipo_templates' ) . '/dashboard-template.php' );
 	} // END public function render_dashboard_page()
 }

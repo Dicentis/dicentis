@@ -42,7 +42,7 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 			return;
 		}
 
-		$directories = [ 'feed', 'libraries', 'podcast-post-type', 'settings', 'taxonomies', 'templates', 'core' ];
+		$directories = [ 'controller', 'model', 'view', 'libraries', 'core' ];
 		foreach ( $directories as $main_dir ) {
 
 			if ( ! is_dir( "$this->dir/$main_dir" ) ) {

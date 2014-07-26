@@ -1,6 +1,6 @@
 <?php
 
-include_once DIPO_INC_DIR . '/podcast-post-type/class-dipo-podcast-post-type.php';
+include_once DIPO_INC_DIR . '/controller/class-dipo-podcast-post-type.php';
 
 if ( !function_exists('dipo_get_series') ) {
 	/**

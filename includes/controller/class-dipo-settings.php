@@ -13,9 +13,9 @@ class Dipo_Settings {
 	private $properties;
 	private $textdomain;
 
-	public function __construct( Core\Dipo_Property_Interface $properties ) {
+	public function __construct() {
 
-		$this->properties = $properties;
+		$this->properties = Core\Dipo_Property_List::get_instance();
 		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->register_settings_hooks();
 
@@ -448,11 +448,11 @@ class Dipo_Settings {
 			switch ( $tab ) {
 				default:
 				case 'general':
-					include( dirname( __FILE__ ) . '/templates/settings-general-template.php' );
+					include( $this->properties->get( 'dipo_templates' ) . '/settings-general-template.php' );
 					break;
 
 				case 'itunes':
-					include( dirname( __FILE__ ) . '/templates/settings-itunes-template.php' );
+					include( $this->properties->get( 'dipo_templates' ) . '/settings-itunes-template.php' );
 					break;
 
 				case 'import':
@@ -475,7 +475,7 @@ class Dipo_Settings {
 						'hide_empty' => false,
 					);
 					$shows = get_terms( 'podcast_show', $args );
-					include( dirname( __FILE__ ) . '/templates/settings-import-template.php' );
+					include( $this->properties->get( 'dipo_templates' ) . '/settings-import-template.php' );
 					break;
 			}
 		}

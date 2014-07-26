@@ -16,12 +16,12 @@ class Dipo_Feed_Import extends Dipo_RSS {
 	private $updated_episodes;
 	private $created_episodes;
 
-	function __construct( $url ) {
-		parent::__construct();
+	function __construct( Core\Dipo_Property_List $properties, $url ) {
+		parent::__construct( $properties );
 		$this->feed_url = $url;
 		$this->updated_episodes = 0;
 		$this->created_episodes = 0;
-		define('ITUNES_NAMESPACE', 'http://www.itunes.com/dtds/podcast-1.0.dtd');
+		define( 'ITUNES_NAMESPACE', 'http://www.itunes.com/dtds/podcast-1.0.dtd' );
 	}
 
 	public function get_feed_url() {

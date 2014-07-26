@@ -33,9 +33,9 @@ class Dipo_Podcast_Post_Type {
 	 */
 	private $_tax = array();
 
-	public function __construct( Core\Dipo_Property_List $properties ) {
+	public function __construct() {
 
-		$this->properties = $properties;
+		$this->properties = Core\Dipo_Property_List::get_instance();
 		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$this->register_podcast_hooks();
@@ -542,7 +542,7 @@ class Dipo_Podcast_Post_Type {
 		// 	endif;
 		// endif;
 
-		include( dirname( dirname( __FILE__ ) ) . '/metaboxes/templates/podcast_metabox-template.php' );
+		include( $this->properties->get('dipo_templates') . '/podcast_metabox-template.php' );
 	} // END public function add_inner_meta_boxes( $post )
 
 	public function get_mediafile_info( $post_id ) {

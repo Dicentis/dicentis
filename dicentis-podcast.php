@@ -28,9 +28,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/dicentis-define.php';
 
-require_once DIPO_INC_DIR . '/taxonomies/series.php';
-require_once DIPO_INC_DIR . '/taxonomies/speaker.php';
-require_once DIPO_INC_DIR . '/taxonomies/show.php';
+require_once DIPO_INC_DIR . '/controller/series.php';
+require_once DIPO_INC_DIR . '/controller/speaker.php';
+require_once DIPO_INC_DIR . '/controller/show.php';
 require_once DIPO_LIB_DIR . '/tgm-plugin.php';
 require_once DIPO_LIB_DIR . '/dipo-version.php';
 
