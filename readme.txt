@@ -1,11 +1,12 @@
 === Dicentis Podcast ===
 Contributors: obstschale
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
+Donate link: https://www.gittip.com/obstschale/
 Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: 0.1.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 0.2.0
+License: GPLv3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Dicentis is a new podcast plugin which has its main focus on CMS based Websites. With Dicentis it is possible to offer multiple podcasts with one WordPress installation.
 
@@ -16,13 +17,20 @@ Most podcast plugin for WordPress are great but have one weakness: They focus on
 You can download and install Dicentis using the built in WordPress plugin installer. If you download Dicentis manually, make sure it is uploaded to \"/wp-content/plugins/dicentis-podcast/\". Activate Dicentis in the \"Plugins\" admin panel using the \"Activate\" link.
 
 == Frequently Asked Questions ==
-FAQ will surely come in the future.
+see http://dicentis.io/faq
 
 == Changelog ==
+= 0.2.0 (Brass Monkey) =
+
+* [UPDATE] new Dashboard with more useful information and a feed generator which gives you the correct feed you need
+* [UPDATE] complete restructured plugin with a better OOP approach 
+
 = 0.1.3 =
+
 * [FIX] Revert changes. Fix from 0.1.2 cause more trouble than it solve -.-
 
 = 0.1.2 =
+
 * [FIX] Redirect `/podcasts/` to a page and not to archive if a page with that slug exists
 
 = 0.1.1 =
@@ -33,7 +41,7 @@ FAQ will surely come in the future.
 * [UPDATE] Dicentis DB-Version added to DB
 * [FIX] Fix CSS for metabox
 
-= 0.1.0 (Bloody Mary) =
+= 0.1.0 (Bloddy Mary) =
 
 * [FEATURE] Create multiple podcast shows
 * [FEATURE] Create multiple speaker
