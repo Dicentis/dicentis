@@ -17,6 +17,19 @@ class Dipo_Admin_Manager {
 
 		$this->view  = new Dipo_Admin_Manager_View();
 		$this->model = new Dipo_Admin_Manager_Model();
+		$this->register_admin_hooks();
+
+	}
+
+	private function register_admin_hooks() {
+		$loader = $this->properties->get( 'hook_loader' );
+
+		// script & style action with page detection
+		$loader->add_action(
+			'admin_enqueue_scripts',
+			$this->view,
+			'load_dashboard_feed_style' );
+
 	}
 
 	/**

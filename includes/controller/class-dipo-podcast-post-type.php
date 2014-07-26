@@ -574,6 +574,10 @@ class Dipo_Podcast_Post_Type {
 		return $select_mediatypes;
 	}
 
+	public static function echo_select_mediatypes() {
+		echo self::get_select_mediatypes();
+	}
+
 	public static function get_mediatypes() {
 		return $default_types = array(
 			array( 'name' => 'MP3 Audio',              'type' => 'audio',    'mime_type' => 'audio/mpeg',  'extension' => 'mp3' ),
