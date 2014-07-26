@@ -2,61 +2,32 @@
 
 namespace Dicentis\Feed;
 
-use \Dicentis\Core;
+use Dicentis\Core;
 
 /**
- * RSS Class for creating Podcast Feeds.
- *
- * This class is responsible for the podcast feeds. It generates them if
- * requested and add new feeds to the WordPress installation. Several methods
- * are implemented as getter methods for episode information which are in
- * the feeds.
  *
  * @author Hans-Helge Buerger <mail@hanshelgebuerger.de>
  * @version 0.2.0
  */
-class Dipo_RSS {
+class Dipo_RSS_Model {
 
-	public  $itunes_opt;
-	protected $properties;
-	private $feed_template;
+	private $properties;
+	private $itunes_opt;
 
 	public function __construct() {
 		$this->properties = Core\Dipo_Property_List::get_instance();
-
-		$this->feed_template = dirname( __FILE__ ) . '/feed-itunes-template.php';
-	}
-
-	public function generate_podcast_feed() {
-		global $wp_query;
-
-		if ( $wp_query->is_comment_feed() ) {
-			load_template( ABSPATH . WPINC . '/feed-rss2-comments.php' );
-		} else if ( $this->is_podcast_feed() ) {
-			// load rss template and exit afterwards to exclude html code
-			load_template( $this->get_feed_template() );
-			exit();
-		}
-	}
-
-	public function is_podcast_feed() {
-		$get_array = array( 'podcast', 'itunes', 'rss', 'rss2' );
-		if ( isset( $_GET['post_type'] )
-				and isset( $_GET['feed'] )
-				and in_array( esc_attr( $_GET['post_type'] ), $get_array )
-				and in_array( esc_attr( $_GET['feed'] ), $get_array ) ) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public function get_feed_template() {
-		return $this->feed_template;
+		return $this->properties->get( 'dipo_templates' ) . '/feed-itunes-template.php';
 	}
 
 	public function get_itunes_options() {
-		$this->itunes_opt = get_option( 'dipo_itunes_options' );
+		if ( ! isset( $this->itunes_opt ) ) {
+			$this->itunes_opt = get_option( 'dipo_itunes_options' );
+		}
+
+		return $this->itunes_opt;
 	}
 
 	public function get_show_details( $type = 'name' ) {
@@ -105,23 +76,15 @@ class Dipo_RSS {
 		}
 	}
 
-	public function get_speaker( $id ) {
-		$text = '';
+	public function get_option_by_key( $key ) {
 
-		$terms = get_the_terms( $id , 'podcast_speaker' );
+		$options = $this->get_itunes_options();
 
-		if ( ! is_wp_error( $terms ) and $terms ) {
-			$count = 1;
-			foreach ( $terms as $term ) {
-				$text .= $term->name;
-				if ( count( $terms ) > $count ) {
-					$text .= ', ';
-					$count++;
-				}
-			}
+		if ( isset( $options[$key] ) ) {
+			return $options[$key];
 		}
 
-		return $text;
+		return '';
 	}
 
 	public function print_itunes_categories() {
@@ -169,6 +132,104 @@ class Dipo_RSS {
 		echo esc_html( $podcast_category3 );
 	}
 
+	public function get_mediatype() {
+		if ( isset( $_GET['type'] ) ) {
+			return esc_attr( $_GET['type'] );
+		} else {
+
+			$extensions = $this->get_file_extensions();
+			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+				$request_uri = esc_attr( $_SERVER['REQUEST_URI'] );
+			} else {
+				$request_uri = '';
+			}
+			$path = explode( '/', $request_uri );
+			if ( $path[sizeof( $path ) - 1] !== '' ) {
+				$ext = $path[sizeof( $path ) - 1];
+			} else {
+				$ext = $path[sizeof( $path ) - 2];
+			}
+
+			$mime = null;
+			if ( 'pod' !== $ext ) {
+				$mime = array_search( $ext, $extensions );
+			}
+
+			return ( $mime ) ? $mime : 'audio/mpeg';
+		}
+	}
+
+
+	public function get_file_extensions() {
+		return $ext = array(
+			'audio/mpeg' => 'mp3',
+			'application/x-bittorrent' => 'mp3.torrent',
+			'video/mpeg' => 'mpg',
+			'audio/mp4' => 'm4a',
+			'audio/mp4' => 'm4a',
+			'video/mp4' => 'mp4',
+			'video/x-m4v' => 'm4v',
+			'audio/ogg' => 'oga',
+			'audio/ogg' => 'ogg',
+			'video/ogg' => 'ogv',
+			'audio/webm' => 'webm',
+			'video/webm' => 'webm',
+			'audio/flac' => 'flac',
+			'audio/ogg;codecs=opus' => 'opus',
+			'audio/x-matroska' => 'mka',
+			'video/x-matroska' => 'mkv',
+			'application/pdf' => 'pdf',
+			'application/epub+zip' => 'epub',
+			'image/png' => 'png',
+			'image/jpeg' => 'jpg',
+			);
+	}
+
+	public function get_episodes_mediafile( $id = -1 ) {
+		if ( -1 == $id ) {
+			return false;
+		}
+
+		$type = $this->get_mediatype();
+		$max_mediafiles = get_post_meta( $id, '_dipo_max_mediafile_number', true );
+
+		for ( $i = 1; $i <= $max_mediafiles; $i++ ) {
+			$field_name = '_dipo_mediafile' . $i;
+			$file = get_post_meta( $id, $field_name, true );
+			if ( ! empty($file) and $type == $file['mediatype'] ) {
+				return $file;
+			}
+		}
+	}
+
+	public function exists_mediafile( $id = -1 ) {
+		if ( -1 == $id ) {
+			return false;
+		}
+
+		$file = $this->get_episodes_mediafile( $id );
+		return ! empty( $file );
+	}
+
+	public function get_speaker( $id ) {
+		$text = '';
+
+		$terms = get_the_terms( $id , 'podcast_speaker' );
+
+		if ( ! is_wp_error( $terms ) and $terms ) {
+			$count = 1;
+			foreach ( $terms as $term ) {
+				$text .= $term->name;
+				if ( count( $terms ) > $count ) {
+					$text .= ', ';
+					$count++;
+				}
+			}
+		}
+
+		return $text;
+	}
+
 	public function get_episodes_subtitle( $id = -1 ) {
 		return ( -1 == $id ) ? '' : get_post_meta( $id, '_dipo_subtitle', true );
 	}
@@ -210,94 +271,4 @@ class Dipo_RSS {
 		return ( 0 < count( $tag_count ) ) ? true : false;
 	}
 
-	public function get_episodes_mediafile( $id = -1 ) {
-		if ( -1 == $id ) {
-			return false;
-		}
-
-		$type = $this->get_mediatype();
-		$max_mediafiles = get_post_meta( $id, '_dipo_max_mediafile_number', true );
-
-		for ( $i = 1; $i <= $max_mediafiles; $i++ ) {
-			$field_name = '_dipo_mediafile' . $i;
-			$file = get_post_meta( $id, $field_name, true );
-			if ( ! empty($file) and $type == $file['mediatype'] ) {
-				return $file;
-			}
-		}
-	}
-
-	public function exists_mediafile( $id = -1 ) {
-		if ( -1 == $id ) {
-			return false;
-		}
-
-		$file = $this->get_episodes_mediafile( $id );
-		return ! empty( $file );
-	}
-
-	public function get_mediatype() {
-		if ( isset( $_GET['type'] ) ) {
-			return esc_attr( $_GET['type'] );
-		} else {
-
-			$extensions = $this->get_file_extensions();
-			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-				$request_uri = esc_attr( $_SERVER['REQUEST_URI'] );
-			} else {
-				$request_uri = '';
-			}
-			$path = explode( '/', $request_uri );
-			if ( $path[sizeof( $path ) - 1] !== '' ) {
-				$ext = $path[sizeof( $path ) - 1];
-			} else {
-				$ext = $path[sizeof( $path ) - 2];
-			}
-
-			if ( 'pod' !== $ext ) {
-				$mime = array_search( $ext, $extensions );
-			}
-
-			return ( $mime ) ? $mime : 'audio/mpeg';
-		}
-	}
-
-	public function add_podcast_feeds() {
-		add_feed( 'pod', array( $this, 'do_podcast_feed' ) );
-
-		$extensions = $this->get_file_extensions();
-		foreach ( $extensions as $mime => $ext ) {
-			add_feed( $ext, array( $this, 'do_podcast_feed' ) );
-		}
-	}
-
-	public function do_podcast_feed( $in ) {
-		load_template( $this->feed_template );
-		exit();
-	}
-
-	public function get_file_extensions() {
-		return $ext = array(
-			'audio/mpeg' => 'mp3',
-			'application/x-bittorrent' => 'mp3.torrent',
-			'video/mpeg' => 'mpg',
-			'audio/mp4' => 'm4a',
-			'audio/mp4' => 'm4a',
-			'video/mp4' => 'mp4',
-			'video/x-m4v' => 'm4v',
-			'audio/ogg' => 'oga',
-			'audio/ogg' => 'ogg',
-			'video/ogg' => 'ogv',
-			'audio/webm' => 'webm',
-			'video/webm' => 'webm',
-			'audio/flac' => 'flac',
-			'audio/ogg;codecs=opus' => 'opus',
-			'audio/x-matroska' => 'mka',
-			'video/x-matroska' => 'mkv',
-			'application/pdf' => 'pdf',
-			'application/epub+zip' => 'epub',
-			'image/png' => 'png',
-			'image/jpeg' => 'jpg',
-			);
-	}
 }
