@@ -57,7 +57,7 @@ class Dicentis_Podcast {
 	 */
 	public function __construct() {
 
-		$this->dipo_properties = new Core\Dipo_Property_List();
+		$this->dipo_properties = Core\Dipo_Property_List::get_instance();
 		$this->load_dependencies();
 		$this->register_hooks();
 
@@ -75,11 +75,12 @@ class Dicentis_Podcast {
 		$this->hook_loader = new Core\Dipo_Hook_Loader();
 		$this->dipo_properties
 			->set( 'hook_loader', $this->hook_loader )
-			->set( 'textdomain', 'dicentis-podcast' );
+			->set( 'textdomain', 'dicentis-podcast' )
+			->set( 'dipo_templates', dirname( __FILE__ ) . '/view/templates' );
 
-		$this->podcast_cpt = new Dipo_Podcast_Post_Type( $this->dipo_properties );
-		$this->settings = new Dipo_Settings( $this->dipo_properties );
-		$this->feed = new Dipo_RSS( $this->dipo_properties );
+		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
+		$this->settings = new Dipo_Settings();
+		$this->feed = new Dipo_RSS();
 
 	}
 
