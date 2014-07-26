@@ -43,4 +43,23 @@ class Dipo_Admin_Manager_View {
 		// Render the dashboard template
 		include( $this->properties->get( 'dipo_templates' ) . '/dashboard-template.php' );
 	} // END public function render_dashboard_page()
+
+
+	/**
+	 * @param  [type] $hook [description]
+	 * @return [type]       [description]
+	 */
+	public function load_dashboard_feed_style( $hook ) {
+
+		if ( 'dipo_podcast_page_dicentis_dashboard' !== $hook ) {
+			return;
+		}
+
+		// wp_enqueue_script( 'dipo_settings_script',
+		// 	DIPO_ASSETS_URL . '/js/dipo_settings.js',
+		// 	array( 'jquery' ) );
+		wp_register_style( 'dipo_dashboard_style',
+			DIPO_ASSETS_URL . '/css/dipo_dashboard.css' );
+		wp_enqueue_style( 'dipo_dashboard_style' );
+	}
 }
