@@ -2,10 +2,6 @@
 	max-width: 800px;
 }
 
-#dipo-dashboard .postbox .hndle {
-	cursor: default;
-}
-
 #dipo-dashboard .dipo-floated-postbox {
 	float: left;
 	margin: 25px 25px 25px 0;
@@ -20,4 +16,15 @@
 
 #dipo-dashboard #dipo-beta-info {
 	border-left: 3px solid red;
+}
+
+#dipo-link-generator label {
+	display: inline-block;
+	width: 190px;
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+#dipo-link-generator select {
+	width: 200px;
 }

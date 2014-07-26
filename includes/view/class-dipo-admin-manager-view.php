@@ -58,9 +58,9 @@ class Dipo_Admin_Manager_View {
 			return;
 		}
 
-		// wp_enqueue_script( 'dipo_settings_script',
-		// 	DIPO_ASSETS_URL . '/js/dipo_settings.js',
-		// 	array( 'jquery' ) );
+		wp_enqueue_script( 'dipo_dashboard_script',
+			DIPO_ASSETS_URL . '/js/dipo_dashboard.js',
+			array( 'jquery' ) );
 		wp_register_style( 'dipo_dashboard_style',
 			DIPO_ASSETS_URL . '/css/dipo_dashboard.css' );
 		wp_enqueue_style( 'dipo_dashboard_style' );

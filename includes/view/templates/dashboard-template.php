@@ -3,7 +3,7 @@
 	<p><?php _e( 'This Dashboard will be your control dashboard and will display many useful information.', $this->textdomain ); ?></p>
 
 	<div id="dipo-beta-info" class="metabox-holder postbox dipo-floated-postbox">
-		<h3 class="hndle"><span><?php _e( 'Beta Information', $this->textdomain ) ?></span></h3>
+		<h3><span><?php _e( 'Beta Information', $this->textdomain ) ?></span></h3>
 		<div class="inside">
 			<p>
 			<?php _e( 'First of all, thank you that you take a look at my new plugin.', $this->textdomain ); ?>
@@ -18,7 +18,7 @@
 	</div>
 
 	<div id="dipo-about" class="metabox-holder postbox dipo-floated-postbox">
-		<h3 class="hndle"><span><?php _e( 'About', $this->textdomain ) ?></span></h3>
+		<h3><span><?php _e( 'About', $this->textdomain ) ?></span></h3>
 		<div class="inside">
 			<p>
 			<?php
@@ -39,9 +39,25 @@
 	</div>
 
 	<div id="dipo-rss-feeds" class="metabox-holder postbox dipo-cleared-postbox dipo-max-width">
-		<h3 class="hndle"><span><?php _e( 'RSS Feeds', $this->textdomain ) ?></span></h3>
+		<h3><span><?php _e( 'RSS Feeds', $this->textdomain ) ?></span></h3>
 		<div class="inside">
-			<ul class="open-if-no-js">
+			<div id="dipo-link-generator" style="display: none;">
+
+				<label for="dipo-gen-show"><?php _e( 'Podcast Show', $this->textdomain ); ?></label>
+				<label for="dipo-gen-type"><?php _e( 'Media Type', $this->textdomain ); ?></label>
+
+				<div class="clear"></div>
+
+				<?php
+					\Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model::echo_select_shows();
+					\Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::echo_select_mediatypes();
+				?>
+
+				<p><strong><?php _e( 'Podcast Feed', $this->textdomain ); ?></strong>: <code id="dipo-feed-link">Feed</code></p>
+
+			</div>
+			<ul class="hide-if-js">
+				<li><strong><?php _e( 'You can replace the <code>pod</code> at the end of a link with any file extension you use for you files. Example: <code>mp3</code> or <code>mp4</code>', $this->textdomain ); ?></strong></li>
 				<?php foreach ( $show_feeds as $show => $fields ) : ?>
 				<li>
 					<h4><?php echo esc_attr( $fields['name'] ); ?></h4>
@@ -57,7 +73,7 @@
 	</div>
 
 	<div id="dipo-blog-posts" class="metabox-holder postbox dipo-cleared-postbox dipo-max-width">
-		<h3 class="hndle"><span><?php _e( 'Dicentis News', $this->textdomain ) ?></span></h3>
+		<h3><span><?php _e( 'Dicentis News', $this->textdomain ) ?></span></h3>
 		<div class="inside">
 			<?php $rss = fetch_feed( 'http://dicentis.io/feed' ); ?>
 
@@ -74,7 +90,7 @@
 
 			<ul>
 				<?php if ( $maxitems == 0 ) : ?>
-					<li><?php _e( 'No items', 'my-text-domain' ); ?></li>
+					<li><?php _e( 'No items', $this->textdomain ); ?></li>
 				<?php else : ?>
 					<?php // Loop through each feed item and display each item as a hyperlink. ?>
 					<?php foreach ( $rss_items as $item ) : ?>
@@ -89,4 +105,6 @@
 			</ul>
 		</div>
 	</div>
+	<?php $perma = ( get_option( 'permalink_structure' ) ) ? 'enabled' : 'disabled' ?>
+	<input id='permalink_structure' type='hidden' value="<?php echo esc_attr( $perma ) ?>" />
 </div>
