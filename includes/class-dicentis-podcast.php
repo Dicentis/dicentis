@@ -6,6 +6,7 @@ use Dicentis\Settings\Dipo_Settings;
 use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 use Dicentis\Feed\Dipo_RSS;
 use Dicentis\Core;
+use Dicentis\Admin;
 
 /**
  * The primary class for Dicentis Podcast.
@@ -105,7 +106,7 @@ class Dicentis_Podcast {
 		/**
 		 * Admin Hooks
 		 */
-		$admin = new Core\Dipo_Admin_Manager();
+		$admin = new Admin\Dipo_Admin_Manager();
 		$this->hook_loader->add_filter( 'admin_init',
 			$admin,
 			'admin_init' );
