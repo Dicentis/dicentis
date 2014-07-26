@@ -1,17 +1,17 @@
 <?php
+
+namespace Dicentis\Feed;
+
 /**
  * RSS2 Feed Template for displaying RSS2 Posts feed.
  *
  * @package WordPress
  */
 
-include_once dirname( __FILE__ ) . '/../classes/rss.php';
-
-$feed = new RSS();
-$feed->get_itunes_options();
+$feed = new Dipo_RSS_Model();
 
 
-header( 'Content-Type: application/xml; charset=' . get_option( 'blog_charset' ), true );
+header( 'Content-Type: application/rss+xml; charset=' . get_option( 'blog_charset' ), true );
 $more = 1;
 
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
@@ -25,25 +25,24 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 	<?php do_action('rss2_ns'); ?>
 >
-
 <channel>
 	<title><?php bloginfo_rss('name'); $feed->get_show_details(); ?></title>
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_lastpostmodified('GMT'), false); ?></lastBuildDate>
 	<language><?php
-		$iso_code = preg_replace('/[_]/', '-', $feed->itunes_opt['itunes_language']);
+		$iso_code = preg_replace('/[_]/', '-', $feed->get_option_by_key( 'itunes_language' ) );
 		echo $iso_code;
 	?></language>
-	<copyright><?php echo ent2ncr($feed->itunes_opt['itunes_copyright']); ?></copyright>
-	<itunes:subtitle><?php echo $feed->itunes_opt['itunes_subtitle']; ?></itunes:subtitle>
-	<itunes:author><?php echo $feed->itunes_opt['itunes_author']; ?></itunes:author>
+	<copyright><?php echo ent2ncr($feed->get_option_by_key( 'itunes_copyright' ) ); ?></copyright>
+	<itunes:subtitle><?php echo $feed->get_option_by_key( 'itunes_subtitle' ) ; ?></itunes:subtitle>
+	<itunes:author><?php echo $feed->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
 	<!-- @TODO: Take Summary from Show -->
 	<itunes:summary><?php $feed->get_show_details( 'description' ); ?></itunes:summary>
 	<!-- @TODO: Take Description from Show -->
 	<description><?php $feed->get_show_details( 'description' ); ?></description>
 	<itunes:owner>
-		<itunes:name><?php echo $feed->itunes_opt['itunes_owner']; ?></itunes:name>
-		<itunes:email><?php echo $feed->itunes_opt['itunes_owner_mail']; ?></itunes:email>
+		<itunes:name><?php echo $feed->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
+		<itunes:email><?php echo $feed->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
 	</itunes:owner>
 	<!-- @TODO: Take Description from Show -->
 	<itunes:image href="" />
@@ -56,7 +55,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<title><?php the_title_rss() ?></title>
 			<link><?php the_permalink() ?></link>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
-			<itunes:subtile><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtile>
+			<itunes:subtitle><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtitle>
 			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
 			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
@@ -73,4 +72,5 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<?php endif; ?>
 	<?php endwhile; ?>
 </channel>
+
 </rss>

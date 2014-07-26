@@ -1,23 +1,26 @@
 <?php
 
-include_once plugin_dir_path( __FILE__ ) . '../dicentis-define.php';
-include_once( ABSPATH . WPINC . '/feed.php' );
+namespace Dicentis\Feed;
+
+use Dicentis\Feed\Dipo_RSS;
+use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
+
+require_once ( ABSPATH . WPINC . '/feed.php' );
 
 /**
 * Feed Importer Class
 */
-class FeedImport extends RSS {
+class Dipo_Feed_Import {
 	private $feed_url;
 	private $try_match = false;
 	private $updated_episodes;
 	private $created_episodes;
 
 	function __construct( $url ) {
-		parent::__construct();
 		$this->feed_url = $url;
 		$this->updated_episodes = 0;
 		$this->created_episodes = 0;
-		define('ITUNES_NAMESPACE', 'http://www.itunes.com/dtds/podcast-1.0.dtd');
+		define( 'ITUNES_NAMESPACE', 'http://www.itunes.com/dtds/podcast-1.0.dtd' );
 	}
 
 	public function get_feed_url() {
@@ -67,7 +70,7 @@ class FeedImport extends RSS {
 			'post_date'    => $item_date,
 			'post_content' => $item->get_description(),
 			'post_status'  => 'publish',
-			'post_type'    => Dicentis_Podcast_CPT::POST_TYPE,
+			'post_type'    => Dipo_Podcast_Post_Type::POST_TYPE,
 			'tags_input'   => $enclosure->get_keywords(),
 		);
 

@@ -1,7 +1,5 @@
 <?php
 
-include_once plugin_dir_path( __FILE__ ) . '../../dicentis-define.php';
-
 if ( !function_exists('dipo_get_podcast_shows') ) {
 	/**
 	 *function to retrieve podcast show information

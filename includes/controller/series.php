@@ -1,7 +1,6 @@
 <?php
 
-include_once plugin_dir_path( __FILE__ ) . '../../dicentis-define.php';
-include_once DIPO_CLASSES_DIR . '/post-type-podcast.php';
+include_once DIPO_INC_DIR . '/controller/class-dipo-podcast-post-type.php';
 
 if ( !function_exists('dipo_get_series') ) {
 	/**
