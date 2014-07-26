@@ -7,9 +7,12 @@ use Dicentis\Core;
 class Dipo_Admin_Manager_View {
 
 	private $properties;
+	private $textdomain;
 
 	public function __construct() {
+
 		$this->properties = Core\Dipo_Property_List::get_instance();
+		$this->textdomain = $this->properties->get( 'textdomain' );
 	}
 
 	public function render_dashboard_page() {
