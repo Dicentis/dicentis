@@ -5,18 +5,36 @@
 	<div id="dipo-beta-info" class="metabox-holder postbox dipo-floated-postbox">
 		<h3 class="hndle"><span><?php _e( 'Beta Information', $this->textdomain ) ?></span></h3>
 		<div class="inside">
-			<?php
-				_e( 'First of all, thank you that you take a look at my new plugin.<br><br>Dicentis is a new podcast plugin for WordPress and is still in Beta. T', $this->textdomain );
-			?>
+			<p>
+			<?php _e( 'First of all, thank you that you take a look at my new plugin.', $this->textdomain ); ?>
+			</p>
+			<p>
+				<?php printf( __( 'Dicentis is a new podcast plugin for WordPress and is still in Beta. That means things don\'t work like intended. If you encounter a bug please %stell me so I can fix it%s.', $this->textdomain ), "<a href='https://github.com/dicentis/dicentis/issues' title='Dicentis Issue Page' target='_blank'>", '</a>' ); ?>
+			</p>
+			<p>
+				<?php _e( 'Now, I wish you good luck and have fun podcasting.<br>Cheers, Hans-Helge', $this->textdomain ); ?>
+			</p>
 		</div>
 	</div>
 
 	<div id="dipo-about" class="metabox-holder postbox dipo-floated-postbox">
 		<h3 class="hndle"><span><?php _e( 'About', $this->textdomain ) ?></span></h3>
 		<div class="inside">
+			<p>
 			<?php
-				_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ergo, si semel tristior effectus est, hilara vita amissa est? Tu quidem reddes; Facit igitur Lucius noster prudenter, qui audire de summo bono potissimum velit; Deprehensus omnem poenam contemnet. Nihilne est in his rebus, quod dignum libero aut indignum esse ducamus? Quid, quod res alia tota est? Iam in altera philosophiae parte. Duo Reges: constructio interrete.', $this->textdomain );
+				_e( 'Dicentis is a new podcast plugin for WordPress. It is developed by myself and is not my day-job, but a hobby.', $this->textdomain );
 			?>
+			</p>
+			<p>
+			<?php
+				printf( __( 'I will improve this plugin step by step. Dicentis is published under the GPL v3.0 license and the source code is %savailable on GitHub%s.', $this->textdomain ), "<a href='https://github.com/dicentis/dicentis' title='Dicentis on GitHub' target='_blank'>", '</a>'  );
+			?>
+			</p>
+			<p>
+			<?php
+				printf( __( 'You can find more information and a documentation about the plugin on the %swebsite%s. If you want to contribute to this project please don\'t hesitate to contact me.', $this->textdomain ), "<a href='http://dicentis.io' title='Dicentis Website' target='_blank'>", '</a>'  );
+			?>
+			</p>
 		</div>
 	</div>
 
