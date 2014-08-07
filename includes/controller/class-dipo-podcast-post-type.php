@@ -426,7 +426,7 @@ class Dipo_Podcast_Post_Type {
 	 */
 	public function curl_get_file_size( $url ) {
 		// Assume failure.
-		$result = -1;
+		$result = 0;
 
 		$curl = curl_init( $url );
 
@@ -440,22 +440,22 @@ class Dipo_Podcast_Post_Type {
 		$data = curl_exec( $curl );
 		curl_close( $curl );
 
-		if( $data ) {
-		$content_length = "unknown";
-		$status = "unknown";
+		if ( $data ) {
+			$content_length = 0;
+			$status = 0;
 
-		if( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $data, $matches ) ) {
-			$status = (int)$matches[1];
-		}
+			if ( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $data, $matches ) ) {
+				$status = (int)$matches[1];
+			}
 
-		if( preg_match( "/Content-Length: (\d+)/", $data, $matches ) ) {
-			$content_length = (int)$matches[1];
-		}
+			if ( preg_match( "/Content-Length: (\d+)/", $data, $matches ) ) {
+				$content_length = (int)$matches[1];
+			}
 
-		// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-		if( $status == 200 || ($status > 300 && $status <= 308) ) {
-			$result = $content_length;
-		}
+			// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+			if ( $status == 200 || ($status > 300 && $status <= 308) ) {
+				$result = $content_length;
+			}
 		}
 
 		return $result;
