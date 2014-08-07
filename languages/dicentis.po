@@ -1,0 +1,826 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dicentis v0.2.0\n"
+"POT-Creation-Date: 2014-07-29 21:55+0100\n"
+"PO-Revision-Date: 2014-07-29 21:55+0100\n"
+"Last-Translator: Hans-Helge Buerger <mail@hanshelgebuerger.de>\n"
+"Language-Team: Hans-Helge Buerger <mail@dicentis.io>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../dicentis-podcast.php:39
+msgid "Hallo"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:109
+msgid "Podcasts"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:110
+msgid "Episode"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:111
+#: ../includes/controller/class-dipo-podcast-post-type.php:112
+msgid "Add New Episode"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:113
+msgid "Edit Episodes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:114
+msgid "New Episodes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:115
+msgid "View Episodes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:116
+msgid "Search Episodes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:117
+msgid "No Episodes Found"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:118
+msgid "No Episodes Found In Trash"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:122
+msgid ""
+"A podcast plugin which allows to define multipel podcasts with individual "
+"feeds"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:187
+msgid "Podcast Shows"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:188
+#: ../includes/view/templates/dashboard-template.php:46
+msgid "Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:189
+msgid "Edit Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:190
+msgid "Update Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:191
+msgid "Add New Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:192
+msgid "New Podcast Show Name"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:193
+msgid "All Podcast Shows"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:194
+msgid "Search Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:195
+msgid "Parent Podcast Show"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:196
+msgid "Parent Podcast Show:"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:208
+#: ../includes/controller/class-dipo-podcast-post-type.php:209
+#: ../includes/view/templates/shortcode_podcast_show-template.php:9
+msgid "Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:210
+msgid "Edit Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:211
+msgid "Update Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:212
+msgid "Add New Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:213
+msgid "New Series Name"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:214
+msgid "All Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:215
+msgid "Search Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:216
+msgid "Parent Series"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:217
+msgid "Parent Series:"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:229
+msgid "Speakers"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:230
+#: ../includes/view/templates/shortcode_podcast_show-template.php:8
+msgid "Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:231
+msgid "Edit Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:232
+msgid "Update Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:233
+msgid "Add New Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:234
+msgid "New Speaker Name"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:235
+msgid "All Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:236
+msgid "Search Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:237
+msgid "Parent Speaker"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:238
+msgid "Parent Speaker:"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:267
+#: ../includes/controller/class-dipo-podcast-post-type.php:276
+msgid "Base URL"
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:269
+#: ../includes/controller/class-dipo-podcast-post-type.php:280
+msgid "This is the path / URL to the asset folder on your server."
+msgstr ""
+
+#: ../includes/controller/class-dipo-podcast-post-type.php:501
+#, php-format
+msgid "%s Information"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:55
+msgid "general Settings"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:63
+msgid "iTunes Settings"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:71
+msgid "Asstets URL"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:80
+msgid "iTunes Owner"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:88
+msgid "iTunes Owner E-Mail"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:96
+msgid "iTunes Title"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:104
+msgid "iTunes Subtitle"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:112
+msgid "iTunes Author"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:120
+msgid "iTunes Language"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:129
+msgid "iTunes Category 1"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:137
+msgid "iTunes Category 2"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:145
+msgid "iTunes Category 3"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:153
+msgid "iTunes Copyright"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:163
+#: ../includes/controller/class-dipo-settings-controller.php:169
+msgid ""
+"These settings are global and are used by all podcast shows if no local "
+"settings are defined."
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:180
+msgid "This URL will be prefix the medialinks of episodes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:189
+msgid "Owner of the podcast for communication specifically about the podcast"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:198
+msgid "Email address of owner for contact options"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:207
+msgid ""
+"Title of podcast show. If multitple shows are defined please use local "
+"settings for shows."
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:216
+msgid ""
+"Subtitle of podcast show. If multitple shows are defined please use local "
+"settings for shows."
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:225
+msgid "The content of this tag is shown in the Artist column in iTunes"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:244
+msgid ""
+"Because iTunes operates sites worldwide, it is critical to specify the "
+"language of a podcast"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:257
+#: ../includes/controller/class-dipo-settings-controller.php:289
+#: ../includes/controller/class-dipo-settings-controller.php:321
+msgid "None"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:353
+msgid "State your copyright for the podcasts"
+msgstr ""
+
+#: ../includes/controller/class-dipo-settings-controller.php:409
+#: ../includes/model/class-dipo-settings-model.php:25
+msgid "Settings"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:186
+#: ../includes/libraries/tgm-plugin.php:75
+msgid "Install Required Plugins"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:187
+#: ../includes/libraries/tgm-plugin.php:76
+msgid "Install Plugins"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:188
+#: ../includes/libraries/tgm-plugin.php:77
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:189
+msgid "Something went wrong."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:200
+#: ../includes/libraries/tgm-plugin.php:89
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:201
+msgid "Return to the dashboard"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:202
+#: ../includes/libraries/TGM_Plugin_Activation.php:1941
+#: ../includes/libraries/tgm-plugin.php:90
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:203
+msgid "The following plugin was activated successfully:"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:204
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:205
+msgid "Dismiss this notice"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:534
+#: ../includes/libraries/TGM_Plugin_Activation.php:2158
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1164
+msgid "Private Repository"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1167
+msgid "Pre-Packaged"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1172
+msgid "WordPress Repository"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1175
+msgid "Required"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1175
+msgid "Recommended"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1178
+msgid "Not Installed"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1180
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1280
+#: ../includes/libraries/TGM_Plugin_Activation.php:1388
+msgid "Install"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1302
+#: ../includes/libraries/TGM_Plugin_Activation.php:1389
+msgid "Activate"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1351
+#, php-format
+msgid ""
+"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+"Dashboard\">Return to the Dashboard</a>"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1367
+msgid "Plugin"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1368
+msgid "Source"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1369
+msgid "Type"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1370
+msgid "Status"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1498
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1606
+msgid "No plugins are available to be activated at this time."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1924
+msgid "Install package not available."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1925
+#, php-format
+msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1926
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1927
+msgid "Installing the plugin&#8230;"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1928
+msgid "Plugin install failed."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1929
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:1940
+msgid "Plugin activation failed."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2054
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2055
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2055
+#: ../includes/libraries/TGM_Plugin_Activation.php:2064
+msgid "Show Details"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2055
+#: ../includes/libraries/TGM_Plugin_Activation.php:2064
+msgid "Hide Details"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2056
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2057
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2061
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2062
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2063
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2064
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2065
+msgid "All installations have been completed."
+msgstr ""
+
+#: ../includes/libraries/TGM_Plugin_Activation.php:2066
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: ../includes/libraries/tgm-plugin.php:78
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#: ../includes/libraries/tgm-plugin.php:91
+#, php-format
+msgid "All plugins installed and activated successfully. %s"
+msgstr ""
+
+#: ../includes/model/class-dipo-admin-manager-model.php:40
+#: ../includes/model/class-dipo-admin-manager-model.php:41
+msgid "Dashboard"
+msgstr ""
+
+#: ../includes/model/class-dipo-settings-model.php:24
+msgid "dicentis Podcast Settings"
+msgstr ""
+
+#: ../includes/view/class-dipo-admin-manager-view.php:20
+#: ../includes/view/class-dipo-settings-view.php:26
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: ../includes/view/class-dipo-settings-view.php:53
+msgid "Dicentis Podcast Settings"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:3
+msgid ""
+"This Dashboard will be your control dashboard and will display many useful "
+"information."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:6
+msgid "Beta Information"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:9
+msgid "First of all, thank you that you take a look at my new plugin."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:12
+#, php-format
+msgid ""
+"Dicentis is a new podcast plugin for WordPress and is still in Beta. That "
+"means things don't work like intended. If you encounter a bug please %stell "
+"me so I can fix it%s."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:15
+msgid ""
+"Now, I wish you good luck and have fun podcasting.<br>Cheers, Hans-Helge"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:21
+msgid "About"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:25
+msgid ""
+"Dicentis is a new podcast plugin for WordPress. It is developed by myself "
+"and is not my day-job, but a hobby."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:30
+#, php-format
+msgid ""
+"I will improve this plugin step by step. Dicentis is published under the GPL "
+"v3.0 license and the source code is %savailable on GitHub%s."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:35
+#, php-format
+msgid ""
+"You can find more information and a documentation about the plugin on the "
+"%swebsite%s. If you want to contribute to this project please don't hesitate "
+"to contact me."
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:42
+msgid "RSS Feeds"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:47
+#: ../includes/view/templates/podcast_metabox-template.php:103
+#: ../includes/view/templates/podcast_metabox-template.php:133
+msgid "Media Type"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:56
+msgid "Podcast Feed"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:60
+msgid ""
+"You can replace the <code>pod</code> at the end of a link with any file "
+"extension you use for you files. Example: <code>mp3</code> or <code>mp4</"
+"code>"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:76
+msgid "Dicentis News"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:93
+msgid "No items"
+msgstr ""
+
+#: ../includes/view/templates/dashboard-template.php:99
+#, php-format
+msgid "Posted %s"
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:53
+msgid ", "
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:69
+msgid "Leave a comment"
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:69
+msgid "1 Comment"
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:69
+msgid "% Comments"
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:73
+msgid "Edit"
+msgstr ""
+
+#: ../includes/view/templates/episode-single-template.php:91
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: ../includes/view/templates/podcast-archive-template.php:30
+msgid "Podcast Archives"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:5
+msgid "General"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:8
+msgid "Mediafiles"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:16
+msgid "Subtitle"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:21
+#: ../includes/view/templates/podcast_metabox-template.php:34
+msgid "Characters left: "
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:29
+msgid "Summary"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:42
+msgid "Episode Image"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:48
+msgid "Enter a media URL or use a file from the Media Library"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:56
+msgid "GUID"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:60
+msgid "Regenerate"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:68
+msgid "Explicit"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:74
+msgid ""
+"Use of explicit content in the title, description, language or cover art of "
+"the podcast."
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:93
+#: ../includes/view/templates/podcast_metabox-template.php:123
+msgid "Medialink"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:94
+#: ../includes/view/templates/podcast_metabox-template.php:124
+msgid "Remove this mediafile"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:104
+#: ../includes/view/templates/podcast_metabox-template.php:134
+msgid "Duration"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:105
+#: ../includes/view/templates/podcast_metabox-template.php:135
+msgid "Filesize"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:151
+msgid "Add Mediafile"
+msgstr ""
+
+#: ../includes/view/templates/podcast_metabox-template.php:152
+msgid ""
+"Enter a media URL or use a file from the Media Library. The duration should "
+"be formatted HH:MM:SS, H:MM:SS, MM:SS, or M:SS (H = hours, M = minutes, S = "
+"seconds). The filesize should be in Bytes. If no filesize is given it trys "
+"to calculate the filesize automatically (saving takes longer)."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:3
+msgid "Import old Podcast Feeds"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:8
+#: ../includes/view/templates/settings-import-template.php:30
+msgid "Import Error"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:15
+#: ../includes/view/templates/settings-import-template.php:22
+msgid "Import Successful"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:16
+#, php-format
+msgid "Congratulation! %s episode was successfully imported."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:23
+#, php-format
+msgid "Congratulation! %s episodes were successfully imported."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:24
+#, php-format
+msgid "Out of %s: New episodes (%s); Updated episodes (%s)"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:31
+msgid ""
+"An unknown Error occured. :( If the error persists please contact the plugin "
+"author and provide detailed information."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:36
+msgid ""
+"You can import episodes from an old RSS Feed. Just enter the RSS Url in the "
+"form below, choose a show for these episodes and hit Import Feed."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:42
+msgid "Feed URL"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:56
+msgid "Import as Show"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:72
+msgid "Try to match with existing episodes"
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:77
+msgid ""
+"If this option is checked Dicentis tries to find a match. That means if an "
+"episode with the same date already exists the episode will be merge with the "
+"one in WordPress and only the additional medialink is added."
+msgstr ""
+
+#: ../includes/view/templates/settings-import-template.php:80
+msgid "Import Feed"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:6
+msgid "Title"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:7
+msgid "Date"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:10
+msgid "Media"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:50
+msgid "Error #1: No Episodes Found!"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:56
+msgid "Error #2: No Showname in Shortcode Given!"
+msgstr ""
+
+#: ../includes/view/templates/shortcode_podcast_show-template.php:62
+msgid "Error #3: No Show Exists with That Name!"
+msgstr ""
