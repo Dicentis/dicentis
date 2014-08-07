@@ -62,15 +62,15 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
 			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 			<guid><?php echo get_permalink( $post->ID ); ?></guid>
+<?php if ( isset($post_mediafile['duration']) && 0 < $post_mediafile['duration'] ) : ?>
 			<itunes:duration><?php echo $post_mediafile['duration']; ?></itunes:duration>
+<?php endif; ?>
 <?php if ( $feed->episode_has_keywords( $post->ID ) ) : ?>
 			<itunes:keywords><?php echo $feed->get_episodes_keywords( $post->ID ); ?></itunes:keywords>
 <?php endif; ?>
-<?php rss_enclosure(); ?>
 <?php do_action( 'rss2_item' ); ?>
 		</item>
-	<?php endif; ?>
-	<?php endwhile; ?>
+<?php endif; ?>
+<?php endwhile; ?>
 </channel>
-
 </rss>
