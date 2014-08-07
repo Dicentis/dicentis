@@ -42,7 +42,7 @@
 		<h3><span><?php _e( 'RSS Feeds', $this->textdomain ) ?></span></h3>
 		<div class="inside">
 			<div id="dipo-link-generator" style="display: none;">
-
+				<input type="hidden" id="dipo-home-url" value="<?php echo home_url('/'); ?>">
 				<label for="dipo-gen-show"><?php _e( 'Podcast Show', $this->textdomain ); ?></label>
 				<label for="dipo-gen-type"><?php _e( 'Media Type', $this->textdomain ); ?></label>
 
