@@ -43,7 +43,7 @@ if ( !function_exists('dipo_get_episodes') ) {
 		$speaker_id = 0
 	) {
 
-		$post_type = Dicentis_Podcast_CPT::POST_TYPE;
+		$post_type = Dipo_Podcast_Post_Type::POST_TYPE;
 		$series_slug = dipo_get_series_slug();
 
 		$args = array(
@@ -146,7 +146,7 @@ if ( !function_exists('dipo_get_episode_meta') ) {
 	 */
 	function dipo_get_episode_meta( $episode_id ) {
 
-		if ( Dicentis_Podcast_CPT::POST_TYPE !== 
+		if ( Dipo_Podcast_Post_Type::POST_TYPE !== 
 			get_post( $episode_id )->post_type )
 			return null;
 
