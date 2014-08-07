@@ -89,9 +89,7 @@
 			?>
 
 			<ul>
-				<?php if ( $maxitems == 0 ) : ?>
-					<li><?php _e( 'No items', $this->textdomain ); ?></li>
-				<?php else : ?>
+				<?php if ( isset( $maxitems ) && $maxitems > 0 ) : ?>
 					<?php // Loop through each feed item and display each item as a hyperlink. ?>
 					<?php foreach ( $rss_items as $item ) : ?>
 						<li>
@@ -101,6 +99,8 @@
 							</a>
 						</li>
 					<?php endforeach; ?>
+				<?php else: ?>
+					<li><?php _e( 'No blog posts found.', $this->textdomain ); ?></li>
 				<?php endif; ?>
 			</ul>
 		</div>
