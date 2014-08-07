@@ -127,9 +127,9 @@ class Dipo_RSS_Model {
 			}
 		endforeach;
 
-		echo esc_html( $podcast_category1 );
-		echo esc_html( $podcast_category2 );
-		echo esc_html( $podcast_category3 );
+		echo $podcast_category1;
+		echo $podcast_category2;
+		echo $podcast_category3;
 	}
 
 	public function get_mediatype() {
