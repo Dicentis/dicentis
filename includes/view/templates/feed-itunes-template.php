@@ -57,7 +57,10 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
 			<itunes:subtitle><![CDATA[<?php echo $feed->get_episodes_subtitle( $post->ID ); ?>]]></itunes:subtitle>
 			<itunes:summary><![CDATA[<?php echo $feed->get_episodes_summary( $post->ID ); ?>]]></itunes:summary>
-			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
+<?php $image = $feed->get_episodes_image( $post->ID ) ?>
+<?php if ( isset( $image ) && strlen( $image ) > 0 ) : ?>
+			<itunes:image href="<?php echo esc_url( $image ); ?>" />
+<?php endif; ?>
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
 			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
