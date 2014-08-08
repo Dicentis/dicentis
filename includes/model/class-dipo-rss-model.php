@@ -271,4 +271,15 @@ class Dipo_RSS_Model {
 		return ( 0 < count( $tag_count ) ) ? true : false;
 	}
 
+	public function get_cover_art() {
+		$coverart = $this->get_option_by_key( 'itunes_coverart' );
+
+		if ( ! isset( $coverart ) || empty( $coverart ) ) {
+			// @TODO: double dirname. Can this be refactored?
+			$coverart = plugins_url( 'assets/img/cover-art.jpg' , dirname( dirname( __FILE__ ) ) );
+		}
+
+		return $coverart;
+	}
+
 }

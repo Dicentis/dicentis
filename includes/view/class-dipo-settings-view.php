@@ -53,14 +53,17 @@ class Dipo_Settings_View {
 		<?php _e( 'Dicentis Podcast Settings', 'dicentis' ); ?>
 		</h2><?php
 
-		if ( isset ( $_GET['tab'] ) ) $this->setting_tabs( $_GET['tab'] );
-		else $this->setting_tabs( 'general' );
+		if ( ! isset( $_GET['page'] ) || esc_attr( $_GET['page'] ) != 'dicentis_settings' ) return;
 
-		if ( $pagenow == 'edit.php'&& $_GET['page'] == 'dicentis_settings' ) {
-			if ( isset ( $_GET['tab'] ) )
-				$tab = $_GET['tab'];
-			else
-				$tab = 'general';
+		if ( isset ( $_GET['tab'] ) ) {
+			$tab = esc_attr( $_GET['tab'] );
+		} else {
+			$tab = 'general';
+		}
+
+		$this->setting_tabs( $tab );
+
+		if ( $pagenow == 'edit.php'&& esc_attr( $_GET['page'] ) == 'dicentis_settings' ) {
 
 			switch ( $tab ) {
 				default:
@@ -98,23 +101,27 @@ class Dipo_Settings_View {
 		}
 	}
 
-	/**
-	 * @param  [type] $hook [description]
-	 * @return [type]       [description]
-	 */
-	public function load_dipo_import_feed_style( $hook ) {
 
-		if ( 'dipo_podcast_page_dicentis_settings' !== $hook
-			or ! isset( $_GET['tab'] )
-			or esc_attr( $_GET['tab'] ) !== 'import' ) {
-			return;
-		}
+	public function admin_settings_scripts( $hook ) {
+
+		if ( 'dipo_podcast_page_dicentis_settings' !== $hook ) return;
+
+		$this->admin_settings_styles();
 
 		wp_enqueue_script( 'dipo_settings_script',
 			DIPO_ASSETS_URL . '/js/dipo_settings.js',
 			array( 'jquery' ) );
+		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_script( 'thickbox' );
+
+	}
+
+	public function admin_settings_styles() {
+
+		wp_enqueue_style( 'thickbox' );
 		wp_register_style( 'dipo_import_feed_style',
 			DIPO_ASSETS_URL . '/css/dipo_import_feed.css' );
 		wp_enqueue_style( 'dipo_import_feed_style' );
+
 	}
 }
