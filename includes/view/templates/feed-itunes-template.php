@@ -37,9 +37,9 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<itunes:subtitle><?php echo $feed->get_option_by_key( 'itunes_subtitle' ) ; ?></itunes:subtitle>
 	<itunes:author><?php echo $feed->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
 	<!-- @TODO: Take Summary from Show -->
-	<itunes:summary><?php $feed->get_show_details( 'description' ); ?></itunes:summary>
+	<itunes:summary><![CDATA[<?php $feed->get_show_details( 'description' ); ?>]]></itunes:summary>
 	<!-- @TODO: Take Description from Show -->
-	<description><?php $feed->get_show_details( 'description' ); ?></description>
+	<description><![CDATA[<?php $feed->get_show_details( 'description' ); ?>]]></description>
 	<itunes:owner>
 		<itunes:name><?php echo $feed->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
 		<itunes:email><?php echo $feed->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
@@ -56,7 +56,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<link><?php the_permalink() ?></link>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
 			<itunes:subtitle><![CDATA[<?php echo $feed->get_episodes_subtitle( $post->ID ); ?>]]></itunes:subtitle>
-			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
+			<itunes:summary><![CDATA[<?php echo $feed->get_episodes_summary( $post->ID ); ?>]]></itunes:summary>
 			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
