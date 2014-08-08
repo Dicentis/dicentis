@@ -272,7 +272,7 @@ class Dipo_RSS_Model {
 	}
 
 	public function get_cover_art() {
-		$coverart = $this->get_option_by_key( 'itunes_cover_art' );
+		$coverart = $this->get_option_by_key( 'itunes_coverart' );
 
 		if ( ! isset( $coverart ) || empty( $coverart ) ) {
 			// @TODO: double dirname. Can this be refactored?
