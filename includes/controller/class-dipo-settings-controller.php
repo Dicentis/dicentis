@@ -2,7 +2,7 @@
 
 namespace Dicentis\Settings;
 
-use Dicentis\Feed\Dipo_Feed_Import;
+use Dicentis\Feed\Dipo_Feed_port;
 use Dicentis\Core;
 
 /**
@@ -35,8 +35,7 @@ class Dipo_Settings_Controller {
 		$loader->add_action(
 			'admin_enqueue_scripts',
 			$this->view,
-			'load_dipo_import_feed_style' );
-
+			'admin_settings_scripts' );
 	}
 
 	/**
@@ -152,6 +151,14 @@ class Dipo_Settings_Controller {
 			'dipo_itunes_copyright',
 			__( 'iTunes Copyright', $this->textdomain ),
 			array( $this, 'itunes_copyright' ),
+			'dipo_itunes',
+			'dipo_itunes_main'
+		);
+
+		add_settings_field(
+			'dipo_itunes_coverart',
+			__( 'iTunes Cover Art', $this->textdomain ),
+			array( $this, 'itunes_coverart' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
 		);
@@ -353,6 +360,18 @@ class Dipo_Settings_Controller {
 			<?php _e('State your copyright for the podcasts', $this->textdomain ); ?>
 		</p>
 
+	<?php }
+
+	public function itunes_coverart() {
+		// get option 'dipo_itunes_options'
+		$options = get_option( 'dipo_itunes_options' );
+		$author = isset( $options['itunes_coverart'] ) ? $options['itunes_coverart'] : '';
+		// echo the field ?>
+
+		<input id="upload_image" type="text" size="36" name="upload_image" value="" />
+		<div id="upload_image_button" class="button">Upload Image</div>
+		<p class="description" ><?php _e( 'Enter an URL or upload an image for the cover art.', $this->textdomain ); ?></p>
+		</label></td>
 	<?php }
 
 	public function validate_general_options( $input ) {
