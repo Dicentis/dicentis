@@ -365,11 +365,12 @@ class Dipo_Settings_Controller {
 	public function itunes_coverart() {
 		// get option 'dipo_itunes_options'
 		$options = get_option( 'dipo_itunes_options' );
-		$author = isset( $options['itunes_coverart'] ) ? $options['itunes_coverart'] : '';
+		$cover = isset( $options['itunes_coverart'] ) ? $options['itunes_coverart'] : '';
 		// echo the field ?>
 
-		<input id="upload_image" type="text" size="36" name="upload_image" value="" />
-		<div id="upload_image_button" class="button">Upload Image</div>
+		<input id="dipo_itunes_coverart" type="text" size="36" name="dipo_itunes_options[itunes_coverart]"
+			value="<?php echo esc_url( $cover ); ?>" />
+		<div id="dipo_upload_image_button" class="button">Upload Image</div>
 		<p class="description" ><?php _e( 'Enter an URL or upload an image for the cover art.', $this->textdomain ); ?></p>
 		</label></td>
 	<?php }
@@ -409,6 +410,8 @@ class Dipo_Settings_Controller {
 		$valid['itunes_category3'] = $input['itunes_category3'];
 
 		$valid['itunes_copyright'] = sanitize_text_field( htmlentities( $input['itunes_copyright'] ) );
+
+		$valid['itunes_coverart'] = esc_url_raw( $input['itunes_coverart'] );
 
 		return $valid;
 	}
