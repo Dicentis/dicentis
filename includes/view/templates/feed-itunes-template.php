@@ -55,7 +55,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<title><?php the_title_rss() ?></title>
 			<link><?php the_permalink() ?></link>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
-			<itunes:subtitle><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtitle>
+			<itunes:subtitle><![CDATA[<?php echo $feed->get_episodes_subtitle( $post->ID ); ?>]]></itunes:subtitle>
 			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
 			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
