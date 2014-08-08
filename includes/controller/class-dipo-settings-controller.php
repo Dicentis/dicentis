@@ -389,7 +389,8 @@ class Dipo_Settings_Controller {
 		// TODO: RegEx definieren
 		$valid['itunes_owner'] = $input['itunes_owner'];
 		$email = $input['itunes_owner_mail'];
-		$valid['itunes_owner_mail'] = ( is_email( $email ) ) ? $input['itunes_owner_mail'] : 'n.a.';
+		// TODO: show admin warning that no e-mail is given. e-mail is mandatory
+		$valid['itunes_owner_mail'] = ( is_email( $email ) ) ? $input['itunes_owner_mail'] : '';
 
 		$valid['itunes_title'] = preg_replace(
 			'/[^a-zA-Z0-9 ]/',
