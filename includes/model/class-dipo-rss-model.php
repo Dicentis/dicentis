@@ -51,7 +51,7 @@ class Dipo_RSS_Model {
 			}
 		} else {
 			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-				$request_uri = esc_attr( $_SERVER['REQUEST_URI'] );
+				$request_uri = esc_url( $_SERVER['REQUEST_URI'] );
 			} else {
 				$request_uri = '';
 			}

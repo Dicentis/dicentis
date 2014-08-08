@@ -33,6 +33,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		$iso_code = preg_replace('/[_]/', '-', $feed->get_option_by_key( 'itunes_language' ) );
 		echo $iso_code;
 	?></language>
+	<atom:link href="<?php echo esc_url( $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" rel="self" type="application/rss+xml" />
 	<copyright><?php echo ent2ncr($feed->get_option_by_key( 'itunes_copyright' ) ); ?></copyright>
 	<itunes:subtitle><?php echo $feed->get_option_by_key( 'itunes_subtitle' ) ; ?></itunes:subtitle>
 	<itunes:author><?php echo $feed->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
