@@ -44,8 +44,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		<itunes:name><?php echo $feed->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
 		<itunes:email><?php echo $feed->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
 	</itunes:owner>
-	<!-- @TODO: Take Description from Show -->
-	<itunes:image href="" />
+	<itunes:image href="<?php echo esc_url( $feed->get_cover_art() ); ?>" />
 <?php $feed->print_itunes_categories();
 
 	do_action( 'rss2_head' ); ?>
