@@ -14,7 +14,7 @@ Dicentis is a new podcast plugin which has its main focus on CMS based Websites.
 Most podcast plugin for WordPress are great but have one weakness: They focus on single podcast sites. It is not easy or impossible to create multiple podcast feeds with on installation. This plugin wants to change that. It is possible to add multiple podcast and support individual feeds for different media types. In addition, you can add series and speaker to episodes for a better archive and to enhance episodes with more meta data.
 
 ## Installation
-You can download and install Dicentis using the built in WordPress plugin installer. If you download Dicentis manually, make sure it is uploaded to `/wp-content/plugins/dicentis-podcast/`. Activate Dicentis in the \"Plugins\" admin panel using the \"Activate\" link.
+A detailed tutorial how to install _Dicentis_ is documented on [dictenits.io](http://dicentis.io/docs/install-dicentis).
 
 ## Frequently Asked Questions
 FAQ will surely come in the future.
