@@ -4,6 +4,7 @@ namespace Dicentis\Settings;
 
 use Dicentis\Feed\Dipo_Feed_port;
 use Dicentis\Core;
+use Dicentis\Feed\Dipo_RSS_Model;
 
 /**
 * Settings page for dicentis plugin
@@ -363,6 +364,9 @@ class Dipo_Settings_Controller {
 	<?php }
 
 	public function itunes_coverart() {
+		// RSS Model Object for Coverlink
+		$rss_model = new Dipo_RSS_Model();
+
 		// get option 'dipo_itunes_options'
 		$options = get_option( 'dipo_itunes_options' );
 		$cover = isset( $options['itunes_coverart'] ) ? $options['itunes_coverart'] : '';
@@ -372,6 +376,7 @@ class Dipo_Settings_Controller {
 			value="<?php echo esc_url( $cover ); ?>" />
 		<div id="dipo_upload_image_button" class="button">Upload Image</div>
 		<p class="description" ><?php _e( 'Enter an URL or upload an image for the cover art.', $this->textdomain ); ?></p>
+		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", $this->textdomain ), $rss_model->get_cover_art() ); ?></p>
 		</label></td>
 	<?php }
 

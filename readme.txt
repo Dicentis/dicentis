@@ -3,8 +3,8 @@ Contributors: obstschale
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Donate link: https://www.gittip.com/obstschale/
 Requires at least: 3.6
-Tested up to: 3.9.1
-Stable tag: 0.2.0
+Tested up to: 4.0
+Stable tag: 0.2.1
 License: GPLv3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -20,6 +20,14 @@ You can download and install Dicentis using the built in WordPress plugin instal
 see http://dicentis.io/faq
 
 == Changelog ==
+
+= 0.2.1 =
+
+* [FIX] Cover Art Image URL
+* [UPDATE] If no cover art is given a placeholder cover art is used
+* [UPDATE] Some <itunes> tags in feeds are using CDATA now
+* [UPDATE] If no duration is given <itunes:duration> tag is left out
+
 = 0.2.0 (Brass Monkey) =
 
 * [UPDATE] new Dashboard with more useful information and a feed generator which gives you the correct feed you need

@@ -1,5 +1,11 @@
 # Changelog
-## 0.2.0 (Brass Monkey) [2014-07-26] =
+## 0.2.1 [2014-10-05]
+* [FIX] Cover Art Image URL
+* [UPDATE] If no cover art is given a placeholder cover art is used
+* [UPDATE] Some <itunes> tags in feeds are using CDATA now
+* [UPDATE] If no duration is given <itunes:duration> tag is left out
+
+## 0.2.0 (Brass Monkey) [2014-07-26]
 
 * [UPDATE] new Dashboard with more useful information and a feed generator which gives you the correct feed you need
 * [UPDATE] complete restructured plugin with a better OOP approach 
