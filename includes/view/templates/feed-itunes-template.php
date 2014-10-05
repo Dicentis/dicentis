@@ -33,19 +33,19 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		$iso_code = preg_replace('/[_]/', '-', $feed->get_option_by_key( 'itunes_language' ) );
 		echo $iso_code;
 	?></language>
+	<atom:link href="<?php echo esc_url( $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" rel="self" type="application/rss+xml" />
 	<copyright><?php echo ent2ncr($feed->get_option_by_key( 'itunes_copyright' ) ); ?></copyright>
 	<itunes:subtitle><?php echo $feed->get_option_by_key( 'itunes_subtitle' ) ; ?></itunes:subtitle>
 	<itunes:author><?php echo $feed->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
 	<!-- @TODO: Take Summary from Show -->
-	<itunes:summary><?php $feed->get_show_details( 'description' ); ?></itunes:summary>
+	<itunes:summary><![CDATA[<?php $feed->get_show_details( 'description' ); ?>]]></itunes:summary>
 	<!-- @TODO: Take Description from Show -->
-	<description><?php $feed->get_show_details( 'description' ); ?></description>
+	<description><![CDATA[<?php $feed->get_show_details( 'description' ); ?>]]></description>
 	<itunes:owner>
 		<itunes:name><?php echo $feed->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
 		<itunes:email><?php echo $feed->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
 	</itunes:owner>
-	<!-- @TODO: Take Description from Show -->
-	<itunes:image href="" />
+	<itunes:image href="<?php echo esc_url( $feed->get_cover_art() ); ?>" />
 <?php $feed->print_itunes_categories();
 
 	do_action( 'rss2_head' ); ?>
@@ -55,22 +55,25 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 			<title><?php the_title_rss() ?></title>
 			<link><?php the_permalink() ?></link>
 			<itunes:author><?php echo $feed->get_speaker( $post->ID ); ?></itunes:author>
-			<itunes:subtitle><?php echo $feed->get_episodes_subtitle( $post->ID ); ?></itunes:subtitle>
-			<itunes:summary><?php echo $feed->get_episodes_summary( $post->ID ); ?></itunes:summary>
-			<itunes:image href="<?php echo $feed->get_episodes_image( $post->ID ); ?>" />
+			<itunes:subtitle><![CDATA[<?php echo $feed->get_episodes_subtitle( $post->ID ); ?>]]></itunes:subtitle>
+			<itunes:summary><![CDATA[<?php echo $feed->get_episodes_summary( $post->ID ); ?>]]></itunes:summary>
+<?php $image = $feed->get_episodes_image( $post->ID ) ?>
+<?php if ( isset( $image ) && strlen( $image ) > 0 ) : ?>
+			<itunes:image href="<?php echo esc_url( $image ); ?>" />
+<?php endif; ?>
 <?php $post_mediafile = $feed->get_episodes_mediafile( $post->ID ); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
 			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 			<guid><?php echo get_permalink( $post->ID ); ?></guid>
+<?php if ( isset($post_mediafile['duration']) && 0 < $post_mediafile['duration'] ) : ?>
 			<itunes:duration><?php echo $post_mediafile['duration']; ?></itunes:duration>
+<?php endif; ?>
 <?php if ( $feed->episode_has_keywords( $post->ID ) ) : ?>
 			<itunes:keywords><?php echo $feed->get_episodes_keywords( $post->ID ); ?></itunes:keywords>
 <?php endif; ?>
-<?php rss_enclosure(); ?>
 <?php do_action( 'rss2_item' ); ?>
 		</item>
-	<?php endif; ?>
-	<?php endwhile; ?>
+<?php endif; ?>
+<?php endwhile; ?>
 </channel>
-
 </rss>

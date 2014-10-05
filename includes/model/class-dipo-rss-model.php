@@ -51,7 +51,7 @@ class Dipo_RSS_Model {
 			}
 		} else {
 			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-				$request_uri = esc_attr( $_SERVER['REQUEST_URI'] );
+				$request_uri = esc_url( $_SERVER['REQUEST_URI'] );
 			} else {
 				$request_uri = '';
 			}
@@ -127,9 +127,9 @@ class Dipo_RSS_Model {
 			}
 		endforeach;
 
-		echo esc_html( $podcast_category1 );
-		echo esc_html( $podcast_category2 );
-		echo esc_html( $podcast_category3 );
+		echo $podcast_category1;
+		echo $podcast_category2;
+		echo $podcast_category3;
 	}
 
 	public function get_mediatype() {
@@ -269,6 +269,17 @@ class Dipo_RSS_Model {
 
 		$tag_count = wp_get_post_tags( $id, array( 'fields' => 'names' ) );
 		return ( 0 < count( $tag_count ) ) ? true : false;
+	}
+
+	public function get_cover_art() {
+		$coverart = $this->get_option_by_key( 'itunes_coverart' );
+
+		if ( ! isset( $coverart ) || empty( $coverart ) ) {
+			// @TODO: double dirname. Can this be refactored?
+			$coverart = plugins_url( 'assets/img/cover-art.jpg' , dirname( dirname( __FILE__ ) ) );
+		}
+
+		return $coverart;
 	}
 
 }

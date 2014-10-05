@@ -2,8 +2,9 @@
 
 namespace Dicentis\Settings;
 
-use Dicentis\Feed\Dipo_Feed_Import;
+use Dicentis\Feed\Dipo_Feed_port;
 use Dicentis\Core;
+use Dicentis\Feed\Dipo_RSS_Model;
 
 /**
 * Settings page for dicentis plugin
@@ -35,8 +36,7 @@ class Dipo_Settings_Controller {
 		$loader->add_action(
 			'admin_enqueue_scripts',
 			$this->view,
-			'load_dipo_import_feed_style' );
-
+			'admin_settings_scripts' );
 	}
 
 	/**
@@ -152,6 +152,14 @@ class Dipo_Settings_Controller {
 			'dipo_itunes_copyright',
 			__( 'iTunes Copyright', $this->textdomain ),
 			array( $this, 'itunes_copyright' ),
+			'dipo_itunes',
+			'dipo_itunes_main'
+		);
+
+		add_settings_field(
+			'dipo_itunes_coverart',
+			__( 'iTunes Cover Art', $this->textdomain ),
+			array( $this, 'itunes_coverart' ),
 			'dipo_itunes',
 			'dipo_itunes_main'
 		);
@@ -355,6 +363,23 @@ class Dipo_Settings_Controller {
 
 	<?php }
 
+	public function itunes_coverart() {
+		// RSS Model Object for Coverlink
+		$rss_model = new Dipo_RSS_Model();
+
+		// get option 'dipo_itunes_options'
+		$options = get_option( 'dipo_itunes_options' );
+		$cover = isset( $options['itunes_coverart'] ) ? $options['itunes_coverart'] : '';
+		// echo the field ?>
+
+		<input id="dipo_itunes_coverart" type="text" size="36" name="dipo_itunes_options[itunes_coverart]"
+			value="<?php echo esc_url( $cover ); ?>" />
+		<div id="dipo_upload_image_button" class="button">Upload Image</div>
+		<p class="description" ><?php _e( 'Enter an URL or upload an image for the cover art.', $this->textdomain ); ?></p>
+		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", $this->textdomain ), $rss_model->get_cover_art() ); ?></p>
+		</label></td>
+	<?php }
+
 	public function validate_general_options( $input ) {
 		$valid = array();
 		
@@ -369,7 +394,8 @@ class Dipo_Settings_Controller {
 		// TODO: RegEx definieren
 		$valid['itunes_owner'] = $input['itunes_owner'];
 		$email = $input['itunes_owner_mail'];
-		$valid['itunes_owner_mail'] = ( is_email( $email ) ) ? $input['itunes_owner_mail'] : 'n.a.';
+		// TODO: show admin warning that no e-mail is given. e-mail is mandatory
+		$valid['itunes_owner_mail'] = ( is_email( $email ) ) ? $input['itunes_owner_mail'] : '';
 
 		$valid['itunes_title'] = preg_replace(
 			'/[^a-zA-Z0-9 ]/',
@@ -390,6 +416,8 @@ class Dipo_Settings_Controller {
 		$valid['itunes_category3'] = $input['itunes_category3'];
 
 		$valid['itunes_copyright'] = sanitize_text_field( htmlentities( $input['itunes_copyright'] ) );
+
+		$valid['itunes_coverart'] = esc_url_raw( $input['itunes_coverart'] );
 
 		return $valid;
 	}

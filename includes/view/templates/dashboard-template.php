@@ -42,7 +42,7 @@
 		<h3><span><?php _e( 'RSS Feeds', $this->textdomain ) ?></span></h3>
 		<div class="inside">
 			<div id="dipo-link-generator" style="display: none;">
-
+				<input type="hidden" id="dipo-home-url" value="<?php echo home_url('/'); ?>">
 				<label for="dipo-gen-show"><?php _e( 'Podcast Show', $this->textdomain ); ?></label>
 				<label for="dipo-gen-type"><?php _e( 'Media Type', $this->textdomain ); ?></label>
 
@@ -89,9 +89,7 @@
 			?>
 
 			<ul>
-				<?php if ( $maxitems == 0 ) : ?>
-					<li><?php _e( 'No items', $this->textdomain ); ?></li>
-				<?php else : ?>
+				<?php if ( isset( $maxitems ) && $maxitems > 0 ) : ?>
 					<?php // Loop through each feed item and display each item as a hyperlink. ?>
 					<?php foreach ( $rss_items as $item ) : ?>
 						<li>
@@ -101,6 +99,8 @@
 							</a>
 						</li>
 					<?php endforeach; ?>
+				<?php else: ?>
+					<li><?php _e( 'No blog posts found.', $this->textdomain ); ?></li>
 				<?php endif; ?>
 			</ul>
 		</div>
