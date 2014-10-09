@@ -650,6 +650,7 @@ class Dipo_Podcast_Post_Type {
 		$taxonomy = $column_name;
 		$post_type = get_post_type($post_id);
 		$terms = get_the_terms($post_id, $taxonomy);
+		$post_terms = array();
 
 		if ( !empty($terms) ) {
 			foreach ( $terms as $term )
