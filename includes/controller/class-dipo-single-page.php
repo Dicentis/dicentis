@@ -39,14 +39,26 @@ class Dipo_Single_Page {
 			$rss_model = new \Dicentis\Podcast_Post_Type\Dipo_Episode_Model();
 			$mediafiles = $rss_model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
 
+			$separator = false;
 			foreach ( $mediafiles as $key => $value ) {
-				$ext = esc_attr( $value['mediatype'] );
-				$link = esc_url( $value['medialink'] );
+
+				if ( $separator ) {
+					$content .= '&nbsp;|&nbsp;';
+				} else {
+					$separator = true;
+				}
+
+				$ext     = esc_attr( $value['mediatype'] );
+				$link    = esc_url( $value['medialink'] );
 
 				$content .= "<a href='{$link}' title='Download {$ext}'>";
 				$content .= "Download {$ext}";
-				$content .= '</a>&nbsp;|&nbsp;';
+				$content .= '</a>';
 			}
+			// Reference of a $value and the last array element remain
+			// even after the foreach loop. It is recommended to
+			// destroy it by unset().
+			unset($value);
 		}
 
 		return $content;
