@@ -17,7 +17,7 @@ class Dipo_Single_Page {
 	}
 
 	public function register_hooks() {
-		add_filter( 'single_template', array( $this, 'single_template' ) );
+		// add_filter( 'single_template', array( $this, 'single_template' ) );
 		add_filter( 'the_content', array( $this, 'append_media_links' ) );
 	}
 
@@ -35,13 +35,18 @@ class Dipo_Single_Page {
 		if ( $GLOBALS['post']->post_type == Dipo_Podcast_Post_Type::POST_TYPE ) {
 			$content .= '<br>';
 
-			$rss_model = new \Dicentis\Feed\Dipo_RSS_Model();
-			$media = $rss_model->get_episodes_mediafile( $GLOBALS['post']->ID );
+			// $rss_model = new \Dicentis\Feed\Dipo_RSS_Model();
+			$rss_model = new \Dicentis\Podcast_Post_Type\Dipo_Episode_Model();
+			$mediafiles = $rss_model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
 
-			$content .= '<a href="' . esc_url( $media['medialink'] ) . '" title="Download mp3">';
-			$content .= 'Download mp3';
-			$content .= '</a>';
+			foreach ( $mediafiles as $key => $value ) {
+				$ext = esc_attr( $value['mediatype'] );
+				$link = esc_url( $value['medialink'] );
 
+				$content .= "<a href='{$link}' title='Download {$ext}'>";
+				$content .= "Download {$ext}";
+				$content .= '</a>&nbsp;|&nbsp;';
+			}
 		}
 
 		return $content;

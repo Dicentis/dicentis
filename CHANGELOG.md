@@ -1,4 +1,9 @@
 # Changelog
+## 0.2.2 
+
+* [FIX] Warning during `join` operation. Fix #13 thx @pierreberchtold
+* [UPDATE] Append Download links of all mediafiles to single page in frontend
+
 ## 0.2.1 [2014-10-05]
 * [FIX] Cover Art Image URL
 * [UPDATE] If no cover art is given a placeholder cover art is used
