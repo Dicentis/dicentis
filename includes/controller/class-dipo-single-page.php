@@ -33,12 +33,28 @@ class Dipo_Single_Page {
 
 	public function append_media_links( $content ) {
 		if ( $GLOBALS['post']->post_type == Dipo_Podcast_Post_Type::POST_TYPE ) {
+			$this->enqueue_scripts();
+
 			$content .= '<br>';
 
 			// $rss_model = new \Dicentis\Feed\Dipo_RSS_Model();
 			$rss_model = new \Dicentis\Podcast_Post_Type\Dipo_Episode_Model();
 			$mediafiles = $rss_model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
 
+			// Add Audioplayer
+			$player = '<audio controls="controls" preload="none">';
+			foreach ( $mediafiles as $key => $value ) {
+				$ext     = esc_attr( $value['mediatype'] );
+				$link    = esc_url( $value['medialink'] );
+
+				$player .= "<source src='{$link}' type='{$ext}'>";
+
+			}
+			$player .= '</audio>';
+			$content .= $player;
+
+			// Add Download Links
+			$content .= '<br>';
 			$separator = false;
 			foreach ( $mediafiles as $key => $value ) {
 
@@ -62,6 +78,10 @@ class Dipo_Single_Page {
 		}
 
 		return $content;
+	}
+
+	public function enqueue_scripts() {
+		wp_enqueue_script( 'wp-mediaelement' );
 	}
 
 }
