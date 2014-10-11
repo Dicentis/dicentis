@@ -4,6 +4,40 @@ namespace Dicentis\Podcast_Post_Type;
 
 class Dipo_Episode_Model {
 
+	public function get_all_audio_files( $id = -1 ) {
+		if ( -1 == $id ) {
+			return false;
+		}
+
+		$files = $this->get_all_episodes_mediafiles( $id );
+
+		// Remove all non-audio files from array
+		foreach ( $files as $index => $file ) {
+			if ( ! $this->is_audio( $file['mediatype'] ) ) {
+				unset( $files[$index] );
+			}
+		}
+
+		return $files;
+	}
+
+	public function get_all_video_files( $id = -1 ) {
+		if ( -1 == $id ) {
+			return false;
+		}
+
+		$files = $this->get_all_episodes_mediafiles( $id );
+
+		// Remove all non-video files from array
+		foreach ( $files as $index => $file ) {
+			if ( ! $this->is_video( $file['mediatype'] ) ) {
+				unset( $files[$index] );
+			}
+		}
+
+		return $files;
+	}
+
 	public function get_all_episodes_mediafiles( $id = -1 ) {
 		if ( -1 == $id ) {
 			return false;
@@ -64,4 +98,38 @@ class Dipo_Episode_Model {
 			);
 	}
 
+	public function is_audio( $mime ) {
+		$audio_mime = array(
+			'audio/mpeg',
+			'audio/mp4',
+			'audio/ogg',
+			'audio/webm',
+			'audio/flac',
+			'audio/ogg;codecs=opus',
+			'audio/x-matroska',
+		);
+
+		if ( in_array( $mime, $audio_mime ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function is_video( $mime ) {
+		$audio_mime = array(
+			'video/mpeg',
+			'video/mp4',
+			'video/x-m4v',
+			'video/ogg',
+			'video/webm',
+			'video/x-matroska',
+		);
+
+		if ( in_array( $mime, $audio_mime ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
