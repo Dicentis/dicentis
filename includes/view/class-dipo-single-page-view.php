@@ -31,10 +31,13 @@ class Dipo_Single_Page_View {
 	 */
 	private $textdomain;
 
-	public function __construct() {
+	private $model;
+
+	public function __construct( $model ) {
 		$this->properties = \Dicentis\Core\Dipo_Property_List::get_instance();
 		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->register_hooks();
+		$this->model = $model;
 	}
 
 	public function register_hooks() {
@@ -47,9 +50,7 @@ class Dipo_Single_Page_View {
 
 			$content .= '<br>';
 
-			// $rss_model = new \Dicentis\Feed\Dipo_RSS_Model();
-			$rss_model = new \Dicentis\Podcast_Post_Type\Dipo_Episode_Model();
-			$mediafiles = $rss_model->get_all_audio_files( $GLOBALS['post']->ID );
+			$mediafiles = $this->model->get_all_audio_files( $GLOBALS['post']->ID );
 
 			// Add Audioplayer
 			$player = '<audio controls="controls" preload="none" style="width: 100%;">';
@@ -88,7 +89,7 @@ class Dipo_Single_Page_View {
 			unset($value);
 			$content .= '<br>';
 
-			$mediafiles = $rss_model->get_all_video_files( $GLOBALS['post']->ID );
+			$mediafiles = $this->model->get_all_video_files( $GLOBALS['post']->ID );
 
 			// Add Audioplayer
 			$player = '<video controls="controls" preload="none" style="width: 100%;">';
