@@ -44,7 +44,7 @@ class Dipo_Single_Page {
 			$mediafiles = $rss_model->get_all_audio_files( $GLOBALS['post']->ID );
 
 			// Add Audioplayer
-			$player = '<audio controls="controls" preload="none">';
+			$player = '<audio controls="controls" preload="none" style="width: 100%;">';
 			foreach ( $mediafiles as $key => $value ) {
 				$ext     = esc_attr( $value['mediatype'] );
 				$link    = esc_url( $value['medialink'] );
@@ -83,7 +83,7 @@ class Dipo_Single_Page {
 			$mediafiles = $rss_model->get_all_video_files( $GLOBALS['post']->ID );
 
 			// Add Audioplayer
-			$player = '<video controls="controls" preload="none">';
+			$player = '<video controls="controls" preload="none" style="width: 100%;">';
 			foreach ( $mediafiles as $key => $value ) {
 				$ext     = esc_attr( $value['mediatype'] );
 				$link    = esc_url( $value['medialink'] );
