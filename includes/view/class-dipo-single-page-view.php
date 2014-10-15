@@ -83,6 +83,7 @@ class Dipo_Single_Page_View {
 				$content .= "{$download} {$ext}";
 				$content .= '</a>';
 			}
+			$content .= $this->create_download_dropdown( $mediafiles );
 			// Reference of a $value and the last array element remain
 			// even after the foreach loop. It is recommended to
 			// destroy it by unset().
@@ -133,5 +134,23 @@ class Dipo_Single_Page_View {
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'wp-mediaelement' );
+	}
+
+	public function create_download_dropdown( $mediafiles ) {
+		if ( 2 > count( $mediafiles ) ) {
+			return null;
+		}
+
+		$dropdown = '<br>';
+
+		$dropdown .= "<select name='select'>";
+		foreach ( $mediafiles as $key => $value ) {
+			$dropdown .= "<option value={$value['medialink']}>";
+			$dropdown .= "Download {$value['mediatype']}";
+			$dropdown .= '</option>';
+		}
+		$dropdown .= '</select>';
+
+		return $dropdown;
 	}
 }
