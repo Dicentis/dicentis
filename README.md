@@ -1,5 +1,5 @@
 # Dicentis Podcast
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Dicentis/dicentis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Dicentis/dicentis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 Contributors: obstschale  
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,  
 Donate link: https://www.gittip.com/obstschale/  
