@@ -64,32 +64,6 @@ class Dipo_Single_Page_View {
 			$player .= '</audio>';
 			$content .= $player;
 
-			// Add Download Links
-			$content .= '<br>';
-			$separator = false;
-			foreach ( $mediafiles as $key => $value ) {
-
-				if ( $separator ) {
-					$content .= '&nbsp;|&nbsp;';
-				} else {
-					$separator = true;
-				}
-
-				$ext     = esc_attr( $value['mediatype'] );
-				$link    = esc_url( $value['medialink'] );
-
-				$download = __( 'Download', $this->textdomain );
-				$content .= "<a href='{$link}' title='{$download} {$ext}'>";
-				$content .= "{$download} {$ext}";
-				$content .= '</a>';
-			}
-			$content .= $this->create_download_dropdown( $mediafiles );
-			// Reference of a $value and the last array element remain
-			// even after the foreach loop. It is recommended to
-			// destroy it by unset().
-			unset($value);
-			$content .= '<br>';
-
 			$mediafiles = $this->model->get_all_video_files( $GLOBALS['post']->ID );
 
 			// Add Audioplayer
@@ -105,28 +79,8 @@ class Dipo_Single_Page_View {
 			$content .= $player;
 
 			// Add Download Links
-			$content .= '<br>';
-			$separator = false;
-			foreach ( $mediafiles as $key => $value ) {
-
-				if ( $separator ) {
-					$content .= '&nbsp;|&nbsp;';
-				} else {
-					$separator = true;
-				}
-
-				$ext     = esc_attr( $value['mediatype'] );
-				$link    = esc_url( $value['medialink'] );
-
-				$download = __( 'Download', $this->textdomain );
-				$content .= "<a href='{$link}' title='{$download} {$ext}'>";
-				$content .= "{$download} {$ext}";
-				$content .= '</a>';
-			}
-			// Reference of a $value and the last array element remain
-			// even after the foreach loop. It is recommended to
-			// destroy it by unset().
-			unset($value);
+			$mediafiles = $this->model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
+			$content .= $this->create_download_dropdown( $mediafiles );
 		}
 
 		return $content;
@@ -137,19 +91,24 @@ class Dipo_Single_Page_View {
 	}
 
 	public function create_download_dropdown( $mediafiles ) {
-		if ( 2 > count( $mediafiles ) ) {
+		if ( 1 > count( $mediafiles ) ) {
 			return null;
 		}
 
 		$dropdown = '<br>';
 
+		$dropdown .= "<button>Download</button>";
 		$dropdown .= "<select name='select'>";
 		foreach ( $mediafiles as $key => $value ) {
 			$dropdown .= "<option value={$value['medialink']}>";
-			$dropdown .= "Download {$value['mediatype']}";
+			$dropdown .= "{$value['mediatype']}";
 			$dropdown .= '</option>';
 		}
 		$dropdown .= '</select>';
+		// Reference of a $value and the last array element remain
+		// even after the foreach loop. It is recommended to
+		// destroy it by unset().
+		unset($value);
 
 		return $dropdown;
 	}
