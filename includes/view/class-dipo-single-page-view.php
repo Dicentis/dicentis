@@ -113,7 +113,8 @@ class Dipo_Single_Page_View {
 			$dropdown .= '</option>';
 		}
 		$dropdown .= '</select>';
-		$dropdown .= "<a href=# id='dipo_downlod_btn'>Download</a>";
+		$first_link = $mediafiles[0]['medialink'];
+		$dropdown .= "<a href={$first_link} id='dipo_downlod_btn'>Download</a>";
 		$dropdown .= "</div>";
 
 		$dropdown .= "<div id='dipo_files_nojs' class='nojs'>";
