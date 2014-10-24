@@ -88,23 +88,47 @@ class Dipo_Single_Page_View {
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'wp-mediaelement' );
+		wp_enqueue_script(
+				'dipo_singlepage_js',
+				DIPO_ASSETS_URL . '/js/dipo_singlepage.js',
+				array( 'jquery' )
+			);
+		wp_enqueue_style(
+				'dipo_singelpage_style',
+				DIPO_ASSETS_URL . '/css/dipo_singlepage.css'
+			);
 	}
 
 	public function create_download_dropdown( $mediafiles ) {
 		if ( 1 > count( $mediafiles ) ) {
 			return null;
 		}
-
 		$dropdown = '<br>';
 
-		$dropdown .= "<button>Download</button>";
-		$dropdown .= "<select name='select'>";
+		$dropdown .= "<div id='dipo_files_js' class='dipo_right'>";
+		$dropdown .= "<select id='dipo_file_select' name='dipo_file_select'>";
 		foreach ( $mediafiles as $key => $value ) {
 			$dropdown .= "<option value={$value['medialink']}>";
 			$dropdown .= "{$value['mediatype']}";
 			$dropdown .= '</option>';
 		}
 		$dropdown .= '</select>';
+		$dropdown .= "<a href=# id='dipo_downlod_btn'>Download</a>";
+		$dropdown .= "</div>";
+
+		$dropdown .= "<div id='dipo_files_nojs' class='nojs'>";
+		$i = 0;
+		foreach ( $mediafiles as $key => $value ) {
+			if ( 0 < $i++) {
+				$dropdown .= "| ";
+			}
+
+			$link = $value['medialink'];
+			$type = $value['mediatype'];
+			$dropdown .= "<a href={$link} title='Download {$type}'>Download {$type}</a> ";
+		}
+		$dropdown .= "</div>";
+
 		// Reference of a $value and the last array element remain
 		// even after the foreach loop. It is recommended to
 		// destroy it by unset().
