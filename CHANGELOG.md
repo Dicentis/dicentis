@@ -1,4 +1,11 @@
 # Changelog
+## 0.2.2 
+
+* [FIX] Warning during `join` operation. Fix #13 thx @pierreberchtold
+* [UPDATE] Audio and / or Video player are added to content
+* [UPDATE] If JS: Show dropdown to download mediafiles
+* [UPDATE] If no JS: Download links for files are displayed
+
 ## 0.2.1 [2014-10-05]
 * [FIX] Cover Art Image URL
 * [UPDATE] If no cover art is given a placeholder cover art is used

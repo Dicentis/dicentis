@@ -7,6 +7,7 @@ use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 use Dicentis\Feed\Dipo_RSS_Controller;
 use Dicentis\Core;
 use Dicentis\Admin;
+use Dicentis\Frontend;
 
 /**
  * The primary class for Dicentis Podcast.
@@ -48,6 +49,8 @@ class Dicentis_Podcast {
 
 	private $feed;
 
+	private $single_page;
+
 	/**
 	 * Constructor loads dependencies and registers hooks.
 	 *
@@ -81,6 +84,7 @@ class Dicentis_Podcast {
 		$this->podcast_cpt = new Dipo_Podcast_Post_Type();
 		$this->settings = new Dipo_Settings_Controller();
 		$this->feed = new Dipo_RSS_Controller();
+		$this->single_page = new Frontend\Dipo_Single_Page();
 
 	}
 
@@ -99,7 +103,6 @@ class Dicentis_Podcast {
 	 */
 	public function register_hooks() {
 
-		// add_filter( 'single_template', array( $this, 'single_template' ) );
 		// add_filter( 'archive_template', array( $this, 'podcast_archive_template' ) );
 
 		/**

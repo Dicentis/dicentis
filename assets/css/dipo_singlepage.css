@@ -1,0 +1,14 @@
+.dipo_right {
+	text-align: right;
+}
+
+#dipo_files_js {
+	visibility: hidden;
+	position: absolute;
+}
+
+#dipo_downlod_btn {
+	padding: 3px;
+	margin:  3px;
+	border:  1px solid;
+}
