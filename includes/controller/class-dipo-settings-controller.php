@@ -122,25 +122,31 @@ class Dipo_Settings_Controller {
 		add_settings_field(
 			'dipo_itunes_cat1',
 			__( 'iTunes Category 1', $this->textdomain ),
-			array( $this, 'itunes_category1' ),
+			array( $this, 'itunes_category' ),
 			'dipo_itunes',
-			'dipo_itunes_main'
+			'dipo_itunes_main',
+			array( 'label_for' => 'dipo_itunes_cat1',
+				'cat' => 'itunes_category1' )
 		);
 
 		add_settings_field(
 			'dipo_itunes_cat2',
 			__( 'iTunes Category 2', $this->textdomain ),
-			array( $this, 'itunes_category2' ),
+			array( $this, 'itunes_category' ),
 			'dipo_itunes',
-			'dipo_itunes_main'
+			'dipo_itunes_main',
+			array( 'label_for' => 'dipo_itunes_cat2',
+				'cat' => 'itunes_category2' )
 		);
 
 		add_settings_field(
 			'dipo_itunes_cat3',
 			__( 'iTunes Category 3', $this->textdomain ),
-			array( $this, 'itunes_category3' ),
+			array( $this, 'itunes_category' ),
 			'dipo_itunes',
-			'dipo_itunes_main'
+			'dipo_itunes_main',
+			array( 'label_for' => 'dipo_itunes_cat3',
+				'cat' => 'itunes_category3' )
 		);
 
 		add_settings_field(
@@ -247,15 +253,15 @@ class Dipo_Settings_Controller {
 		<p class="description"><?php _e('Because iTunes operates sites worldwide, it is critical to specify the language of a podcast' ); ?></p>
 	<?php }
 
-	public function itunes_category1() {
+	public function itunes_category( $args ) {
 		// get itunes categories as array
 		require DIPO_LIB_DIR . '/itunes-categories.php';
 
 		// get option 'dipo_itunes_options'
 		$options = get_option( 'dipo_itunes_options' );
-		$cat1 = $options['itunes_category1']; ?>
+		$cat = $options[$args['cat']]; ?>
 
-		<select id='dipo_itunes_cat1' name='dipo_itunes_options[itunes_category1]'>
+		<select id="<?php echo $args['label_for']; ?>" name='dipo_itunes_options[<?php echo $args['cat']; ?>]'>
 			<option value=''>
 			<?php _e( 'None', $this->textdomain ); ?>
 			</option>
@@ -264,78 +270,14 @@ class Dipo_Settings_Controller {
 			// list main cats
 			$catvalue = strtolower( $catname );
 			echo "<option value='$catvalue'";
-			echo ( !strcmp( $cat1, $catvalue ) ) ? " selected>" : ">" ;
+			echo ( !strcmp( $cat, $catvalue ) ) ? " selected>" : ">" ;
 			echo $catname;
 			echo "</option>";
 
 			foreach ($subcats as $subcat => $subcatname) {
 				$subcatvalue = strtolower( $subcatname );
 				echo "<option value='$subcatvalue'";
-				echo ( !strcmp( $cat1, $subcatvalue ) ) ? " selected>" : ">" ;
-				echo $catname . " &gt; " . $subcatname;
-				echo "</option>";
-			}
-		} ?>
-		</select>
-	<?php }
-
-	public function itunes_category2() {
-		// get itunes categories as array
-		require DIPO_LIB_DIR . '/itunes-categories.php';
-
-		// get option 'dipo_itunes_options'
-		$options = get_option( 'dipo_itunes_options' );
-		$cat2 = $options['itunes_category2']; ?>
-
-		<select id='dipo_itunes_cat2' name='dipo_itunes_options[itunes_category2]'>
-			<option value=''>
-			<?php _e( 'None', $this->textdomain ); ?>
-			</option>
-
-		<?php foreach ($cats as $catname => $subcats) {
-			// list main cats
-			$catvalue = strtolower( $catname );
-			echo "<option value='$catvalue'";
-			echo ( !strcmp( $cat2, $catvalue ) ) ? " selected>" : ">" ;
-			echo $catname;
-			echo "</option>";
-
-			foreach ($subcats as $subcat => $subcatname) {
-				$subcatvalue = strtolower( $subcatname );
-				echo "<option value='$subcatvalue'";
-				echo ( !strcmp( $cat2, $subcatvalue ) ) ? " selected>" : ">" ;
-				echo $catname . " &gt; " . $subcatname;
-				echo "</option>";
-			}
-		} ?>
-		</select>
-	<?php }
-
-	public function itunes_category3() {
-		// get itunes categories as array
-		require DIPO_LIB_DIR . '/itunes-categories.php';
-
-		// get option 'dipo_itunes_options'
-		$options = get_option( 'dipo_itunes_options' );
-		$cat3 = $options['itunes_category3']; ?>
-
-		<select id='dipo_itunes_cat3' name='dipo_itunes_options[itunes_category3]'>
-			<option value=''>
-			<?php _e( 'None', $this->textdomain ); ?>
-			</option>
-
-		<?php foreach ($cats as $catname => $subcats) {
-			// list main cats
-			$catvalue = strtolower( $catname );
-			echo "<option value='$catvalue'";
-			echo ( !strcmp( $cat3, $catvalue ) ) ? " selected>" : ">" ;
-			echo $catname;
-			echo "</option>";
-
-			foreach ($subcats as $subcat => $subcatname) {
-				$subcatvalue = strtolower( $subcatname );
-				echo "<option value='$subcatvalue'";
-				echo ( !strcmp( $cat3, $subcatvalue ) ) ? " selected>" : ">" ;
+				echo ( !strcmp( $cat, $subcatvalue ) ) ? " selected>" : ">" ;
 				echo $catname . " &gt; " . $subcatname;
 				echo "</option>";
 			}
