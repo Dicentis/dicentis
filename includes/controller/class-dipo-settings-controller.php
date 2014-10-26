@@ -2,8 +2,8 @@
 
 namespace Dicentis\Settings;
 
-use Dicentis\Feed\Dipo_Feed_port;
 use Dicentis\Core;
+use Dicentis\Feed\Dipo_Feed_port;
 use Dicentis\Feed\Dipo_RSS_Model;
 
 /**
@@ -30,13 +30,8 @@ class Dipo_Settings_Controller {
 	} // END function __construct()
 
 	private function register_settings_hooks() {
-		$loader = $this->properties->get( 'hook_loader' );
-
-		// script & style action with page detection
-		$loader->add_action(
-			'admin_enqueue_scripts',
-			$this->view,
-			'admin_settings_scripts' );
+		add_action( 'admin_enqueue_scripts',
+			array( $this->view, 'admin_settings_scripts' ) );
 	}
 
 	/**
