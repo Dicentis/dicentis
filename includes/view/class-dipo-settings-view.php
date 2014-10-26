@@ -32,6 +32,7 @@ class Dipo_Settings_View {
 
 	public function setting_tabs( $current = 'homepage' ) {
 		$tabs = array(
+			'shows'  => 'Shows',
 			'general' => 'General',
 			'itunes' => 'iTunes',
 			'import' => 'Import/Export',
@@ -67,6 +68,19 @@ class Dipo_Settings_View {
 
 			switch ( $tab ) {
 				default:
+				case 'shows':
+					$show_model = new \Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model();
+					$shows = $show_model->get_shows();
+
+					if ( isset ( $_GET['show'] ) ) {
+						$active_show = esc_attr( $_GET['show'] );
+					} else {
+						$active_show = 'all';
+					}
+
+					include( $this->properties->get( 'dipo_templates' ) . '/settings-shows-template.php' );
+					break;
+
 				case 'general':
 					include( $this->properties->get( 'dipo_templates' ) . '/settings-general-template.php' );
 					break;
