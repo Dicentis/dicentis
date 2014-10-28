@@ -52,31 +52,35 @@ class Dipo_Single_Page_View {
 
 			$mediafiles = $this->model->get_all_audio_files( $GLOBALS['post']->ID );
 
-			// Add Audioplayer
-			$player = '<audio controls="controls" preload="none" style="width: 100%;">';
-			foreach ( $mediafiles as $key => $value ) {
-				$ext     = esc_attr( $value['mediatype'] );
-				$link    = esc_url( $value['medialink'] );
+			if ( 0 < count( $mediafiles ) ) {
+				// Add Audioplayer
+				$player = '<audio controls="controls" preload="none" style="width: 100%;">';
+				foreach ( $mediafiles as $key => $value ) {
+					$ext     = esc_attr( $value['mediatype'] );
+					$link    = esc_url( $value['medialink'] );
 
-				$player .= "<source src='{$link}' type='{$ext}'>";
+					$player .= "<source src='{$link}' type='{$ext}'>";
 
+				}
+				$player .= '</audio>';
+				$content .= $player;
 			}
-			$player .= '</audio>';
-			$content .= $player;
 
 			$mediafiles = $this->model->get_all_video_files( $GLOBALS['post']->ID );
 
-			// Add Audioplayer
-			$player = '<video controls="controls" preload="none" style="width: 100%;">';
-			foreach ( $mediafiles as $key => $value ) {
-				$ext     = esc_attr( $value['mediatype'] );
-				$link    = esc_url( $value['medialink'] );
+			if ( 0 < count( $mediafiles ) ) {
+				// Add Videoplayer
+				$player = '<video controls="controls" preload="none" style="width: 100%;">';
+				foreach ( $mediafiles as $key => $value ) {
+					$ext     = esc_attr( $value['mediatype'] );
+					$link    = esc_url( $value['medialink'] );
 
-				$player .= "<source src='{$link}' type='{$ext}'>";
+					$player .= "<source src='{$link}' type='{$ext}'>";
 
+				}
+				$player .= '</video>';
+				$content .= $player;
 			}
-			$player .= '</video>';
-			$content .= $player;
 
 			// Add Download Links
 			$mediafiles = $this->model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
