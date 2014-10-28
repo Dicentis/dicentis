@@ -75,7 +75,7 @@ class Dipo_Settings_View {
 					if ( isset ( $_GET['show'] ) ) {
 						$active_show = esc_attr( $_GET['show'] );
 					} else {
-						$active_show = 'all';
+						$active_show = 'all_shows';
 					}
 
 					include( $this->properties->get( 'dipo_templates' ) . '/settings-shows-template.php' );

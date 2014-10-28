@@ -1,7 +1,7 @@
 <div id="dipo_subheader" class="wrap">
 <?php
 	$all_shows = __( 'All Shows', $this->textdomain );
-	echo "<a href='?post_type=dipo_podcast&page=dicentis_settings&tab=shows&show=all'>{$all_shows}</a>";
+	echo "<a href='?post_type=dipo_podcast&page=dicentis_settings&tab=shows&show=all_shows'>{$all_shows}</a>";
 	foreach ( $shows as $show ) { ?>
  | <a href='?post_type=dipo_podcast&page=dicentis_settings&tab=shows&show=<?php echo $show->slug; ?>'><?php echo esc_attr( $show->name ); ?></a>
 	<?php }
@@ -14,8 +14,7 @@
 	<form method="POST" action="options.php">
 		<?php settings_fields( 'dipo_' . $active_show . '_options' ); ?>
 		<?php do_settings_sections( 'dipo_' . $active_show ); ?>
-		<?php //settings_fields( 'dipo_general_options' ); ?>
-		<?php //do_settings_sections( 'dipo_general' ); ?>
+		<?php do_settings_sections( 'dipo_' . $active_show . '_iTunes' ); ?>
 
 		<?php submit_button(); ?>
 	</form>
