@@ -59,7 +59,7 @@ class Dipo_Settings_View {
 		if ( isset ( $_GET['tab'] ) ) {
 			$tab = esc_attr( $_GET['tab'] );
 		} else {
-			$tab = 'general';
+			$tab = 'shows';
 		}
 
 		$this->setting_tabs( $tab );
@@ -70,7 +70,7 @@ class Dipo_Settings_View {
 				default:
 				case 'shows':
 					$show_model = new \Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model();
-					$shows = $show_model->get_shows();
+					$shows = $show_model->get_shows( false );
 
 					if ( isset ( $_GET['show'] ) ) {
 						$active_show = esc_attr( $_GET['show'] );

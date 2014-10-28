@@ -32,6 +32,8 @@ class Dipo_Settings_Controller {
 	private function register_settings_hooks() {
 		add_action( 'admin_enqueue_scripts',
 			array( $this->view, 'admin_settings_scripts' ) );
+		add_action('create_podcast_show',
+			array( $this->model, 'register_show_settings' ), 10, 1);
 	}
 
 	/**
@@ -40,9 +42,15 @@ class Dipo_Settings_Controller {
 	public function admin_init() {
 
 		// register the settings for this plugin
-		register_setting( 'dipo_general_options', 'dipo_general_options', array( $this, 'validate_general_options' ) );
+		register_setting(
+			'dipo_general_options',
+			'dipo_general_options',
+			array( $this, 'validate_general_options' ) );
+
 		// iTunes Settings for RSS Feed
-		register_setting( 'dipo_itunes_options', 'dipo_itunes_options', array( $this, 'validate_itunes_options' ) );
+		register_setting( 'dipo_itunes_options',
+			'dipo_itunes_options',
+			array( $this, 'validate_itunes_options' ) );
 
 		// General section settings
 		add_settings_section(
@@ -118,7 +126,6 @@ class Dipo_Settings_Controller {
 			'dipo_itunes_main'
 		);
 
-		/* @TODO: use args argument for callback function and use only one function for itunes_category */
 		add_settings_field(
 			'dipo_itunes_cat1',
 			__( 'iTunes Category 1', $this->textdomain ),
@@ -164,6 +171,8 @@ class Dipo_Settings_Controller {
 			'dipo_itunes',
 			'dipo_itunes_main'
 		);
+
+		$this->model->init_settings();
 
 	} // END public function admin_init()
 

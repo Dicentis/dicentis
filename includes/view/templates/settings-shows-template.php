@@ -7,25 +7,16 @@
 	<?php }
 ?>
 </div>
+
 <div class="wrap">
 	<div id="icon-tools" class="icon32"></div>
-	<?php
-	$a = array_search( $active_show, $shows );
-	var_dump( $a );
-	?>
 	<h1><?php echo $active_show; ?></h1>
 	<form method="POST" action="options.php">
-		<?php settings_fields( 'dipo_general_options' ); ?>
-		<?php do_settings_sections( 'dipo_general' ); ?>
+		<?php settings_fields( 'dipo_' . $active_show . '_options' ); ?>
+		<?php do_settings_sections( 'dipo_' . $active_show ); ?>
+		<?php //settings_fields( 'dipo_general_options' ); ?>
+		<?php //do_settings_sections( 'dipo_general' ); ?>
 
 		<?php submit_button(); ?>
 	</form>
 </div>
-
-	<?php
-	// <debug>
-echo "<pre>";
-var_dump( $shows );
-echo "</pre>";
-// </debug>
-?>
