@@ -21,6 +21,22 @@ function dipo_update_database( $version ) {
 
 	switch ( $version ) {
 		case 2:
+			$general = get_option( 'dipo_general_options' );
+			$itunes  = get_option( 'dipo_itunes_options' );
+			$update = array();
+			foreach ( $general as $key => $value ) {
+				if ( 'general_assets_url' == $key ) {
+					$update['show_assets_url'] = $value;
+				} else {
+					$update[$key] = $value;
+				}
+			}
+			foreach ( $itunes as $key => $value ) {
+				$update[$key] = $value;
+			}
+			update_option( 'dipo_all_shows_options', $update );
+			delete_option( 'dipo_general_options' );
+			delete_option( 'dipo_itunes_options' );
 			break;
 	}
 }
