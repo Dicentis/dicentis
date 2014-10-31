@@ -85,10 +85,15 @@ class Dipo_Settings_View {
 					$show_model = new \Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model();
 					$shows = $show_model->get_shows( false );
 
+					$active_show = 'all_shows';
+					$active_show_title = 'All Shows';
 					if ( isset ( $_GET['show'] ) ) {
 						$active_show = esc_attr( $_GET['show'] );
-					} else {
-						$active_show = 'all_shows';
+						foreach ( $shows as $show ) {
+							if ( 0 == strcmp( $show->slug, $active_show ) ) {
+								$active_show_title = $show->name;
+							}
+						}
 					}
 
 					include( $this->properties->get( 'dipo_templates' ) . '/settings-shows-template.php' );

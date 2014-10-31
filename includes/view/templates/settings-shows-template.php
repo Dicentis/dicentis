@@ -10,7 +10,8 @@
 
 <div class="wrap">
 	<div id="icon-tools" class="icon32"></div>
-	<h1><?php echo $active_show; ?></h1>
+	<h1><?php  _e( sprintf( 'Settings for "%s"', $active_show_title ), $this->textdomain ); ?></h1>
+	<hr>
 	<form method="POST" action="options.php">
 		<?php settings_fields( 'dipo_' . $active_show . '_options' ); ?>
 		<?php do_settings_sections( 'dipo_' . $active_show ); ?>
