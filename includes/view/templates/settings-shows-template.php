@@ -14,7 +14,9 @@
 	<form method="POST" action="options.php">
 		<?php settings_fields( 'dipo_' . $active_show . '_options' ); ?>
 		<?php do_settings_sections( 'dipo_' . $active_show ); ?>
+		<hr />
 		<?php do_settings_sections( 'dipo_' . $active_show . '_iTunes' ); ?>
+		<hr />
 
 		<?php submit_button(); ?>
 	</form>

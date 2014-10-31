@@ -12,44 +12,35 @@ class Dipo_Settings_Model {
 
 	private $properties;
 	private $textdomain;
+	private $controller;
 
-	public function __construct() {
+	public function __construct( $controller ) {
 		$this->properties = Core\Dipo_Property_List::get_instance();
 		$this->textdomain = $this->properties->get( 'textdomain' );
+		$this->controller = $controller;
 	}
 
-	private function get_option_name( $slug ) {
+	public function get_option_name( $slug ) {
 		return 'dipo_' . $slug . '_options';
 	}
 
-	public function init_settings() {
-		$show_model = new \Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model();
-		$shows = $show_model->get_shows( false );
+	public function get_field_value( $setting_name, $value_name ) {
 
-		$this->register_show_settings( -1 );
-		foreach ( $shows as $show ) {
-			$this->register_show_settings( $show->term_id );
-		}
-	}
+		$opt_name = $this->get_option_name( $setting_name );
 
-	public function register_show_settings( $term_id ) {
-		if ( -1 < $term_id ) {
-			$term = get_term( $term_id, 'podcast_show' );
-			$slug = $term->slug;
-		} else {
-			$slug = 'all_shows';
-		}
+		$options = get_option( $opt_name );
+		// if ( 'all_shows' != $args['term_slug'] ) {
+		// 	$all_shows_options = get_option( $model->get_option_name ( 'all_shows' ) );
+		// 	$placeholder = ( isset( $all_shows_options['show_assets_url'] ) ) ? $all_shows_options['show_assets_url'] : '' ;
+		// }
 
+		$value = ( isset( $options[$value_name] ) ) ? $options[$value_name] : '' ;
 
-		$option = $this->get_option_name( $slug );
-
-		// register settings for new show
-		register_setting(
-			$option,
-			$option,
-			array( $this, 'validate_show_options' ) );
-
-		$sec_id = $this->add_show_settings_section( $slug );
+		return array(
+			'setting_name' => $opt_name,
+			'field_name'   => $value_name,
+			'field_value'  => $value
+		);
 	}
 
 /**
@@ -64,13 +55,14 @@ class Dipo_Settings_Model {
  */
 
 	public function add_show_settings_section( $slug ) {
+		$view = $this->controller->get_view();
 
 		$id = "dipo_{$slug}_sec";
 		// section settings for new show
 		add_settings_section(
 			$id,
 			__( 'General Settings', $this->textdomain ), // title
-			array( $this, 'general_settings_description' ),
+			array( $view, 'general_settings_description' ),
 			"dipo_{$slug}"
 		);
 		$this->add_show_settings_fields( $slug, $id );
@@ -79,24 +71,12 @@ class Dipo_Settings_Model {
 		add_settings_section(
 			$id,
 			__( 'iTunes Settings', $this->textdomain ),
-			array( $this, 'itunes_settings_description' ),
+			array( $view, 'itunes_settings_description' ),
 			"dipo_{$slug}_iTunes"
 		);
 		$this->add_show_itunes_fields( $slug, $id );
 
 	}
-
-	public function general_settings_description() { ?>
-		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
-		</p>
-	<?php }
-
-	public function itunes_settings_description() { ?>
-		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
-		</p>
-	<?php }
 
 /**
  /$$$$$$$$ /$$           /$$       /$$          
@@ -109,66 +89,151 @@ class Dipo_Settings_Model {
 |__/      |__/ \_______/|__/ \_______/|_______/ 
  */
 	public function add_show_settings_fields( $slug, $sec_id ) {
+		$view = $this->controller->get_view();
+
 		// General Fields
 		add_settings_field(
 			'dipo_show_assets_url',
 			__( 'Assets URL', $this->textdomain ),
-			array( $this, 'general_assets_url' ),
+			array( $view, 'general_assets_url' ),
 			"dipo_{$slug}",
 			$sec_id,
-			array( 'label_for' => 'dipo_itunes_cat1',
+			array( 'label_for' => 'dipo_label_show_asset',
 				'term_slug' => $slug )
 		);
 	}
 
-
-	public function general_assets_url( $args ) {
-		$opt_name = $this->get_option_name( $args['term_slug'] );
-		$options = get_option( $opt_name );
-		$placeholder = '';
-		if ( 'all_shows' != $args['term_slug'] ) {
-			$all_shows_options = get_option( $this->get_option_name( 'all_shows' ) );
-			$placeholder = ( isset( $all_shows_options['show_assets_url'] ) ) ? $all_shows_options['show_assets_url'] : '' ;
-		}
-
-		$assets = ( isset( $options['show_assets_url'] ) ) ? $options['show_assets_url'] : '' ;
-
-		// echo the field ?>
-		<input id='dipo_show_assets_url' name="<?php echo $opt_name; ?>[show_assets_url]" size='40' type='text' value='<?php echo $assets; ?>' placeholder="<?php echo esc_attr( $placeholder ); ?>" />
-		<p class="description"><?php _e('This URL will be prefix the medialinks of episodes', $this->textdomain ); ?></p>
-	<?php }
-
 	public function add_show_itunes_fields( $slug, $sec_id ) {
+		$view = $this->controller->get_view();
 
 		// iTunes Fields
 		add_settings_field(
 			'dipo_itunes_owner',
 			__( 'iTunes Owner', $this->textdomain ),
-			array( $this, 'itunes_owner' ),
+			array( $view, 'itunes_owner' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
-			array( 'label_for' => 'dipo_itunes_cat1',
+			array( 'label_for' => 'dipo_label_itunes_owner',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_owner_mail',
+			__( 'iTunes Owner E-Mail', $this->textdomain ),
+			array( $view, 'itunes_owner_mail' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_mail',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_title',
+			__( 'iTunes Title', $this->textdomain ),
+			array( $view, 'itunes_title_string' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_title',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_subtitle',
+			__( 'iTunes Subtitle', $this->textdomain ),
+			array( $view, 'itunes_subtitle_string' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_subtitle',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_author',
+			__( 'iTunes Author', $this->textdomain ),
+			array( $view, 'itunes_author_string' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_author',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_language',
+			__( 'iTunes Language', $this->textdomain ),
+			array( $view, 'itunes_language_dropdown' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_lang',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_cat1',
+			__( 'iTunes Category 1', $this->textdomain ),
+			array( $view, 'itunes_category' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_cat1',
+				'cat' => 'itunes_category1',
+				'term_slug' => $slug  )
+		);
+
+		add_settings_field(
+			'dipo_itunes_cat2',
+			__( 'iTunes Category 2', $this->textdomain ),
+			array( $view, 'itunes_category' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_cat2',
+				'cat' => 'itunes_category2',
+				'term_slug' => $slug  )
+		);
+
+		add_settings_field(
+			'dipo_itunes_cat3',
+			__( 'iTunes Category 3', $this->textdomain ),
+			array( $view, 'itunes_category' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_cat3',
+				'cat' => 'itunes_category3',
+				'term_slug' => $slug  )
+		);
+
+		add_settings_field(
+			'dipo_itunes_copyright',
+			__( 'iTunes Copyright', $this->textdomain ),
+			array( $view, 'itunes_copyright' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_itunes_copyright',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
+			'dipo_itunes_coverart',
+			__( 'iTunes Cover Art', $this->textdomain ),
+			array( $view, 'itunes_coverart' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_coverart',
 				'term_slug' => $slug )
 		);
 
 	}
 
-	public function itunes_owner( $args ) {
-		$opt_name = $this->get_option_name( $args['term_slug'] );
-		$options = get_option( $opt_name );
-		$placeholder = '';
-		if ( 'all_shows' != $args['term_slug'] ) {
+	public function get_show_option( $value_name, $show_slug, $use_fallback = false ) {
+
+		$options = get_option( $this->get_option_name( $show_slug ) );
+		$option = ( isset( $options[$value_name] ) ) ? $options[$value_name] : '' ;
+
+		if ( empty( $option ) && $use_fallback ) {
 			$all_shows_options = get_option( $this->get_option_name( 'all_shows' ) );
-			$placeholder = ( isset( $all_shows_options['itunes_owner'] ) ) ? $all_shows_options['itunes_owner'] : '' ;
+			$placeholder = ( isset( $all_shows_options[$value_name] ) ) ? $all_shows_options[$value_name] : '' ;
 		}
 
-		$value = ( isset( $options['itunes_owner'] ) ) ? $options['itunes_owner'] : '' ;
-
-		// echo the field ?>
-		<input id='dipo_itunes_owner' name='<?php echo $opt_name; ?>[itunes_owner]' size='40' type='text' value='<?php echo esc_attr( $value ); ?>' placeholder='<?php echo esc_attr( $placeholder ); ?>' />
-		<p class="description"><?php _e('Owner of the podcast for communication specifically about the podcast', $this->textdomain ); ?></p>
-	<?php }
-
+		return $option;
+	}
 
 /**
  /$$    /$$          /$$ /$$       /$$             /$$              
@@ -180,14 +245,33 @@ class Dipo_Settings_Model {
    \  $/  |  $$$$$$$| $$| $$|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$$
     \_/    \_______/|__/|__/ \_______/ \_______/   \___/   \_______/
  */
+
+    /**
+     * [validate_show_options description]
+     *
+     * @link http://codex.wordpress.org/Data_Validation
+     * @param  [type] $input [description]
+     * @return [type]        [description]
+     */
 	public function validate_show_options( $input ) {
 		$valid = array();
 
 		// General
-		$valid['show_assets_url'] = esc_url( $input['show_assets_url'] );
+		$valid['show_assets_url'] = esc_url_raw( $input['show_assets_url'] );
 
 		// iTunes
 		$valid['itunes_owner'] = sanitize_text_field( $input['itunes_owner'] );
+		$valid['itunes_owner_mail'] = sanitize_email( $input['itunes_owner_mail'] );
+		$valid['itunes_title'] = sanitize_text_field( $input['itunes_title'] );
+		$valid['itunes_subtitle'] = sanitize_text_field( $input['itunes_subtitle'] );
+		$valid['itunes_author'] = sanitize_text_field( $input['itunes_author'] );
+		preg_match('/[a-z]{1,3}(_[A-Z]{2})?/', $input['itunes_language'], $matches);
+		$valid['itunes_language'] = $matches[0];
+		$valid['itunes_category1'] = sanitize_text_field( $input['itunes_category1'] );
+		$valid['itunes_category2'] = sanitize_text_field( $input['itunes_category2'] );
+		$valid['itunes_category3'] = sanitize_text_field( $input['itunes_category3'] );
+		$valid['itunes_copyright'] = sanitize_text_field( $input['itunes_copyright'] );
+		$valid['itunes_coverart'] = esc_url_raw( $input['itunes_coverart'] );
 
 		return $valid;
 	}
