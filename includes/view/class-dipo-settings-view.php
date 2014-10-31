@@ -49,8 +49,6 @@ class Dipo_Settings_View {
 		$tabs = array(
 			'shows'  => 'Shows',
 			'import' => 'Import/Export',
-			'general' => 'General',
-			'itunes' => 'iTunes',
 		);
 		?>
 		<div id="icon-themes" class="icon32"><br></div>
@@ -94,14 +92,6 @@ class Dipo_Settings_View {
 					}
 
 					include( $this->properties->get( 'dipo_templates' ) . '/settings-shows-template.php' );
-					break;
-
-				case 'general':
-					include( $this->properties->get( 'dipo_templates' ) . '/settings-general-template.php' );
-					break;
-
-				case 'itunes':
-					include( $this->properties->get( 'dipo_templates' ) . '/settings-itunes-template.php' );
 					break;
 
 				case 'import':
