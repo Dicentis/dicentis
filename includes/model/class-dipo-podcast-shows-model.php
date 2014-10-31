@@ -4,12 +4,12 @@ namespace Dicentis\Podcast_Post_Type;
 
 class Dipo_Podcast_Shows_Model {
 
-	public function get_shows() {
+	public function get_shows( $hide_empty = true ) {
 
 		$args = array(
 			'orderby'       => 'name', 
 			'order'         => 'ASC',
-			'hide_empty'    => true,
+			'hide_empty'    => $hide_empty,
 			'cache_domain'  => 'core',
 		);
 
