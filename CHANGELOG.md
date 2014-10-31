@@ -2,9 +2,11 @@
 ## 0.2.2 
 
 * [FIX] Warning during `join` operation. Fix #13 thx @pierreberchtold
+* [UPDATE] This version introduces show specific settings
 * [UPDATE] Audio and / or Video player are added to content
 * [UPDATE] If JS: Show dropdown to download mediafiles
 * [UPDATE] If no JS: Download links for files are displayed
+* [FICTION] 
 
 ## 0.2.1 [2014-10-05]
 * [FIX] Cover Art Image URL
