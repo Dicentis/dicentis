@@ -15,16 +15,16 @@ class Dipo_Single_Page_View {
 
 	/**
 	 * Property object with information for Dicentis
-	 * 
+	 *
 	 * @since  0.2.0
 	 * @access private
-	 * @var Dipo_Property_List $properties includes useful information e.g. textdomain 
+	 * @var Dipo_Property_List $properties includes useful information e.g. textdomain
 	 */
 	private $properties;
 
 	/**
 	 * Textdomain for this plugin
-	 * 
+	 *
 	 * @since  0.1.0
 	 * @access private
 	 * @var String $textdomain
@@ -50,7 +50,10 @@ class Dipo_Single_Page_View {
 
 			$content .= '<br>';
 
-			$mediafiles = $this->model->get_all_audio_files( $GLOBALS['post']->ID );
+			$this->model->set_episode_id( $GLOBALS['post']->ID );
+
+			$mediafiles = $this->model->get_all_audio_files();
+
 
 			if ( 0 < count( $mediafiles ) ) {
 				// Add Audioplayer
@@ -66,7 +69,7 @@ class Dipo_Single_Page_View {
 				$content .= $player;
 			}
 
-			$mediafiles = $this->model->get_all_video_files( $GLOBALS['post']->ID );
+			$mediafiles = $this->model->get_all_video_files();
 
 			if ( 0 < count( $mediafiles ) ) {
 				// Add Videoplayer
@@ -83,7 +86,7 @@ class Dipo_Single_Page_View {
 			}
 
 			// Add Download Links
-			$mediafiles = $this->model->get_all_episodes_mediafiles( $GLOBALS['post']->ID );
+			$mediafiles = $this->model->get_all_episodes_mediafiles();
 			$content .= $this->create_download_dropdown( $mediafiles );
 		}
 
