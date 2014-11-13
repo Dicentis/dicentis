@@ -76,10 +76,14 @@ class Dipo_Show_Model {
 		$show_options     = get_option( $show_option_name );
 		$all_show_options = get_option( 'dipo_all_shows_options' );
 
-		foreach ( $show_options as $key => $value ) {
-			if ( '' == $show_options[$key] ) {
-				$show_options[$key] = $all_show_options[$key];
+		if ( $show_options ) {
+			foreach ( $show_options as $key => $value ) {
+				if ( '' == $show_options[$key] ) {
+					$show_options[$key] = $all_show_options[$key];
+				}
 			}
+		} else {
+			$show_options = $all_show_options;
 		}
 
 		$this->set_show_options( $show_options );
