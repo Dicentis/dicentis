@@ -150,14 +150,14 @@ class Dipo_Settings_View {
 	}
 
 /**
-  /$$$$$$            /$$ /$$ /$$                           /$$                
- /$$__  $$          | $$| $$| $$                          | $$                
+  /$$$$$$            /$$ /$$ /$$                           /$$
+ /$$__  $$          | $$| $$| $$                          | $$
 | $$  \__/  /$$$$$$ | $$| $$| $$$$$$$   /$$$$$$   /$$$$$$$| $$   /$$  /$$$$$$$
 | $$       |____  $$| $$| $$| $$__  $$ |____  $$ /$$_____/| $$  /$$/ /$$_____/
-| $$        /$$$$$$$| $$| $$| $$  \ $$  /$$$$$$$| $$      | $$$$$$/ |  $$$$$$ 
+| $$        /$$$$$$$| $$| $$| $$  \ $$  /$$$$$$$| $$      | $$$$$$/ |  $$$$$$
 | $$    $$ /$$__  $$| $$| $$| $$  | $$ /$$__  $$| $$      | $$_  $$  \____  $$
 |  $$$$$$/|  $$$$$$$| $$| $$| $$$$$$$/|  $$$$$$$|  $$$$$$$| $$ \  $$ /$$$$$$$/
- \______/  \_______/|__/|__/|_______/  \_______/ \_______/|__/  \__/|_______/ 
+ \______/  \_______/|__/|__/|_______/  \_______/ \_______/|__/  \__/|_______/
  */
 
 	/* Section-Callbacks */
@@ -333,7 +333,7 @@ class Dipo_Settings_View {
 
 	public function itunes_coverart( $args ) {
 		// RSS Model Object for Coverlink
-		$rss_model = new \Dicentis\Feed\Dipo_RSS_Model();
+		$show_model = new \Dicentis\Dipo_Podcast_Post_Type\Dipo_Show_Model();
 
 		$model = $this->controller->get_model();
 
@@ -343,12 +343,12 @@ class Dipo_Settings_View {
 		<input id="dipo_itunes_coverart" type="text" size="36" name="<?php echo $value['setting_name'] ?>[itunes_coverart]"
 			value="<?php echo esc_url( $value['field_value'] ); ?>" placeholder="<?php echo esc_url( $placeholder['field_value'] ); ?>" />
 		<div id="dipo_upload_image_button" class="button"><?php _e( 'Upload Image', $this->textdomain ); ?></div>
-		<?php 
+		<?php
 
 		$description = 'Enter an URL or upload an image for the cover art.';
 		$this->echo_description( $description );?>
 
-		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", $this->textdomain ), $rss_model->get_cover_art() ); ?></p>
+		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", $this->textdomain ), $show_model->get_cover_art() ); ?></p>
 
 	<?php }
 
