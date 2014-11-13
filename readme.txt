@@ -4,7 +4,7 @@ Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Donate link: https://www.gittip.com/obstschale/
 Requires at least: 3.6
 Tested up to: 4.0
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,9 +17,18 @@ Most podcast plugin for WordPress are great but have one weakness: They focus on
 You can download and install Dicentis using the built in WordPress plugin installer. If you download Dicentis manually, make sure it is uploaded to \"/wp-content/plugins/dicentis-podcast/\". Activate Dicentis in the \"Plugins\" admin panel using the \"Activate\" link.
 
 == Frequently Asked Questions ==
-see http://dicentis.io/faq
+A separated page on the website is dedicated to FAQs. See: http://dicentis.io/faq.
 
 == Changelog ==
+
+= 0.2.2 =
+
+* [FIX] Warning during `join` operation. Fix #13 thx @pierreberchtold
+* [UPDATE] This version introduces show specific settings
+* [UPDATE] Audio and / or Video player are added to content
+* [UPDATE] If JS: Show dropdown to download mediafiles
+* [UPDATE] If no JS: Download links for files are displayed
+* [FICTION] Superman is now using Dicentis Podcast to broadcast his superhero stories
 
 = 0.2.1 =
 
@@ -31,7 +40,7 @@ see http://dicentis.io/faq
 = 0.2.0 (Brass Monkey) =
 
 * [UPDATE] new Dashboard with more useful information and a feed generator which gives you the correct feed you need
-* [UPDATE] complete restructured plugin with a better OOP approach 
+* [UPDATE] complete restructured plugin with a better OOP approach
 
 = 0.1.3 =
 

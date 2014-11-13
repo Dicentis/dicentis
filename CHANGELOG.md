@@ -1,12 +1,12 @@
 # Changelog
-## 0.2.2 
+## 0.2.2
 
 * [FIX] Warning during `join` operation. Fix #13 thx @pierreberchtold
 * [UPDATE] This version introduces show specific settings
 * [UPDATE] Audio and / or Video player are added to content
 * [UPDATE] If JS: Show dropdown to download mediafiles
 * [UPDATE] If no JS: Download links for files are displayed
-* [FICTION] 
+* [FICTION] Superman is now using Dicentis Podcast to broadcast his superhero stories
 
 ## 0.2.1 [2014-10-05]
 * [FIX] Cover Art Image URL
@@ -17,7 +17,7 @@
 ## 0.2.0 (Brass Monkey) [2014-07-26]
 
 * [UPDATE] new Dashboard with more useful information and a feed generator which gives you the correct feed you need
-* [UPDATE] complete restructured plugin with a better OOP approach 
+* [UPDATE] complete restructured plugin with a better OOP approach
 
 ## 0.1.3 [2014-06-29]
 * [FIX] Revert changes. Fix from 0.1.2 cause more trouble than it solve -.-
