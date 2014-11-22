@@ -64,5 +64,8 @@ class Dipo_Admin_Manager_View {
 		wp_register_style( 'dipo_dashboard_style',
 			DIPO_ASSETS_URL . '/css/dipo_dashboard.css' );
 		wp_enqueue_style( 'dipo_dashboard_style' );
+		wp_localize_script( 'dipo_dashboard_script', 'objectL10n', array(
+			'noShow' => __( 'Create a show to get started.', $this->textdomain ),
+		) );
 	}
 }

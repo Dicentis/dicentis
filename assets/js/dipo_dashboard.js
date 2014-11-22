@@ -21,11 +21,15 @@ function generate_feed () {
 	var homeurl = jQuery('#dipo-home-url').val();
 	var link    = '';
 
-	if ( permalink_structure === 'enabled' ) {
-		link = generate_permalink_feed( homeurl, show, type );
+	if ( null == show ) {
+		link = objectL10n.noShow;
 	} else {
-		link = generate_default_feed( homeurl, show, type );
-	};
+		if ( permalink_structure === 'enabled' ) {
+			link = generate_permalink_feed( homeurl, show, type );
+		} else {
+			link = generate_default_feed( homeurl, show, type );
+		};
+	}
 
 	jQuery('#dipo-feed-link').html( link );
 }
