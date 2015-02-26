@@ -106,6 +106,12 @@ class Dipo_Single_Page_View {
 			);
 	}
 
+	/**
+	 * [create_download_dropdown description]
+	 * @param  [type] $mediafiles [description]
+	 * @return [type]             [description]
+	 * @todo add download attr http://davidwalsh.name/download-attribute
+	 */
 	public function create_download_dropdown( $mediafiles ) {
 		if ( 1 > count( $mediafiles ) ) {
 			return null;
