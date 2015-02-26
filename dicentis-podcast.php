@@ -14,7 +14,7 @@
  * Author URI: http://hanshelgebuerger.de
  * Text Domain: dicentis
  * Domain Path: /languages/
- * GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
+ * GitHub Plugin URI: https://github.com/dicentis/dicentis
  *
  * Copyright 2014 Hans-Helge Buerger (http://hanshelgebuerger.de)
  * License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-3.0.txt)
