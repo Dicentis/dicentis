@@ -134,15 +134,8 @@ class Dipo_Podcast_Post_Type {
 			'taxonomies' => array(
 				'post_tag'
 			),
-			// 'capabilities' => array(
-			// 	'edit_post' => 'edit_podcast',
-			// 	'edit_posts' => 'edit_podcasts',
-			// 	'edit_other_posts' => 'edit_other_podcasts',
-			// 	'publish_post' => 'publish_podcast',
-			// 	'read_post' => 'read_podcast',
-			// 	'read_private_posts' => 'read_private_podcast',
-			// 	'delete_post' => 'delete_podcast',
-			// ),
+			'capability_type' => 'podcast',
+			'map_meta_cap'    => true,
 		);
 
 		// Register the dicentis podcast post type
@@ -195,6 +188,12 @@ class Dipo_Podcast_Post_Type {
 				'parent_item' => __( 'Parent Podcast Show', $this->textdomain ),
 				'parent_item_colon' => __( 'Parent Podcast Show:', $this->textdomain ),
 			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_podcast_shows',
+				'edit_terms' => 'edit_podcast_shows',
+				'delete_terms' => 'delete_podcast_shows',
+				'assign_terms' => 'assign_podcast_shows',
+			),
 		);
 
 		// Set up the series taxonomy
@@ -216,6 +215,12 @@ class Dipo_Podcast_Post_Type {
 				'parent_item' => __( 'Parent Series', $this->textdomain ),
 				'parent_item_colon' => __( 'Parent Series:', $this->textdomain ),
 			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_podcast_series',
+				'edit_terms' => 'edit_podcast_series',
+				'delete_terms' => 'delete_podcast_series',
+				'assign_terms' => 'assign_podcast_series',
+			),
 		);
 
 		// Set up the speaker taxonomy
@@ -236,6 +241,12 @@ class Dipo_Podcast_Post_Type {
 				'search_items' => __( 'Search Speaker', $this->textdomain ),
 				'parent_item' => __( 'Parent Speaker', $this->textdomain ),
 				'parent_item_colon' => __( 'Parent Speaker:', $this->textdomain ),
+			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_podcast_speaker',
+				'edit_terms' => 'edit_podcast_speaker',
+				'delete_terms' => 'delete_podcast_speaker',
+				'assign_terms' => 'assign_podcast_speaker',
 			),
 		);
 
@@ -470,16 +481,16 @@ class Dipo_Podcast_Post_Type {
 	 * @link        http://www.jonasjohn.de/snippets/php/readable-filesize.htm
 	 */
 	public function human_readable_filesize($size) {
-	
+
 		// Adapted from: http://www.php.net/manual/en/function.filesize.php
-	 
+
 		$mod = 1024;
-	 
+
 		$units = explode(' ','B KB MB GB TB PB');
 		for ($i = 0; $size > $mod; $i++) {
 			$size /= $mod;
 		}
-	 
+
 		return round($size, 2) . ' ' . $units[$i];
 	}
 
@@ -550,7 +561,7 @@ class Dipo_Podcast_Post_Type {
 
 		$mediafiles = array();
 
-		for ( $i=1; $i <= $media_count; $i++ ) { 
+		for ( $i=1; $i <= $media_count; $i++ ) {
 			$temp_mediafile = get_post_meta( $post_id, '_dipo_mediafile' . $i, true );
 			array_push( $mediafiles, $temp_mediafile );
 		}

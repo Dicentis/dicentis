@@ -37,7 +37,7 @@ class Dipo_Settings_View {
 	 * Menu Callback
 	 */
 	public function render_settings_page() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'dipo_manage_options' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', $this->textdomain ) );
 		}
 

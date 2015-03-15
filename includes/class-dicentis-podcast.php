@@ -11,7 +11,7 @@ use Dicentis\Frontend;
 
 /**
  * The primary class for Dicentis Podcast.
- * 
+ *
  * This class is called by the plugin file dicentis-podcast.php and is the
  * first class which is instantiated. It is responsible for loading the
  * necessary hooks and create an object for the Podcast Custom Post Type.
@@ -25,7 +25,7 @@ class Dicentis_Podcast {
 	/**
 	 * The core of this plugin is its Custom Post Type "Podcast"
 	 * representing through this variable.
-	 * 
+	 *
 	 * @since  0.2.0
 	 * @access private
 	 * @var Dipo_Podcast_Post_Type $podcast_cpt Custom Post Tye object which
@@ -35,7 +35,7 @@ class Dicentis_Podcast {
 
 	/**
 	 * Loader class for holding all action and filter hooks in arrays
-	 * 
+	 *
 	 * @since  0.2.0
 	 * @access private
 	 * @var Dipo_Hook_Loader $hook_loader responsible for adding actions and
@@ -50,6 +50,8 @@ class Dicentis_Podcast {
 	private $feed;
 
 	private $single_page;
+
+	private $roles;
 
 	/**
 	 * Constructor loads dependencies and registers hooks.
@@ -85,6 +87,7 @@ class Dicentis_Podcast {
 		$this->settings = new Dipo_Settings_Controller();
 		$this->feed = new Dipo_RSS_Controller();
 		$this->single_page = new Frontend\Dipo_Single_Page();
+		$this->roles = new Dipo_Roles();
 
 	}
 
@@ -93,7 +96,7 @@ class Dicentis_Podcast {
 	 *
 	 * The Dipo_Hook_Loader object is used to register action and filter
 	 * hooks for Admin, Settings, Localization, RSS.
-	 * 
+	 *
 	 * @see Dipo_Hook_Loader    Loader object for registering filter
 	 *                          and action hooks
 	 * @see Dipo_Admin_Manager  Admin object for pages in backend
@@ -152,6 +155,13 @@ class Dicentis_Podcast {
 			$this->feed,
 			'generate_podcast_feed' );
 
+		/**
+		 * Roles and Capabilities
+		 */
+		$this->hook_loader->add_action( 'admin_init',
+			$this->roles,
+			'admin_init' );
+
 	}
 
 	/**
@@ -161,7 +171,7 @@ class Dicentis_Podcast {
 	 * and regestering hooks in the loader this function sets all in motions
 	 * and finally registers all hooks for real. After this run the plugin
 	 * is fully functional.
-	 * 
+	 *
 	 * @see Dipo_Hook_Loader  Loader object for registering filter
 	 *                        and action hooks
 	 */

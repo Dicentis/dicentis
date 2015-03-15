@@ -16,7 +16,7 @@ class Dipo_Admin_Manager_View {
 	}
 
 	public function render_dashboard_page() {
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( 'dipo_read_dashboard' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 

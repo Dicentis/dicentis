@@ -296,7 +296,7 @@ class Dipo_Settings_Model {
 			'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
 			__( 'dicentis Podcast Settings', $this->textdomain ),
 			__( 'Settings' ),
-			'manage_options', // capabilities
+			'dipo_manage_options', // capabilities
 			'dicentis_settings', // slug
 			array( $view, 'render_settings_page' )
 		);
