@@ -10,4 +10,4 @@ php:
 install:
   - composer install
 
-script: phpunit --bootstrap tests/bootstrap.php test/
+script: phpunit --bootstrap tests/bootstrap.php tests/
