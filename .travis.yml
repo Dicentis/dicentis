@@ -1,13 +1,17 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - hhvm
-  - nightly
+- 5.4
+- 5.5
+- 5.6
+- hhvm
+- nightly
 
 install:
-  - composer install
+- composer install
 
 script: phpunit --bootstrap tests/bootstrap.php tests/
+
+notifications:
+  slack:
+    secure: WVU/Xu+C6L/jlv67V3i5nWW1fC4fJYtiS42S3p0P308GrqjDD7Aa/PgtoW1APzd5IaWJyxciKTAXpcknfW6nTBze7dca99gmE3lCkpzv/3sMDG0ilMbzSuEAOQMOAyWC6EE7MQ6cr7a+YbNZalzQTOgg/hO4BGaYB6o61KX29iI=
