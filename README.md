@@ -1,12 +1,14 @@
 # Dicentis Podcast
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Dicentis/dicentis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Contributors: obstschale
-Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
-Donate link: https://www.gittip.com/obstschale/
-Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 0.2.2
-License: GPLv3.0
+
+[![Build Status](https://travis-ci.org/Dicentis/dicentis.svg?branch=master)](https://travis-ci.org/Dicentis/dicentis)
+
+Contributors: obstschale  
+Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,  
+Donate link: https://www.gittip.com/obstschale/  
+Requires at least: 3.6  
+Tested up to: 4.0  
+Stable tag: 0.2.2  
+License: GPLv3.0  
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
 Dicentis is a new podcast plugin which has its main focus on CMS based Websites. With Dicentis it is possible to offer multiple podcasts with one WordPress installation.
