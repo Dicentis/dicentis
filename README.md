@@ -1,5 +1,6 @@
 # Dicentis Podcast
 
+[![Slackin](http://slack.dicentis.io/badge.svg)](http://slack.dicentis.io)
 [![Build Status](https://travis-ci.org/Dicentis/dicentis.svg?branch=master)](https://travis-ci.org/Dicentis/dicentis)
 
 Contributors: obstschale  
