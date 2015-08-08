@@ -7,14 +7,14 @@
  * @copyright 2014 Hans-Helge Buerger
  *
  * Plugin Name: Dicentis Podcast
- * Plugin URI: http://hanshelgebuerger.de
+ * Plugin URI: http://dicentis.io
  * Description: Manage multiple podcasts with ease in one plugin
- * Version: 0.2.2
+ * Version: 0.2.3
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de
  * Text Domain: dicentis
  * Domain Path: /languages/
- * GitHub Plugin URI: https://github.com/obstschale/dicentis-podcast
+ * GitHub Plugin URI: https://github.com/dicentis/dicentis
  *
  * Copyright 2014 Hans-Helge Buerger (http://hanshelgebuerger.de)
  * License: GPL (http://www.gnu.org/licenses/old-licenses/gpl-3.0.txt)
@@ -29,7 +29,6 @@ require_once __DIR__ . '/dicentis-define.php';
 require_once DIPO_INC_DIR . '/controller/series.php';
 require_once DIPO_INC_DIR . '/controller/speaker.php';
 require_once DIPO_INC_DIR . '/controller/show.php';
-require_once DIPO_LIB_DIR . '/tgm-plugin.php';
 require_once DIPO_LIB_DIR . '/dipo-version.php';
 
 function dipo_load_plugin() {

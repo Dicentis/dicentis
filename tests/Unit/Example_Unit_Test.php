@@ -1,9 +1,11 @@
 <?php
 
+namespace Dicentis\Tests\Unit;
+
 /**
  * An example test case
  */
-class Example_Test extends WP_UnitTestCase {
+class Example_Unit_Test extends \PHPUnit_Framework_TestCase {
 	/**
 	 * An example test.
 	 *

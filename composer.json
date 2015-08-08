@@ -1,0 +1,26 @@
+{
+	"name": "dicentis/dicentis",
+	"description": "WordPress Podcast Plugin",
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-3.0+",
+	"require": {
+		"brain/brain": "0.1.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.7",
+		"10up/wp_mock": "dev-master",
+		"mockery/mockery": "0.9.*"
+	},
+	"authors": [
+		{
+			"name": "Hans-Helge Buerger",
+			"email": "mail@dicentis.io"
+		}
+	],
+	"homepage"   : "http://dicentis.io",
+	"support": {
+		"issues": "https://github.com/dicenits/dicentis/issues",
+		"forum": "https://wordpress.org/support/plugin/dicentis-podcast",
+		"source": "https://github.com/dicentis/dicentis"
+	}
+}

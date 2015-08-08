@@ -1,5 +1,5 @@
 <div id="dipo-dashboard" class="wrap">
-	<div id="icon-themes" class="icon32"></div><h2>Dashboard</h2>
+	<h2>Dashboard</h2>
 	<p><?php _e( 'This Dashboard will be your control dashboard and will display many useful information.', $this->textdomain ); ?></p>
 
 	<div id="dipo-beta-info" class="metabox-holder postbox dipo-floated-postbox">
@@ -49,7 +49,7 @@
 				<div class="clear"></div>
 
 				<?php
-					\Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model::echo_select_shows();
+					\Dicentis\Podcast_Post_Type\Dipo_Podcast_Shows_Model::echo_select_shows( false );
 					\Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type::echo_select_mediatypes();
 				?>
 
@@ -61,7 +61,7 @@
 				<?php foreach ( $show_feeds as $show => $fields ) : ?>
 				<li>
 					<h4><?php echo esc_attr( $fields['name'] ); ?></h4>
-					
+
 					<ul>
 						<li><?php echo esc_attr( $fields['feed'] ); ?></li>
 						<li><?php echo esc_attr( $fields['pretty_feed'] ); ?></li>
@@ -79,8 +79,8 @@
 
 			<?php if ( ! is_wp_error( $rss ) ) : // Checks that the object is created correctly
 
-				// Figure out how many total items there are, but limit it to 5. 
-				$maxitems = $rss->get_item_quantity( 5 ); 
+				// Figure out how many total items there are, but limit it to 5.
+				$maxitems = $rss->get_item_quantity( 5 );
 
 				// Build an array of all the items, starting with element 0 (first element).
 				$rss_items = $rss->get_items( 0, $maxitems );

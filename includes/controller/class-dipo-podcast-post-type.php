@@ -3,8 +3,6 @@ namespace Dicentis\Podcast_Post_Type;
 
 use \Dicentis\Core;
 
-require_once __DIR__ . '/../libraries/simple-term-meta.php';
-
 /**
  * The Podcast Post Type
  */
@@ -39,6 +37,7 @@ class Dipo_Podcast_Post_Type {
 		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$this->register_podcast_hooks();
+		$this->include_dependencies();
 
 		// setup new tables by simple-term-meta
 		// used for additional meta data in podcast_show taxonomy
@@ -128,8 +127,7 @@ class Dipo_Podcast_Post_Type {
 			'rewrite' => array(
 				'slug' => 'podcasts',
 			),
-			// 'menu_icon' => plugins_url( 'dicentis/assets/img/podcast-icon.png' ),
-			'menu_icon' => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPCEtLSBHZW5lcmF0b3I6IEljb01vb24uaW8gLS0+IDwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+IDxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9IiMwMDAwMDAiPiA8cGF0aCBkPSJNIDM4Ljg1LDEyLjE1M2MtOC4yMDItOC4yMDItMjEuNDk4LTguMjAyLTI5LjY5NywwLjAwTCA0LjkwOCw3LjkwOCBjIDEwLjU0NS0xMC41NDUsIDI3LjY0Mi0xMC41NDUsIDM4LjE4NywwLjAwTCAzOC44NSwxMi4xNTN6IE0gMTUuNTE2LDE4LjUxNkwgMTEuMjc0LDE0LjI3MWMgNy4wMjktNy4wMjksIDE4LjQyNi03LjAyOSwgMjUuNDUyLDAuMDBsLTQuMjQyLDQuMjQ1IEMgMjcuODAxLDEzLjgyNywgMjAuMTk5LDEzLjgyNywgMTUuNTE2LDE4LjUxNnogTSAzOS4wMCw0NS4wMGMwLjAwLDEuNjU5LTEuMzQxLDMuMDAtMy4wMCwzLjAwTDEyLjAwLDQ4LjAwIGMtMS42NTksMC4wMC0zLjAwLTEuMzQxLTMuMDAtMy4wMGwwLjAwLC0zLjAwIGMgMC44Ny00LjI3NSwgMy44NTUtNy44OSwgNy41MTgtMTAuMDAyIEMgMTUuNTY0LDMwLjU2NywgMTUuMDAsMjguODUxLCAxNS4wMCwyNy4wMGMwLjAwLTQuOTcxLCA0LjAyOS05LjAwLCA5LjAwLTkuMDBzIDkuMDAsNC4wMjksIDkuMDAsOS4wMGMwLjAwLDEuODUxLTAuNTY0LDMuNTY3LTEuNTE4LDQuOTk4QyAzNS4xNDUsMzQuMTEsIDM4LjEzLDM3LjcyNSwgMzkuMDAsNDIuMDBMMzkuMDAsNDUuMDAgeiBNIDI0LjAwLDI0LjAwQyAyMi4zNDEsMjQuMDAsIDIxLjAwLDI1LjM0MSwgMjEuMDAsMjcuMDBzIDEuMzQxLDMuMDAsIDMuMDAsMy4wMHMgMy4wMC0xLjM0MSwgMy4wMC0zLjAwUyAyNS42NTksMjQuMDAsIDI0LjAwLDI0LjAweiBNIDMyLjQ0OCw0Mi4wMEMgMzEuMjA5LDM4LjUxNCwgMjcuOTE1LDM2LjAwLCAyNC4wMCwzNi4wMHMtNy4yMDksMi41MTQtOC40NDgsNi4wMCBMMzIuNDQ4LDQyLjAwIHoiID48L3BhdGg+PC9zdmc+',
+			 'menu_icon' => 'dashicons-dipo-logo',
 			'can_export' => 'true',
 			'taxonomies' => array(
 				'post_tag'
@@ -610,6 +608,10 @@ class Dipo_Podcast_Post_Type {
 
 	public function load_custom_wp_admin_style( $hook ) {
 
+		// Load everytime Dicentis Font if in Backend
+		wp_register_style( 'dipo_font', DIPO_ASSETS_URL . '/css/dicentis-font.css' );
+		wp_enqueue_style( 'dipo_font' );
+
 		if( 'post.php' != $hook and 'post-new.php' != $hook )
 			return;
 
@@ -728,5 +730,9 @@ class Dipo_Podcast_Post_Type {
 			array_push( $shows, $show->slug );
 		}
 		return $shows;
+	}
+
+	private function include_dependencies() {
+		require_once __DIR__ . '/../libraries/simple-term-meta.php';
 	}
 } // END class Dipo_Podcast_Post_Type

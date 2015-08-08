@@ -64,7 +64,7 @@ class Dipo_Settings_View {
 		global $pagenow;
 		//generic HTML and code goes here
 		?><h2>
-		<?php _e( 'Dicentis Podcast Settings', 'dicentis' ); ?>
+		<?php _e( 'Dicentis Podcast Settings', $this->textdomain ); ?>
 		</h2><?php
 
 		if ( ! isset( $_GET['page'] ) || esc_attr( $_GET['page'] ) != 'dicentis_settings' ) return;
@@ -77,7 +77,7 @@ class Dipo_Settings_View {
 
 		$this->setting_tabs( $tab );
 
-		if ( $pagenow == 'edit.php'&& esc_attr( $_GET['page'] ) == 'dicentis_settings' ) {
+		if ( $pagenow == 'edit.php' && esc_attr( $_GET['page'] ) == 'dicentis_settings' ) {
 
 			switch ( $tab ) {
 				default:

@@ -7,7 +7,7 @@ class Dipo_Podcast_Shows_Model {
 	public function get_shows( $hide_empty = true ) {
 
 		$args = array(
-			'orderby'       => 'name', 
+			'orderby'       => 'name',
 			'order'         => 'ASC',
 			'hide_empty'    => $hide_empty,
 			'cache_domain'  => 'core',
@@ -19,10 +19,11 @@ class Dipo_Podcast_Shows_Model {
 		return isset($podcast_show) ? $podcast_show : null;
 	}
 
-	public static function echo_select_shows() {
+	public static function echo_select_shows( $hide_empty = true ) {
 		$model = new Dipo_Podcast_Shows_Model();
 
-		$shows = $model->get_shows();
+
+		$shows = $model->get_shows( $hide_empty );
 
 		$select_shows = "<select id='dipo-podcast-shows' name='dipo-podcast-shows'>";
 		foreach ( $shows as $show ) {

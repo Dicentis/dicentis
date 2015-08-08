@@ -48,12 +48,10 @@ class Dipo_Settings_Model {
 			return '';
 		}
 
-		$option_slug = $this->get_option_name( $setting_name );
-		$value = $this->get_field_value( $option_slug, $value_name );
+		$value = $this->get_field_value( $setting_name, $value_name );
 
-		if ( empty( $value ) || !isset( $value ) ) {
-			$option_slug = $this->get_option_name( 'all_shows' );
-			$value = $this->get_field_value( $option_slug, $value_name );
+		if ( !isset( $value ) || empty( $value['field_value'] ) ) {
+			$value = $this->get_field_value( 'all_shows', $value_name );
 		}
 
 		return $value;
