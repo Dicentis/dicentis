@@ -1,5 +1,5 @@
 <div id="dipo-dashboard" class="wrap">
-	<div id="icon-themes" class="icon32"></div><h2>Dashboard</h2>
+	<h2>Dashboard</h2>
 	<p><?php _e( 'This Dashboard will be your control dashboard and will display many useful information.', $this->textdomain ); ?></p>
 
 	<div id="dipo-beta-info" class="metabox-holder postbox dipo-floated-postbox">
