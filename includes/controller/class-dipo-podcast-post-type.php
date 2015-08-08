@@ -3,8 +3,6 @@ namespace Dicentis\Podcast_Post_Type;
 
 use \Dicentis\Core;
 
-require_once __DIR__ . '/../libraries/simple-term-meta.php';
-
 /**
  * The Podcast Post Type
  */
@@ -39,6 +37,7 @@ class Dipo_Podcast_Post_Type {
 		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$this->register_podcast_hooks();
+		$this->include_dependencies();
 
 		// setup new tables by simple-term-meta
 		// used for additional meta data in podcast_show taxonomy
@@ -731,5 +730,9 @@ class Dipo_Podcast_Post_Type {
 			array_push( $shows, $show->slug );
 		}
 		return $shows;
+	}
+
+	private function include_dependencies() {
+		require_once __DIR__ . '/../libraries/simple-term-meta.php';
 	}
 } // END class Dipo_Podcast_Post_Type

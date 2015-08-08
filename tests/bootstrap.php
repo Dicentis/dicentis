@@ -7,6 +7,15 @@
  * @package wordpress-plugin-tests
  */
 
+// Load Vendors
+require_once( dirname( __DIR__ ) . '/vendor/autoload.php' );
+
+// Load Dicentis Autoloader
+if ( ! class_exists( 'Dipo_Load_Controller' ) ) {
+	require dirname( __DIR__ ) . '/includes/autoload/class-dipo-load-controller.php';
+	$loader = new \Dicentis\Autoload\Dipo_Load_Controller( dirname( __DIR__ ) . '/includes' );
+}
+
 // Activates this plugin in WordPress so it can be tested.
 //$GLOBALS['wp_tests_options'] = array(
 //	'active_plugins' => array( 'dicentis-podcast/dicentis-podcast.php' ),
