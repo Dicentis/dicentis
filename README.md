@@ -8,7 +8,7 @@ Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Donate link: [PayPal Donation](http://bit.ly/hhb-paypal)  
 Requires at least: 3.6  
 Tested up to: 4.3  
-Stable tag: 0.2.3  
+Stable tag: 0.2.4
 License: GPLv3.0  
 License URI: [http://www.gnu.org/licenses/gpl-3.0.html](http://www.gnu.org/licenses/gpl-3.0.html)
 

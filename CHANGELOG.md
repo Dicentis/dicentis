@@ -1,4 +1,9 @@
 # Changelog
+## 0.2.4
+_Release Date: 2015-10-22_
+
+* [HOTFIX] Allow loading custom styles and scripts via HTTPS. props @noelboss
+
 ## 0.2.3
 _Release Date: 2015-08-08_
 
