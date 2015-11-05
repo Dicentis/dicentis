@@ -39,9 +39,6 @@ class Dipo_Podcast_Post_Type {
 		$this->register_podcast_hooks();
 		$this->include_dependencies();
 
-		// setup new tables by simple-term-meta
-		// used for additional meta data in podcast_show taxonomy
-		simple_term_meta_install();
 	} // END public function __construct()
 
 	private function register_podcast_hooks() {
@@ -259,32 +256,6 @@ class Dipo_Podcast_Post_Type {
 		$this->_tax['podcast_speaker'] = $the_tax->labels->name;
 
 	} // END public function register_podcast_taxonomy()
-
-	public function podcast_show_metabox_add( $tag ) { ?>
-		<div class="form-field">
-			<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
-			<input name="asset-url" id="asset-url" type="text" value="" size="40" aria-required="true" />
-			<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
-		</div>
-	<?php }
-
-	public function podcast_show_metabox_edit( $tag ) { ?>
-		<tr class="form-field">
-			<th scope="row" valign="top">
-				<label for="asset-url"><?php _e( 'Base URL', 'dicentis' ); ?></label>
-			</th>
-			<td>
-				<input name="asset-url" id="asset-url" type="text" value="<?php echo get_term_meta( $tag->term_id, 'asset-url', true  ); ?>" size="40" aria-require="true" />
-				<p class="description"><?php _e( 'This is the path / URL to the asset folder on your server.', 'dicentis' ); ?></p>
-			</td>
-		</tr>
-	<?php }
-
-	public function save_podcast_show_metadata( $term_id ) {
-		if ( isset( $_POST['asset-url'] ) ) {
-			update_term_meta( $term_id, 'asset-url', $_POST['asset-url'] );
-		}
-	}
 
 	/**
 	 * add additional filter options to post type site for each
