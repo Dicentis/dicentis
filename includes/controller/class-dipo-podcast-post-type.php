@@ -37,7 +37,6 @@ class Dipo_Podcast_Post_Type {
 		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$this->register_podcast_hooks();
-		$this->include_dependencies();
 
 	} // END public function __construct()
 
@@ -703,7 +702,4 @@ class Dipo_Podcast_Post_Type {
 		return $shows;
 	}
 
-	private function include_dependencies() {
-		require_once __DIR__ . '/../libraries/simple-term-meta.php';
-	}
 } // END class Dipo_Podcast_Post_Type
