@@ -1,4 +1,10 @@
 # Changelog
+
+## 0.2.5
+_Release Date: 2015-12-10_
+
+* [HOTFIX] Fix issue with term_meta in WP 4.4
+
 ## 0.2.4
 _Release Date: 2015-10-22_
 

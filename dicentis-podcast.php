@@ -9,7 +9,7 @@
  * Plugin Name: Dicentis Podcast
  * Plugin URI: http://dicentis.io
  * Description: Manage multiple podcasts with ease in one plugin
- * Version: 0.2.4
+ * Version: 0.2.5
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de
  * Text Domain: dicentis
