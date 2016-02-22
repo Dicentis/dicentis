@@ -36,7 +36,7 @@ function dipo_load_plugin() {
 	$path = plugin_dir_path( __FILE__ );
 
 	if ( ! class_exists( 'Dipo_Load_Controller' ) ) {
-		require $path . 'includes/autoload/class-dipo-load-controller.php';
+		require $path . 'includes/autoload/Dipo_Load_Controller.php';
 		$loader = new \Dicentis\Autoload\Dipo_Load_Controller( $path . 'includes' );
 	}
 

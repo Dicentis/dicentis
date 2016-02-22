@@ -12,11 +12,10 @@ namespace Dicentis\Autoload;
  * @since      2013.08.18
  * @version    2014.03.26
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FInpsyde_Autoload.php
  * @package    Dicentis
  * @subpackage Autoload
  */
-class Inpsyde_Autoload {
+class Dipo_Autoload {
 	/**
 	 * List of auto-load rules
 	 *
@@ -34,10 +33,10 @@ class Inpsyde_Autoload {
 	/**
 	 * Add a rule as object instance.
 	 *
-	 * @param  Inpsyde_Autoload_Rule_Interface $rule
-	 * @return Inpsyde_Autoload
+	 * @param  Dipo_Autoload_Rule_Interface $rule
+	 * @return Dipo_Autoload
 	 */
-	public function add_rule( Inpsyde_Autoload_Rule_Interface $rule ) {
+	public function add_rule( Dipo_Autoload_Rule_Interface $rule ) {
 		$this->rules[] = $rule;
 		return $this;
 	}
@@ -48,7 +47,7 @@ class Inpsyde_Autoload {
 	 * @param  string  $name
 	 */
 	public function load( $name ) {
-		/** @var Inpsyde_Autoload_Rule_Interface $rule */
+		/** @var Dipo_Autoload_Rule_Interface $rule */
 
 		foreach ( $this->rules as $rule )
 			if ( $rule->load( $name ) ) {

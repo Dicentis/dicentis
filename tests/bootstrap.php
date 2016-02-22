@@ -12,7 +12,7 @@ require_once( dirname( __DIR__ ) . '/vendor/autoload.php' );
 
 // Load Dicentis Autoloader
 if ( ! class_exists( 'Dipo_Load_Controller' ) ) {
-	require dirname( __DIR__ ) . '/includes/autoload/class-dipo-load-controller.php';
+	require dirname( __DIR__ ) . '/includes/autoload/Dipo_Load_Controller.php';
 	$loader = new \Dicentis\Autoload\Dipo_Load_Controller( dirname( __DIR__ ) . '/includes' );
 }
 

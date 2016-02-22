@@ -10,7 +10,6 @@ namespace Dicentis\Autoload;
  * @since      0.1.1
  * @version    0.1.1
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FMlp_Load_Controller.php
  * @package    Dicentis
  * @subpackage Autoload
  */
@@ -24,9 +23,9 @@ class Dipo_Load_Controller {
 	private $plugin_dir;
 
 	/**
-	 * Instance of Inpsyde_Autoload
+	 * Instance of Dipo_Autoload
 	 *
-	 * @var Inpsyde_Autoload
+	 * @var Dipo_Autoload
 	 */
 	private $loader;
 
@@ -46,7 +45,7 @@ class Dipo_Load_Controller {
 	/**
 	 * Return current instance of autoloader.
 	 *
-	 * @return Inpsyde_Autoload
+	 * @return Dipo_Autoload
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -62,20 +61,27 @@ class Dipo_Load_Controller {
 		$dir = dirname( __FILE__ );
 
 		// We need these classes in exactly this order
-		if ( ! interface_exists( 'Inpsyde_Autoload_Rule_Interface' ) ) {
-			require "$dir/Inpsyde_Autoload_Rule_Interface.php";
+		if ( ! interface_exists( 'Dipo_Autoload_Rule_Interface' ) ) {
+			require "$dir/Dipo_Autoload_Rule_Interface.php";
 		}
 
 		if ( ! class_exists( 'Dipo_Autoload_Rule' ) ) {
-			require "$dir/class-dipo-autoload-rule.php";
+			require "$dir/Dipo_Autoload_Rule_old.php";
 		}
 
-		if ( ! class_exists( 'Inpsyde_Autoload' ) ) {
-			require "$dir/Inpsyde_Autoload.php";
+		if ( ! class_exists( 'Dipo_PSR4_Rule' ) ) {
+			require "$dir/Dipo_PSR4_Rule.php";
 		}
 
-		$this->loader = new Inpsyde_Autoload;
-		$rule         = new Dipo_Autoload_Rule( $this->plugin_dir );
+		if ( ! class_exists( 'Dipo_Autoload' ) ) {
+			require "$dir/Dipo_Autoload.php";
+		}
+
+		$this->loader = new Dipo_Autoload;
+		$rule         = new Dipo_Autoload_Rule_Old( $this->plugin_dir );
 		$this->loader->add_rule( $rule );
+
+		$psr4_rule         = new Dipo_PSR4_Rule( $this->plugin_dir );
+		$this->loader->add_rule( $psr4_rule );
 	}
 }

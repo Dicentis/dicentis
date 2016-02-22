@@ -10,13 +10,12 @@ namespace Dicentis\Autoload;
  * @since      0.1.1
  * @version    0.1.1
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link       https://github.com/inpsyde/multilingual-press/blob/master/inc%2Fautoload%2FMlp_Autoload_Rule.php
  * @package    Dicentis
  * @subpackage Autoload
  */
-class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
+class Dipo_Autoload_Rule_Old implements Dipo_Autoload_Rule_Interface {
 	/**
-	 * Path to Inpsyde Suite directory.
+	 * Path to Dipo Suite directory.
 	 *
 	 * @type string
 	 */
@@ -61,7 +60,7 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 	/**
 	 * Check for namespaces and matching file name.
 	 *
-	 * @param  string $name   The class/interface name.
+	 * @param  string $fully_qualified_name   The class/interface name.
 	 * @return string|boolean The class name or FALSE
 	 */
 	protected function prepare_name( $fully_qualified_name ) {
@@ -75,7 +74,7 @@ class Dipo_Autoload_Rule implements Inpsyde_Autoload_Rule_Interface {
 		$name = preg_filter( '/_/', '-', $name );
 		$name = 'class-' . $name;
 
-		if ( 0 !== strpos( $name, 'class-' ) && 0 !== strpos( $name, 'Inpsyde_' ) ) {
+		if ( 0 !== strpos( $name, 'class-' ) && 0 !== strpos( $name, 'Dipo_' ) ) {
 			return false;
 		}
 
