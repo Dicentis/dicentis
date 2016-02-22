@@ -2,6 +2,7 @@
 namespace Dicentis\Podcast_Post_Type;
 
 use \Dicentis\Core;
+use Dicentis\Taxonomy\Series\Dipo_Series;
 
 /**
  * The Podcast Post Type
@@ -191,27 +192,6 @@ class Dipo_Podcast_Post_Type {
 			),
 		);
 
-		// Set up the series taxonomy
-		$series_args = array(
-			'hierarchical' => true,
-			'query_var' => 'podcast_series',
-			'rewrite' => array(
-				'slug' => self::POST_TYPE_NAME . '/series',
-			),
-			'labels' => array(
-				'name' => __( 'Series', $this->textdomain ),
-				'singular_name' => __( 'Series', $this->textdomain ),
-				'edit_item' => __( 'Edit Series', $this->textdomain ),
-				'update_item' => __( 'Update Series', $this->textdomain ),
-				'add_new_item' => __( 'Add New Series', $this->textdomain ),
-				'new_item_name' => __( 'New Series Name', $this->textdomain ),
-				'all_items' => __( 'All Series', $this->textdomain ),
-				'search_items' => __( 'Search Series', $this->textdomain ),
-				'parent_item' => __( 'Parent Series', $this->textdomain ),
-				'parent_item_colon' => __( 'Parent Series:', $this->textdomain ),
-			),
-		);
-
 		// Set up the speaker taxonomy
 		$speaker_args = array(
 			'hierarchical' => true,
@@ -245,7 +225,9 @@ class Dipo_Podcast_Post_Type {
 		$this->_tax['podcast_show'] = $the_tax->labels->name;
 
 		// register series taxonomy
-		register_taxonomy( 'podcast_series', array( self::POST_TYPE ), $series_args );
+		$series = new Dipo_Series();
+		$series->register_taxonomy();
+		$series->init_term_meta();
 		$the_tax = get_taxonomy( 'podcast_series' );
 		$this->_tax['podcast_series'] = $the_tax->labels->name;
 
