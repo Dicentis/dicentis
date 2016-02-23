@@ -20,6 +20,7 @@ class Dipo_Series implements Taxonomy\Dipo_Taxonomy_Interface {
 	}
 
 	public function init_term_meta() {
+		add_action( 'admin_print_scripts', [ $this->term_meta, 'include_media_button_js_file' ] );
 		add_action( 'podcast_series_add_form_fields', [ $this->term_meta, 'add_picture_field' ], 10, 2 );
 		add_action( 'created_podcast_series', [ $this->term_meta, 'save_feature_meta' ], 10, 2 );
 		add_action( 'podcast_series_edit_form_fields', [ $this->term_meta, 'edit_picture_field' ], 10, 2 );
