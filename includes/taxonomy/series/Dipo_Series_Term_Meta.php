@@ -15,15 +15,18 @@ class Dipo_Series_Term_Meta {
 
 	}
 
-	public function add_picture_field( $taxonomy ) { ?>
+	public function include_tax_style() {
+		wp_enqueue_style( 'dipo_tax_style', DIPO_ASSETS_URL . '/css/dipo_taxonomies.css' );
+	}
+
+	public function add_picture_field() { ?>
 		<div class="form-field term-group">
 			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis' ); ?></label>
 			<input type="button" class="button open-media-button" id="open-media-lib" value="Open Media Library" data-title="Select An Image" data-button-text="Select" />
 
 			<fieldset id="attachment-details" class="attachment-fieldset">
-				<p><?php _e( 'The recommended picture size is 300x300 pixels.', 'dicentis' ); ?></p>
 				<label><?php _e( 'Picture URL:', 'dicentis' ); ?></label>
-				<input class="postform" name="dipo-series-pictures" type="text" id="attachment-url" class="regular-text" />
+				<input class="postform" name="dipo-series-picture" type="text" id="attachment-url" class="regular-text" />
 
 				<label><?php _e( 'Picture Preview:', 'dicentis' ); ?></label>
 				<img id="attachment-src" />
@@ -34,65 +37,64 @@ class Dipo_Series_Term_Meta {
 	}
 
 	public function save_feature_meta( $term_id, $tt_id ) {
-		if ( isset( $_POST['dipo-series-pictures'] ) && '' !== $_POST['dipo-series-pictures'] ) {
-			$group = esc_url_raw( $_POST['dipo-series-pictures'] );
-			add_term_meta( $term_id, 'dipo-series-pictures', $group, true );
+		if ( isset( $_POST['dipo-series-picture'] ) && '' !== $_POST['dipo-series-picture'] ) {
+			$group = esc_url_raw( $_POST['dipo-series-picture'] );
+			add_term_meta( $term_id, 'dipo-series-picture', $group, true );
 		}
 	}
 
 	public function edit_picture_field( $term, $taxonomy ) {
-		$feature_groups = array(
-			'bedroom' => __( 'Bedroom', 'my_plugin' ),
-			'living'  => __( 'Living room', 'my_plugin' ),
-			'kitchen' => __( 'Kitchen', 'my_plugin' )
-		);
 
 		// get current group
-		$feature_group = get_term_meta( $term->term_id, 'feature-group', true );
+		$picture_url = get_term_meta( $term->term_id, 'dipo-series-picture', true );
+		$picture_url = isset( $picture_url ) ? esc_url( $picture_url ) : '';
 
 		?>
 		<tr class="form-field term-group-wrap">
 		<th scope="row"><label for="feature-group"><?php _e( 'Feature Group', 'my_plugin' ); ?></label></th>
-		<td><select class="postform" id="feature-group" name="feature-group">
-				<option value="-1"><?php _e( 'none', 'my_plugin' ); ?></option>
-				<?php foreach ( $feature_groups as $_group_key => $_group ) : ?>
-					<option
-						value="<?php echo $_group_key; ?>" <?php selected( $feature_group, $_group_key ); ?>><?php echo $_group; ?></option>
-				<?php endforeach; ?>
-			</select></td>
+		<td>
+			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis' ); ?></label>
+			<input type="button" class="button open-media-button" id="open-media-lib" value="Open Media Library" data-title="Select An Image" data-button-text="Select" />
+
+			<fieldset id="attachment-details" class="attachment-fieldset">
+				<label><?php _e( 'Picture URL:', 'dicentis' ); ?></label>
+				<input class="postform" name="dipo-series-picture" type="text" id="attachment-url" class="regular-text" value="<?php echo $picture_url; ?>" />
+
+				<label><?php _e( 'Picture Preview:', 'dicentis' ); ?></label>
+				<div><img id="attachment-src" class="dipo_tax_preview_img" src="<?php echo $picture_url; ?>"/></div>
+
+			</fieldset>
+		</td>
 		</tr><?php
 	}
 
 
 	public function update_feature_meta( $term_id, $tt_id ) {
 
-		if ( isset( $_POST['feature-group'] ) && '' !== $_POST['feature-group'] ) {
-			$group = sanitize_title( $_POST['feature-group'] );
-			update_term_meta( $term_id, 'feature-group', $group );
+		if ( isset( $_POST['dipo-series-picture'] ) && '' !== $_POST['dipo-series-picture'] ) {
+			$group = esc_url_raw( $_POST['dipo-series-picture'] );
+			update_term_meta( $term_id, 'dipo-series-picture', $group );
 		}
 	}
 
 	public function add_picture_column( $columns ) {
-		$columns['feature_group'] = __( 'Group', 'my_plugin' );
+		$columns['dipo_series_picture'] = __( 'Series Picture', 'dicentis' );
 
 		return $columns;
 	}
 
 	public function add_picture_column_content( $content, $column_name, $term_id ) {
-		$feature_groups = array(
-			'bedroom' => __( 'Bedroom', 'my_plugin' ),
-			'living'  => __( 'Living room', 'my_plugin' ),
-			'kitchen' => __( 'Kitchen', 'my_plugin' )
-		);
-		if ( $column_name !== 'feature_group' ) {
+
+		if ( $column_name !== 'dipo_series_picture' ) {
 			return $content;
 		}
 
 		$term_id       = absint( $term_id );
-		$feature_group = get_term_meta( $term_id, 'feature-group', true );
+		$term = get_term( $term_id, 'podcast_series' );
+		$picture_url = get_term_meta( $term_id, 'dipo-series-picture', true );
 
-		if ( ! empty( $feature_group ) ) {
-			$content .= esc_attr( $feature_groups[ $feature_group ] );
+		if ( ! empty( $picture_url ) ) {
+			$content .= '<img class="dipo_tax_preview_img_column" src="' . esc_url( $picture_url ) . '" title="Series Picture for: ' . esc_attr( $term->name ) . '" />';
 		}
 
 		return $content;
