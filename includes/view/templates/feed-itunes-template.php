@@ -62,6 +62,8 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 <?php $image = $episode->get_meta_by_key( '_dipo_image' ); ?>
 <?php if ( isset( $image ) && strlen( $image ) > 0 ) : ?>
 			<itunes:image href="<?php echo esc_url( $image ); ?>" />
+<?php else : ?>
+			<itunes:image href="<?php echo esc_url( $show->get_cover_art() ); ?>" />
 <?php endif; ?>
 <?php $post_mediafile = $episode->get_episodes_mediafile(); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />
