@@ -41,6 +41,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<itunes:author><?php echo $show->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
 	<itunes:summary><![CDATA[<?php echo esc_html( $show->get_description() ); ?>]]></itunes:summary>
 	<description><![CDATA[<?php echo esc_html( $show->get_description() ); ?>]]></description>
+	<itunes:explicit><?php echo esc_html( $show->get_option_by_key( 'itunes_explicit' ) ) ; ?></itunes:explicit>
 	<itunes:owner>
 		<itunes:name><?php echo $show->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
 		<itunes:email><?php echo $show->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
