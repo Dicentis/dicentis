@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.6
+_Release Date: 2016-03-03_
+
+* [HOTFIX] Add iTunes explicit tag to feed. Feeds were rejected without it
+* [UPDATE] Use cover art of show for episodes if not cover art is set for it
+* [UPDATE] Activate comments for episodes. I really have no idea why this this was not activated `¯\_(ツ)_/¯`
+
+Thx to all how reported the missing explicit tag.
+
 ## 0.2.5
 _Release Date: 2015-12-10_
 

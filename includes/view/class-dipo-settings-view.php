@@ -271,6 +271,22 @@ class Dipo_Settings_View {
 		$this->echo_description( $description );
 	}
 
+	public function itunes_explicit_checkbox( $args ) {
+		$model = $this->get_model();
+
+		$value = $model->get_field_value( $args['term_slug'], 'itunes_explicit' ); ?>
+
+		<select id="<?php esc_attr( $args['label_for'] ); ?>" name="<?php echo $value['setting_name'] ?>[itunes_explicit]'>">
+			<option value="no" <?php selected( $value['field_value'], 'no', true ); ?>><?php _e( 'No (Not Explicit)', 'dicentis' ); ?></option>
+			<option value="yes" <?php selected( $value['field_value'], 'yes', true ); ?>><?php _e( 'Yes (Explicit)', 'dicentis' ); ?></option>
+			<option value="clean" <?php selected( $value['field_value'], 'clean', true ); ?>><?php _e( 'Clean', 'dicentis' ); ?></option>
+		</select>
+
+		<?php
+		$description = "Indicates whether your podcast contains explicit material.<br/><strong>Note:</strong> Podcasts containing explicit material are not available in some iTunes Store territories.";
+		$this->echo_description( $description );
+	}
+
 	public function itunes_category( $args ) {
 		// get itunes categories as array
 		require DIPO_LIB_DIR . '/itunes-categories.php';
