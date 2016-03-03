@@ -41,6 +41,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<itunes:author><?php echo $show->get_option_by_key( 'itunes_author' ) ; ?></itunes:author>
 	<itunes:summary><![CDATA[<?php echo esc_html( $show->get_description() ); ?>]]></itunes:summary>
 	<description><![CDATA[<?php echo esc_html( $show->get_description() ); ?>]]></description>
+	<itunes:explicit><?php echo esc_html( $show->get_option_by_key( 'itunes_explicit' ) ) ; ?></itunes:explicit>
 	<itunes:owner>
 		<itunes:name><?php echo $show->get_option_by_key( 'itunes_owner' ) ; ?></itunes:name>
 		<itunes:email><?php echo $show->get_option_by_key( 'itunes_owner_mail' ) ; ?></itunes:email>
@@ -61,6 +62,8 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 <?php $image = $episode->get_meta_by_key( '_dipo_image' ); ?>
 <?php if ( isset( $image ) && strlen( $image ) > 0 ) : ?>
 			<itunes:image href="<?php echo esc_url( $image ); ?>" />
+<?php else : ?>
+			<itunes:image href="<?php echo esc_url( $show->get_cover_art() ); ?>" />
 <?php endif; ?>
 <?php $post_mediafile = $episode->get_episodes_mediafile(); ?>
 			<enclosure url="<?php echo $post_mediafile['medialink'] ?>" length="<?php echo $post_mediafile['filesize']; ?>" type="<?php echo $post_mediafile['mediatype']; ?>" />

@@ -6,9 +6,9 @@
 Contributors: obstschale  
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,  
 Donate link: [PayPal Donation](http://bit.ly/hhb-paypal)  
-Requires at least: 3.6  
-Tested up to: 4.4  
-Stable tag: 0.2.5  
+Requires at least: 4.3  
+Tested up to: 4.5  
+Stable tag: 0.2.6  
 License: GPLv3.0  
 License URI: [http://www.gnu.org/licenses/gpl-3.0.html](http://www.gnu.org/licenses/gpl-3.0.html)
 
