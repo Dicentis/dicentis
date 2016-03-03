@@ -119,6 +119,7 @@ class Dipo_Podcast_Post_Type {
 				'editor',
 				'thumbnail',
 				'title',
+				'comments',
 			),
 			'rewrite' => array(
 				'slug' => 'podcasts',
