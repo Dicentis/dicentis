@@ -182,6 +182,16 @@ class Dipo_Settings_Model {
 		);
 
 		add_settings_field(
+			'dipo_itunes_explicit',
+			__( 'iTunes Explicit', $this->textdomain ),
+			array( $view, 'itunes_explicit_checkbox' ),
+			"dipo_{$slug}_iTunes",
+			$sec_id,
+			array( 'label_for' => 'dipo_label_itunes_explicit',
+				'term_slug' => $slug )
+		);
+
+		add_settings_field(
 			'dipo_itunes_cat1',
 			__( 'iTunes Category 1', $this->textdomain ),
 			array( $view, 'itunes_category' ),
@@ -281,6 +291,7 @@ class Dipo_Settings_Model {
 		$valid['itunes_author'] = sanitize_text_field( $input['itunes_author'] );
 		preg_match('/[a-z]{1,3}(_[A-Z]{2})?/', $input['itunes_language'], $matches);
 		$valid['itunes_language'] = $matches[0];
+		$valid['itunes_explicit'] = sanitize_text_field( $input['itunes_explicit'] );
 		$valid['itunes_category1'] = sanitize_text_field( $input['itunes_category1'] );
 		$valid['itunes_category2'] = sanitize_text_field( $input['itunes_category2'] );
 		$valid['itunes_category3'] = sanitize_text_field( $input['itunes_category3'] );

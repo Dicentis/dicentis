@@ -2,9 +2,9 @@
 Contributors: obstschale
 Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Donate link: http://bit.ly/hhb-paypal
-Requires at least: 3.6
-Tested up to: 4.4
-Stable tag: 0.2.5
+Requires at least: 4.3
+Tested up to: 4.5
+Stable tag: 0.2.6
 License: GPLv3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,14 @@ You can download and install Dicentis using the built in WordPress plugin instal
 A separated page on the website is dedicated to FAQs. See: http://dicentis.io/faq.
 
 == Changelog ==
+
+= 0.2.6 =
+
+* [HOTFIX] Add iTunes explicit tag to feed. Feeds were rejected without it
+* [UPDATE] Use cover art of show for episodes if not cover art is set for it
+* [UPDATE] Activate comments for episodes. I really have no idea why this this was not activated ¯\_(ツ)_/¯
+
+Thx to all how reported the missing explicit tag.
 
 = 0.2.5 =
 
