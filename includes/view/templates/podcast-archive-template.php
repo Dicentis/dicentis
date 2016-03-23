@@ -27,7 +27,7 @@ get_header(); ?>
 			<header class="page-header">
 				<h1 class="page-title">
 					<?php
-						_e( 'Podcast Archives', 'dicentis' );
+						_e( 'Podcast Archives', 'dicentis-podcast' );
 					?>
 				</h1>
 			</header><!-- .page-header -->

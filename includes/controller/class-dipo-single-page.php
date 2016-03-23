@@ -11,11 +11,9 @@ class Dipo_Single_Page {
 
 	private $view;
 	private $properties;
-	private $textdomain;
 
 	public function __construct() {
 		$this->properties = \Dicentis\Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$rss_model = new \Dicentis\Podcast_Post_Type\Dipo_Episode_Model();
 		$this->view       = new Dipo_Single_Page_View( $rss_model );

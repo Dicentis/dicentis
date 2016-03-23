@@ -22,20 +22,10 @@ class Dipo_Single_Page_View {
 	 */
 	private $properties;
 
-	/**
-	 * Textdomain for this plugin
-	 *
-	 * @since  0.1.0
-	 * @access private
-	 * @var String $textdomain
-	 */
-	private $textdomain;
-
 	private $model;
 
 	public function __construct( $model ) {
 		$this->properties = \Dicentis\Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->register_hooks();
 		$this->model = $model;
 	}

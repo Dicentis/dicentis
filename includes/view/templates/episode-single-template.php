@@ -50,7 +50,7 @@ get_header(); ?>
 					<header class="entry-header">
 						<?php if ( in_array( 'category', get_object_taxonomies( get_post_type() ) ) ) : ?>
 						<div class="entry-meta">
-							<span class="cat-links"><?php echo get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'dicentis' ) ); ?></span>
+							<span class="cat-links"><?php echo get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'dicentis-podcast' ) ); ?></span>
 						</div>
 						<?php
 							endif;
@@ -66,11 +66,11 @@ get_header(); ?>
 							<?php
 								if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
 							?>
-							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'dicentis' ), __( '1 Comment', 'dicentis' ), __( '% Comments', 'dicentis' ) ); ?></span>
+							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'dicentis-podcast' ), __( '1 Comment', 'dicentis-podcast' ), __( '% Comments', 'dicentis-podcast' ) ); ?></span>
 							<?php
 								endif;
 
-								edit_post_link( __( 'Edit', 'dicentis' ), '<span class="edit-link">', '</span>' );
+								edit_post_link( __( 'Edit', 'dicentis-podcast' ), '<span class="edit-link">', '</span>' );
 								$taxonomy_names = get_the_taxonomies();
 								foreach ($taxonomy_names as $key => $value) {
 									echo $value;
@@ -88,7 +88,7 @@ get_header(); ?>
 
 							if ( has_post_thumbnail() ) the_post_thumbnail();
 
-							the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'dicentis' ) );
+							the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'dicentis-podcast' ) );
 
 							if ( 0 == strcmp( $format, "audio" ) ) {
 								echo wp_audio_shortcode( $episode );

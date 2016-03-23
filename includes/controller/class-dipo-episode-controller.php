@@ -21,19 +21,10 @@ class Dipo_Episode_Controller {
 	 * @var Dipo_Property_List $properties includes useful information e.g. textdomain
 	 */
 	private $properties;
-
-	/**
-	 * Textdomain for this plugin
-	 *
-	 * @since  0.1.0
-	 * @access private
-	 * @var String $textdomain
-	 */
-	private $textdomain;
+	
 
 	public function __construct() {
 		$this->properties = \Dicentis\Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->register_hooks();
 	}
 

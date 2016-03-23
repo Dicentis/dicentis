@@ -12,7 +12,6 @@ use Dicentis\Feed\Dipo_RSS_Model;
 class Dipo_Settings_Controller {
 
 	private $properties;
-	private $textdomain;
 
 	private $model;
 	private $view;
@@ -23,7 +22,6 @@ class Dipo_Settings_Controller {
 		$this->model = new Dipo_Settings_Model( $this );
 
 		$this->properties = Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->register_settings_hooks();
 
 
@@ -56,7 +54,7 @@ class Dipo_Settings_Controller {
 
 	// Add the settings link to the plugin page
 	public function plugin_action_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', $this->textdomain ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', 'dicentis-podcast' ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}

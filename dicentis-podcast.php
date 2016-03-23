@@ -12,7 +12,7 @@
  * Version: 0.2.6
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de
- * Text Domain: dicentis
+ * Text Domain: dicentis-podcast
  * Domain Path: /languages/
  * GitHub Plugin URI: https://github.com/dicentis/dicentis
  *

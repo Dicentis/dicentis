@@ -11,13 +11,11 @@ use Dicentis\Feed;
 class Dipo_Settings_View {
 
 	private $properties;
-	private $textdomain;
 	private $controller;
 	private $model = null;
 
 	public function __construct( $controller ) {
 		$this->properties = Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->controller = $controller;
 	}
 
@@ -38,7 +36,7 @@ class Dipo_Settings_View {
 	 */
 	public function render_settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', $this->textdomain ) );
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'dicentis-podcast' ) );
 		}
 
 		// Render the settings template
@@ -64,7 +62,7 @@ class Dipo_Settings_View {
 		global $pagenow;
 		//generic HTML and code goes here
 		?><h2>
-		<?php _e( 'Dicentis Podcast Settings', $this->textdomain ); ?>
+		<?php _e( 'Dicentis Podcast Settings', 'dicentis-podcast' ); ?>
 		</h2><?php
 
 		if ( ! isset( $_GET['page'] ) || esc_attr( $_GET['page'] ) != 'dicentis_settings' ) return;
@@ -163,13 +161,13 @@ class Dipo_Settings_View {
 	/* Section-Callbacks */
 	public function general_settings_description() { ?>
 		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
+		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis-podcast' ); ?>
 		</p>
 	<?php }
 
 	public function itunes_settings_description() { ?>
 		<p>
-		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', $this->textdomain ); ?>
+		<?php _e( 'These settings are global and are used by all podcast shows if no local settings are defined.', 'dicentis-podcast' ); ?>
 		</p>
 	<?php }
 
@@ -277,9 +275,9 @@ class Dipo_Settings_View {
 		$value = $model->get_field_value( $args['term_slug'], 'itunes_explicit' ); ?>
 
 		<select id="<?php esc_attr( $args['label_for'] ); ?>" name="<?php echo $value['setting_name'] ?>[itunes_explicit]'>">
-			<option value="no" <?php selected( $value['field_value'], 'no', true ); ?>><?php _e( 'No (Not Explicit)', 'dicentis' ); ?></option>
-			<option value="yes" <?php selected( $value['field_value'], 'yes', true ); ?>><?php _e( 'Yes (Explicit)', 'dicentis' ); ?></option>
-			<option value="clean" <?php selected( $value['field_value'], 'clean', true ); ?>><?php _e( 'Clean', 'dicentis' ); ?></option>
+			<option value="no" <?php selected( $value['field_value'], 'no', true ); ?>><?php _e( 'No (Not Explicit)', 'dicentis-podcast' ); ?></option>
+			<option value="yes" <?php selected( $value['field_value'], 'yes', true ); ?>><?php _e( 'Yes (Explicit)', 'dicentis-podcast' ); ?></option>
+			<option value="clean" <?php selected( $value['field_value'], 'clean', true ); ?>><?php _e( 'Clean', 'dicentis-podcast' ); ?></option>
 		</select>
 
 		<?php
@@ -298,7 +296,7 @@ class Dipo_Settings_View {
 
 		<select id="<?php echo $args['label_for']; ?>" name='<?php echo $value['setting_name'] ?>[<?php echo $args['cat']; ?>]'>
 			<option value=''>
-			<?php _e( 'None', $this->textdomain ); ?>
+			<?php _e( 'None', 'dicentis-podcast' ); ?>
 			</option>
 
 		<?php
@@ -342,7 +340,7 @@ class Dipo_Settings_View {
 		<p class="description">
 			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#xA9;">&#xA9;</span>
 			<span class="button hide-if-no-js dipo_copyright" data-copyright="&#x2122;">&#x2122;</span>
-			<?php _e('State your copyright for the podcasts', $this->textdomain ); ?>
+			<?php _e('State your copyright for the podcasts', 'dicentis-podcast' ); ?>
 		</p>
 
 	<?php }
@@ -358,13 +356,13 @@ class Dipo_Settings_View {
 
 		<input id="dipo_itunes_coverart" type="text" size="36" name="<?php echo $value['setting_name'] ?>[itunes_coverart]"
 			value="<?php echo esc_url( $value['field_value'] ); ?>" placeholder="<?php echo esc_url( $placeholder['field_value'] ); ?>" />
-		<div id="dipo_upload_image_button" class="button"><?php _e( 'Upload Image', $this->textdomain ); ?></div>
+		<div id="dipo_upload_image_button" class="button"><?php _e( 'Upload Image', 'dicentis-podcast' ); ?></div>
 		<?php
 
 		$description = 'Enter an URL or upload an image for the cover art.';
 		$this->echo_description( $description );?>
 
-		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", $this->textdomain ), $show_model->get_cover_art() ); ?></p>
+		<p class="description" ><?php echo sprintf( __( "If no image URL is given, <a href='%s' title='Podcast Coverart'>this</a> fallback is used.", 'dicentis-podcast' ), $show_model->get_cover_art() ); ?></p>
 
 	<?php }
 
@@ -374,7 +372,7 @@ class Dipo_Settings_View {
 	<?php }
 
 	public function echo_description( $desc ) { ?>
-		<p class="description"><?php _e( $desc, $this->textdomain ); ?></p>
+		<p class="description"><?php _e( $desc, 'dicentis-podcast' ); ?></p>
 	<?php }
 
 }

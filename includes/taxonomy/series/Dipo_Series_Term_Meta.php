@@ -21,14 +21,14 @@ class Dipo_Series_Term_Meta {
 
 	public function add_picture_field() { ?>
 		<div class="form-field term-group">
-			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis' ); ?></label>
+			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis-podcast' ); ?></label>
 			<input type="button" class="button open-media-button" id="open-media-lib" value="Open Media Library" data-title="Select An Image" data-button-text="Select" />
 
 			<fieldset id="attachment-details" class="attachment-fieldset">
-				<label><?php _e( 'Picture URL:', 'dicentis' ); ?></label>
+				<label><?php _e( 'Picture URL:', 'dicentis-podcast' ); ?></label>
 				<input class="postform" name="dipo-series-picture" type="text" id="attachment-url" class="regular-text" />
 
-				<label><?php _e( 'Picture Preview:', 'dicentis' ); ?></label>
+				<label><?php _e( 'Picture Preview:', 'dicentis-podcast' ); ?></label>
 				<img id="attachment-src" />
 
 			</fieldset>
@@ -53,14 +53,14 @@ class Dipo_Series_Term_Meta {
 		<tr class="form-field term-group-wrap">
 		<th scope="row"><label for="feature-group"><?php _e( 'Feature Group', 'my_plugin' ); ?></label></th>
 		<td>
-			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis' ); ?></label>
+			<label for="series-picture"><?php _e( 'Series Picture', 'dicentis-podcast' ); ?></label>
 			<input type="button" class="button open-media-button" id="open-media-lib" value="Open Media Library" data-title="Select An Image" data-button-text="Select" />
 
 			<fieldset id="attachment-details" class="attachment-fieldset">
-				<label><?php _e( 'Picture URL:', 'dicentis' ); ?></label>
+				<label><?php _e( 'Picture URL:', 'dicentis-podcast' ); ?></label>
 				<input class="postform" name="dipo-series-picture" type="text" id="attachment-url" class="regular-text" value="<?php echo $picture_url; ?>" />
 
-				<label><?php _e( 'Picture Preview:', 'dicentis' ); ?></label>
+				<label><?php _e( 'Picture Preview:', 'dicentis-podcast' ); ?></label>
 				<div><img id="attachment-src" class="dipo_tax_preview_img" src="<?php echo $picture_url; ?>"/></div>
 
 			</fieldset>
@@ -78,7 +78,7 @@ class Dipo_Series_Term_Meta {
 	}
 
 	public function add_picture_column( $columns ) {
-		$columns['dipo_series_picture'] = __( 'Series Picture', 'dicentis' );
+		$columns['dipo_series_picture'] = __( 'Series Picture', 'dicentis-podcast' );
 
 		return $columns;
 	}

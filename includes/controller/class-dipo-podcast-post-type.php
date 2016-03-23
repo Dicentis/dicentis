@@ -10,7 +10,6 @@ use Dicentis\Taxonomy\Series\Dipo_Series;
 class Dipo_Podcast_Post_Type {
 
 	private $properties;
-	private $textdomain;
 
 	const POST_TYPE = 'dipo_podcast';
 	const POST_TYPE_NAME = 'podcast';
@@ -35,7 +34,6 @@ class Dipo_Podcast_Post_Type {
 	public function __construct() {
 
 		$this->properties = Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 
 		$this->register_podcast_hooks();
 
@@ -102,20 +100,20 @@ class Dipo_Podcast_Post_Type {
 		// set up arguments for podcast post type
 		$podcast_args = array(
 			'labels' => array(
-				'name' => __( 'Podcasts', 'dicentis' ),
-				'singular_name' => __( 'Episode', 'dicentis' ),
-				'add_new' => __( 'Add New Episode', 'dicentis' ),
-				'add_new_item' => __( 'Add New Episode', 'dicentis' ),
-				'edit_item' => __( 'Edit Episodes', 'dicentis' ),
-				'new_item' => __( 'New Episodes', 'dicentis' ),
-				'view_item' => __( 'View Episodes', 'dicentis' ),
-				'search_items' => __( 'Search Episodes', 'dicentis' ),
-				'not_found' => __( 'No Episodes Found', 'dicentis' ),
-				'not_found_in_trash' => __( 'No Episodes Found In Trash', 'dicentis' )
+				'name' => __( 'Podcasts', 'dicentis-podcast' ),
+				'singular_name' => __( 'Episode', 'dicentis-podcast' ),
+				'add_new' => __( 'Add New Episode', 'dicentis-podcast' ),
+				'add_new_item' => __( 'Add New Episode', 'dicentis-podcast' ),
+				'edit_item' => __( 'Edit Episodes', 'dicentis-podcast' ),
+				'new_item' => __( 'New Episodes', 'dicentis-podcast' ),
+				'view_item' => __( 'View Episodes', 'dicentis-podcast' ),
+				'search_items' => __( 'Search Episodes', 'dicentis-podcast' ),
+				'not_found' => __( 'No Episodes Found', 'dicentis-podcast' ),
+				'not_found_in_trash' => __( 'No Episodes Found In Trash', 'dicentis-podcast' )
 			),
 			'public' => true,
 			'has_archive' => true,
-			'description' => __( 'A podcast plugin which allows to define multipel podcasts with individual feeds', 'dicentis' ),
+			'description' => __( 'A podcast plugin which allows to define multipel podcasts with individual feeds', 'dicentis-podcast' ),
 			'supports' => array(
 				'editor',
 				'thumbnail',
@@ -180,16 +178,16 @@ class Dipo_Podcast_Post_Type {
 				'slug' => self::POST_TYPE_NAME . '/show',
 			),
 			'labels' => array(
-				'name' => __( 'Podcast Shows', $this->textdomain ),
-				'singular_name' => __( 'Podcast Show', $this->textdomain ),
-				'edit_item' => __( 'Edit Podcast Show', $this->textdomain ),
-				'update_item' => __( 'Update Podcast Show', $this->textdomain ),
-				'add_new_item' => __( 'Add New Podcast Show', $this->textdomain ),
-				'new_item_name' => __( 'New Podcast Show Name', $this->textdomain ),
-				'all_items' => __( 'All Podcast Shows', $this->textdomain ),
-				'search_items' => __( 'Search Podcast Show', $this->textdomain ),
-				'parent_item' => __( 'Parent Podcast Show', $this->textdomain ),
-				'parent_item_colon' => __( 'Parent Podcast Show:', $this->textdomain ),
+				'name' => __( 'Podcast Shows', 'dicentis-podcast' ),
+				'singular_name' => __( 'Podcast Show', 'dicentis-podcast' ),
+				'edit_item' => __( 'Edit Podcast Show', 'dicentis-podcast' ),
+				'update_item' => __( 'Update Podcast Show', 'dicentis-podcast' ),
+				'add_new_item' => __( 'Add New Podcast Show', 'dicentis-podcast' ),
+				'new_item_name' => __( 'New Podcast Show Name', 'dicentis-podcast' ),
+				'all_items' => __( 'All Podcast Shows', 'dicentis-podcast' ),
+				'search_items' => __( 'Search Podcast Show', 'dicentis-podcast' ),
+				'parent_item' => __( 'Parent Podcast Show', 'dicentis-podcast' ),
+				'parent_item_colon' => __( 'Parent Podcast Show:', 'dicentis-podcast' ),
 			),
 		);
 
@@ -201,16 +199,16 @@ class Dipo_Podcast_Post_Type {
 				'slug' => self::POST_TYPE_NAME . '/speaker',
 			),
 			'labels' => array(
-				'name' => __( 'Speakers', $this->textdomain ),
-				'singular_name' => __( 'Speaker', $this->textdomain ),
-				'edit_item' => __( 'Edit Speaker', $this->textdomain ),
-				'update_item' => __( 'Update Speaker', $this->textdomain ),
-				'add_new_item' => __( 'Add New Speaker', $this->textdomain ),
-				'new_item_name' => __( 'New Speaker Name', $this->textdomain ),
-				'all_items' => __( 'All Speaker', $this->textdomain ),
-				'search_items' => __( 'Search Speaker', $this->textdomain ),
-				'parent_item' => __( 'Parent Speaker', $this->textdomain ),
-				'parent_item_colon' => __( 'Parent Speaker:', $this->textdomain ),
+				'name' => __( 'Speakers', 'dicentis-podcast' ),
+				'singular_name' => __( 'Speaker', 'dicentis-podcast' ),
+				'edit_item' => __( 'Edit Speaker', 'dicentis-podcast' ),
+				'update_item' => __( 'Update Speaker', 'dicentis-podcast' ),
+				'add_new_item' => __( 'Add New Speaker', 'dicentis-podcast' ),
+				'new_item_name' => __( 'New Speaker Name', 'dicentis-podcast' ),
+				'all_items' => __( 'All Speaker', 'dicentis-podcast' ),
+				'search_items' => __( 'Search Speaker', 'dicentis-podcast' ),
+				'parent_item' => __( 'Parent Speaker', 'dicentis-podcast' ),
+				'parent_item_colon' => __( 'Parent Speaker:', 'dicentis-podcast' ),
 			),
 		);
 
@@ -449,7 +447,7 @@ class Dipo_Podcast_Post_Type {
 		// Add this metabox to every selected post
 		add_meta_box(
 			sprintf( 'dicentis_%s_selection', self::POST_TYPE_NAME ),
-			sprintf( __( '%s Information', 'dicentis' ), ucwords( str_replace( "_", " ", self::POST_TYPE_NAME ) ) ),
+			sprintf( __( '%s Information', 'dicentis-podcast' ), ucwords( str_replace( "_", " ", self::POST_TYPE_NAME ) ) ),
 			array( $this, 'add_inner_meta_boxes' ),
 			self::POST_TYPE
 		);
@@ -595,7 +593,7 @@ class Dipo_Podcast_Post_Type {
 
 	public function add_tax_column( $columns ) {
 		foreach ( $this->_tax as $tax_slug => $tax_name ) {
-			$columns[$tax_slug] = __( $tax_name, 'dicentis' );
+			$columns[$tax_slug] = __( $tax_name, 'dicentis-podcast' );
 		}
 
 		return $columns;

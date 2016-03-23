@@ -37,8 +37,8 @@ class Dipo_Admin_Manager_Model {
 
 		add_submenu_page(
 			'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
-			__( 'Dashboard' ),
-			__( 'Dashboard' ),
+			__( 'Dashboard', 'dicentis-podcast' ),
+			__( 'Dashboard', 'dicentis-podcast' ),
 			'edit_posts',
 			'dicentis_dashboard',
 			array( $view, 'render_dashboard_page' )

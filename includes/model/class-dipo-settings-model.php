@@ -11,12 +11,10 @@ use Dicentis\Podcast_Post_Type\Dipo_Podcast_Post_Type;
 class Dipo_Settings_Model {
 
 	private $properties;
-	private $textdomain;
 	private $controller;
 
 	public function __construct( $controller ) {
 		$this->properties = Core\Dipo_Property_List::get_instance();
-		$this->textdomain = $this->properties->get( 'textdomain' );
 		$this->controller = $controller;
 	}
 
@@ -75,7 +73,7 @@ class Dipo_Settings_Model {
 		// section settings for new show
 		add_settings_section(
 			$id,
-			__( 'General Settings', $this->textdomain ), // title
+			__( 'General Settings', 'dicentis-podcast' ), // title
 			array( $view, 'general_settings_description' ),
 			"dipo_{$slug}"
 		);
@@ -84,7 +82,7 @@ class Dipo_Settings_Model {
 		$id = "dipo_{$slug}_iTunes_sec";
 		add_settings_section(
 			$id,
-			__( 'iTunes Settings', $this->textdomain ),
+			__( 'iTunes Settings', 'dicentis-podcast' ),
 			array( $view, 'itunes_settings_description' ),
 			"dipo_{$slug}_iTunes"
 		);
@@ -108,7 +106,7 @@ class Dipo_Settings_Model {
 		// General Fields
 		add_settings_field(
 			'dipo_show_assets_url',
-			__( 'Assets URL', $this->textdomain ),
+			__( 'Assets URL', 'dicentis-podcast' ),
 			array( $view, 'general_assets_url' ),
 			"dipo_{$slug}",
 			$sec_id,
@@ -123,7 +121,7 @@ class Dipo_Settings_Model {
 		// iTunes Fields
 		add_settings_field(
 			'dipo_itunes_owner',
-			__( 'iTunes Owner', $this->textdomain ),
+			__( 'iTunes Owner', 'dicentis-podcast' ),
 			array( $view, 'itunes_owner' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -133,7 +131,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_owner_mail',
-			__( 'iTunes Owner E-Mail', $this->textdomain ),
+			__( 'iTunes Owner E-Mail', 'dicentis-podcast' ),
 			array( $view, 'itunes_owner_mail' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -143,7 +141,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_title',
-			__( 'iTunes Title', $this->textdomain ),
+			__( 'iTunes Title', 'dicentis-podcast' ),
 			array( $view, 'itunes_title_string' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -153,7 +151,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_subtitle',
-			__( 'iTunes Subtitle', $this->textdomain ),
+			__( 'iTunes Subtitle', 'dicentis-podcast' ),
 			array( $view, 'itunes_subtitle_string' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -163,7 +161,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_author',
-			__( 'iTunes Author', $this->textdomain ),
+			__( 'iTunes Author', 'dicentis-podcast' ),
 			array( $view, 'itunes_author_string' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -173,7 +171,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_language',
-			__( 'iTunes Language', $this->textdomain ),
+			__( 'iTunes Language', 'dicentis-podcast' ),
 			array( $view, 'itunes_language_dropdown' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -183,7 +181,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_explicit',
-			__( 'iTunes Explicit', $this->textdomain ),
+			__( 'iTunes Explicit', 'dicentis-podcast' ),
 			array( $view, 'itunes_explicit_checkbox' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -193,7 +191,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_cat1',
-			__( 'iTunes Category 1', $this->textdomain ),
+			__( 'iTunes Category 1', 'dicentis-podcast' ),
 			array( $view, 'itunes_category' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -204,7 +202,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_cat2',
-			__( 'iTunes Category 2', $this->textdomain ),
+			__( 'iTunes Category 2', 'dicentis-podcast' ),
 			array( $view, 'itunes_category' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -215,7 +213,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_cat3',
-			__( 'iTunes Category 3', $this->textdomain ),
+			__( 'iTunes Category 3', 'dicentis-podcast' ),
 			array( $view, 'itunes_category' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -226,7 +224,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_copyright',
-			__( 'iTunes Copyright', $this->textdomain ),
+			__( 'iTunes Copyright', 'dicentis-podcast' ),
 			array( $view, 'itunes_copyright' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -236,7 +234,7 @@ class Dipo_Settings_Model {
 
 		add_settings_field(
 			'dipo_itunes_coverart',
-			__( 'iTunes Cover Art', $this->textdomain ),
+			__( 'iTunes Cover Art', 'dicentis-podcast' ),
 			array( $view, 'itunes_coverart' ),
 			"dipo_{$slug}_iTunes",
 			$sec_id,
@@ -305,8 +303,8 @@ class Dipo_Settings_Model {
 
 		add_submenu_page(
 			'edit.php?post_type=' . Dipo_Podcast_Post_Type::POST_TYPE, // add to podcast menu
-			__( 'dicentis Podcast Settings', $this->textdomain ),
-			__( 'Settings' ),
+			__( 'dicentis Podcast Settings', 'dicentis-podcast' ),
+			__( 'Settings', 'dicentis-podcast' ),
 			'manage_options', // capabilities
 			'dicentis_settings', // slug
 			array( $view, 'render_settings_page' )

@@ -3,11 +3,11 @@
 		<h2><?php echo $show_tax->name; ?></h2>
 		<table>
 		<tr>
-			<td><?php _e( 'Title', 'dicentis' ); ?></td>
-			<td><?php _e( 'Date', 'dicentis' ); ?></td>
-			<td><?php _e( 'Speaker', 'dicentis' ); ?></td>
-			<td><?php _e( 'Series', 'dicentis' ); ?></td>
-			<td><?php _e( 'Media', 'dicentis' ); ?></td>
+			<td><?php _e( 'Title', 'dicentis-podcast' ); ?></td>
+			<td><?php _e( 'Date', 'dicentis-podcast' ); ?></td>
+			<td><?php _e( 'Speaker', 'dicentis-podcast' ); ?></td>
+			<td><?php _e( 'Series', 'dicentis-podcast' ); ?></td>
+			<td><?php _e( 'Media', 'dicentis-podcast' ); ?></td>
 		</tr>
 		<?php foreach ( $episodes as $id => $post ) :
 				$speaker = NULL;
@@ -47,19 +47,19 @@
 		case 1:
 		default:
 			echo "<p>";
-			_e( 'Error #1: No Episodes Found!', 'dicentis' );
+			_e( 'Error #1: No Episodes Found!', 'dicentis-podcast' );
 			echo "</p>";
 			break;
 
 		case 2:
 			echo "<p>";
-			_e( 'Error #2: No Showname in Shortcode Given!', 'dicentis' );
+			_e( 'Error #2: No Showname in Shortcode Given!', 'dicentis-podcast' );
 			echo "</p>";
 			break;
 
 		case 3:
 			echo "<p>";
-			_e( 'Error #3: No Show Exists with That Name!', 'dicentis' );
+			_e( 'Error #3: No Show Exists with That Name!', 'dicentis-podcast' );
 			echo "</p>";
 			break;
 	}
