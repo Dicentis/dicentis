@@ -4,7 +4,7 @@ Tags: podcast, podcasts, feed, rss, episode, episodes, audio, video, cm,
 Donate link: http://bit.ly/hhb-paypal
 Requires at least: 4.3
 Tested up to: 4.5
-Stable tag: 0.2.6
+Stable tag: 0.2.7
 License: GPLv3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,10 @@ You can download and install Dicentis using the built in WordPress plugin instal
 A separated page on the website is dedicated to FAQs. See: http://dicentis.io/faq.
 
 == Changelog ==
+
+= 0.2.7 =
+
+* [FIX] Wrong enclosure type were used in podcast feed if URL had GET parameters.
 
 = 0.2.6 =
 
