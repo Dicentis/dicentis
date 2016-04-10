@@ -12,50 +12,65 @@ use \Dicentis\Core;
  * are implemented as getter methods for episode information which are in
  * the feeds.
  *
- * @author Hans-Helge Buerger <mail@hanshelgebuerger.de>
+ * @author  Hans-Helge Buerger <mail@hanshelgebuerger.de>
  * @version 0.2.0
  */
 class Dipo_RSS_Controller {
 
-	public  $itunes_opt;
+	public $itunes_opt;
 	protected $properties;
 	private $model;
 	private $view;
 
 	public function __construct() {
 
-		$this->model = new Dipo_RSS_Model();
-		$this->view  = new Dipo_RSS_View();
+		$this->model      = new Dipo_RSS_Model();
+		$this->view       = new Dipo_RSS_View();
 		$this->properties = Core\Dipo_Property_List::get_instance();
 
 	}
 
+	/**
+	 * Check template for podcast feed. If feed with file extension is used without a podcast_show redirect to home page.
+	 */
 	public function generate_podcast_feed() {
-		global $wp_query;
 
-		if ( $wp_query->is_comment_feed() ) {
-			load_template( ABSPATH . WPINC . '/feed-rss2-comments.php' );
-		} else if ( $this->is_podcast_feed() ) {
-			// load rss template and exit afterwards to exclude html code
-			load_template( $this->model->get_feed_template() );
-			exit();
+		// Check if custom feed extension are used only in combination with a podcast_show
+		switch ( $this->is_podcast_feed() ) {
+			case 'no_show_defined':
+				wp_redirect( home_url() );
+				exit();
+				break;
+
+			default:
+				// Just forward
 		}
 	}
 
+	/**
+	 * Method to see if a template is a valid podcast feed, normal feed or no feed at all.
+	 *
+	 * @return string indicator of template
+	 */
 	public function is_podcast_feed() {
+		global $wp_query;
 
-		$get_array = array( 'podcast', 'itunes', 'rss', 'rss2' );
-		if ( isset( $_GET['post_type'] )
-				and isset( $_GET['feed'] )
-				and in_array( esc_attr( $_GET['post_type'] ), $get_array )
-				and in_array( esc_attr( $_GET['feed'] ), $get_array ) ) {
 
-			return true;
+		if ( isset( $wp_query->query['feed'] ) ) {
 
+			if ( ! isset( $wp_query->query['podcast_show'] ) ) {
+
+				$extensions = $this->model->get_file_extensions();
+				if ( ! in_array( $wp_query->query['feed'], $extensions ) ) {
+					return 'no_podcast_feed';
+				}
+
+				return 'no_show_defined';
+			}
+
+			return 'is_podcast_feed';
 		} else {
-
-			return false;
-
+			return 'is_not_feed';
 		}
 	}
 
@@ -68,7 +83,7 @@ class Dipo_RSS_Controller {
 		}
 	}
 
-	public function do_podcast_feed( $in ) {
+	public function do_podcast_feed() {
 
 		$feed = $this->model->get_feed_template();
 		$this->view->do_podcast_feed( $feed );
