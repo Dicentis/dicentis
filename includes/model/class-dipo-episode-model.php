@@ -183,7 +183,10 @@ class Dipo_Episode_Model {
 			} else {
 				$request_uri = '';
 			}
-			$path = explode( '/', $request_uri );
+
+			$url = parse_url( $request_uri );
+			$path = explode( '/', $url['path'] );
+
 			if ( $path[sizeof( $path ) - 1] !== '' ) {
 				$ext = $path[sizeof( $path ) - 1];
 			} else {
