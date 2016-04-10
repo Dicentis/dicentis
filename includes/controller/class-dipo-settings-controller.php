@@ -56,7 +56,7 @@ class Dipo_Settings_Controller {
 
 	// Add the settings link to the plugin page
 	public function plugin_action_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=dicentis_settings">' . __( 'Settings', $this->textdomain ) . '</a>';
+		$settings_link = '<a href="edit.php?post_type=dipo_podcast&page=dicentis_settings">' . __( 'Settings', $this->textdomain ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}

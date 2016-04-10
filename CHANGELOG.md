@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.7
+_Release Date: 2016-04-10_
+
+* [FIX] Wrong enclosure type were used in podcast feed if URL had GET parameters.
+
 ## 0.2.6
 _Release Date: 2016-03-03_
 
