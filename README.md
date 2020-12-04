@@ -1,3 +1,6 @@
+# [Archived]: I don't have time to continue dicentis. Feel free to fork it.
+
+
 # Dicentis Podcast
 
 [![Slackin](http://slack.dicentis.io/badge.svg)](http://slack.dicentis.io)
